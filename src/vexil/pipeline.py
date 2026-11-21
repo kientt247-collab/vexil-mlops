@@ -13,9 +13,10 @@ from dataclasses import dataclass
 import polars as pl
 
 from vexil.data.store import Store
+from vexil.matchdata import is_usable
 from vexil.ratings import MatchMeta, RatingState
 from vexil.registry import Registry
-from vexil.scoring import is_judged, match_inputs, score_match
+from vexil.scoring import JUDGED_TIERS, is_judged, match_inputs, score_match
 from vexil.weeks import region
 
 MATCH_SCHEMA = {
@@ -94,9 +95,17 @@ def process_week(
 
     entries = registry.active()
     match_rows, prediction_frames = [], []
-    counts = {"matches": len(rows), "judged_tier": 0, "judged": 0, "gap": 0}
+    counts = {
+        "matches": len(rows),
+        "judged_tier": 0,
+        "judged_tier_usable": 0,
+        "judged": 0,
+        "gap": 0,
+    }
     for match, players in rows:
-        counts["judged_tier"] += match.get("league_tier") in ("professional", "premium")
+        in_tier = match.get("league_tier") in JUDGED_TIERS
+        counts["judged_tier"] += in_tier
+        counts["judged_tier_usable"] += in_tier and is_usable(match)
         if not is_judged(match):
             continue
         match_region = region(match["start_time"])

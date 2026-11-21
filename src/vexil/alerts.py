@@ -52,22 +52,33 @@ def outside(statistic: np.ndarray, reference: float, limit: float) -> np.ndarray
         return np.abs(statistic - reference) > limit
 
 
-def cusum(shortfall: np.ndarray, slack: float, limit: float) -> np.ndarray:
-    """One-sided CUSUM. `shortfall` is the standardised amount by which a week falls short
-    of its reference (positive is bad). The sum grows by shortfall minus slack, never drops
-    below zero, fires when it passes `limit`, and restarts from zero after firing.
-    Weeks with a missing value leave the sum unchanged.
+def cusum_levels(
+    shortfall: np.ndarray, slack: float, limit: float
+) -> tuple[np.ndarray, np.ndarray]:
+    """One-sided CUSUM. Returns (firing, level), level being the sum before any restart.
+
+    `shortfall` is the standardised amount by which a week falls short of its reference
+    (positive is bad). The sum grows by shortfall minus slack, never drops below zero, fires
+    when it passes `limit`, and restarts from zero after firing. A week with a missing value
+    leaves the sum unchanged.
     """
     shortfall = np.asarray(shortfall, dtype=float)
     total = np.zeros(shortfall.shape[:-1])
     firing = np.zeros(shortfall.shape, dtype=bool)
+    level = np.zeros(shortfall.shape)
     for week in range(shortfall.shape[-1]):
-        step = np.nan_to_num(shortfall[..., week] - slack, nan=0.0)
-        step = np.where(np.isnan(shortfall[..., week]), 0.0, step)
-        total = np.maximum(0.0, total + step)
+        missing = np.isnan(shortfall[..., week])
+        step = np.where(missing, 0.0, np.nan_to_num(shortfall[..., week]) - slack)
+        total = np.where(missing, total, np.maximum(0.0, total + step))
+        level[..., week] = total
         firing[..., week] = total > limit
         total = np.where(firing[..., week], 0.0, total)
-    return firing
+    return firing, level
+
+
+def cusum(shortfall: np.ndarray, slack: float, limit: float) -> np.ndarray:
+    """Weeks in which the one-sided CUSUM fires (see ``cusum_levels``)."""
+    return cusum_levels(shortfall, slack, limit)[0]
 
 
 def alarms(firing: np.ndarray) -> np.ndarray:
