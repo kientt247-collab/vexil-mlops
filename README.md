@@ -36,10 +36,14 @@ for the first 8 weeks at about 100 judged matches a week.
 ## Run it
 
 ```
-uv sync
-uv run pytest -q
-uv run python -m vexil --help
+uv sync && uv run pytest -q
+uv run python -m vexil replay --first-week 2026-10-26 --last-week 2026-11-09 --scratch /tmp/scratch
 ```
+
+The first line installs and runs the tests. The second downloads the weekly match files
+(about 220 MB, no credentials) and replays three Mondays into `/tmp/scratch`.
+`uv run python -m vexil --help` lists the other commands; `docs/guide.md` explains the
+code.
 
 Match data: weekly files derived from the OpenDota API, attached to the release
 `data-2026`; `data/manifest.json` lists them with their hashes.

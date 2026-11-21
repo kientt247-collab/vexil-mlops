@@ -320,15 +320,15 @@ uv run ruff check .          # lint: expect "All checks passed!"
 **Get the data and replay three weeks.** No credentials are needed.
 
 ```
-uv run python -m vexil verify-remote     # downloads 94 files (220 MB) into ./_store, checks every fingerprint
-mkdir -p /tmp/scratch/monitoring /tmp/scratch/data
-cp -r models /tmp/scratch/ && cp data/manifest.json /tmp/scratch/data/
-cp monitoring/rules.yaml monitoring/gate.yaml /tmp/scratch/monitoring/
-uv run python -m vexil --root /tmp/scratch --store _store replay --first-week 2026-10-26 --last-week 2026-11-09
+uv run python -m vexil replay --first-week 2026-10-26 --last-week 2026-11-09 --scratch /tmp/scratch
 ```
 
-It prints the number of runs and the actions taken, and writes its tables under
-`/tmp/scratch/monitoring`. `lock.json` and `state/` are not needed: without a lock the
+The command downloads the weekly files it needs from the release into `./_store` (every
+week up to the last one, about 220 MB, each checked against its fingerprint), copies the
+models, the manifest, the rules and the gate into `/tmp/scratch`, and replays there, so
+the tables committed in the repository are not touched. Without `--scratch` it writes
+into the repository itself. It prints the number of runs and the actions taken, and
+writes its tables under `/tmp/scratch/monitoring`. `lock.json` and `state/` are not needed: without a lock the
 job runs unlocked, and without a snapshot it rebuilds the ratings from the first stored
 week. Without a lock the cutoff rule also holds back results from 2026-11-20 on, so a
 scratch replay scores no match after that date. The full history is `--first-week 2025-12-29 --last-week 2026-11-16` (about six

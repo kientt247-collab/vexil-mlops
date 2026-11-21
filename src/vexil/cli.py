@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import time
 from pathlib import Path
 
@@ -66,12 +67,31 @@ def cmd_run(args: argparse.Namespace) -> int:
     return 0
 
 
+def _scratch_root(source: Path, scratch: Path) -> Path:
+    """Copy what a replay reads (models, manifest, rules, gate) into a folder of its own,
+    so that the tables committed in the repository are left alone."""
+    for folder in ("monitoring", "data"):
+        (scratch / folder).mkdir(parents=True, exist_ok=True)
+    shutil.copytree(source / "models", scratch / "models", dirs_exist_ok=True)
+    shutil.copy(source / "data" / "manifest.json", scratch / "data")
+    for name in ("rules.yaml", "gate.yaml"):
+        shutil.copy(source / "monitoring" / name, scratch / "monitoring")
+    return scratch
+
+
 def cmd_replay(args: argparse.Namespace) -> int:
     """Replay past weeks from the local store as if the job had run every Monday."""
     from vexil.issues import LogChannel
     from vexil.job import Layout, replay
 
-    layout = Layout(args.root, args.store)
+    root = args.root
+    if args.scratch:
+        root = _scratch_root(args.root, args.scratch)
+    store = _store(args)
+    for week in store.weeks():
+        if week <= args.last_week:
+            remote.download_week(store, week, args.repository)
+    layout = Layout(root, args.store)
     log = layout.monitoring / "replay_issues.jsonl"
     log.unlink(missing_ok=True)
     summaries = replay(layout, args.first_week, args.last_week, LogChannel(log))
@@ -134,6 +154,9 @@ def main(argv: list[str] | None = None) -> int:
         "--first-week", required=True, help="Monday of the first week, e.g. 2025-12-29"
     )
     replay.add_argument("--last-week", required=True, help="Monday of the last week")
+    replay.add_argument(
+        "--scratch", type=Path, help="write into this folder instead of the repository"
+    )
     replay.set_defaults(run=cmd_replay)
 
     dashboard = commands.add_parser("dashboard", help=cmd_dashboard.__doc__)
