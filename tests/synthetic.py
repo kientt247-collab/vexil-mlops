@@ -18,7 +18,9 @@ RAX_KEYS = [
 ]
 
 
-def make_match(seed: int, minutes: int = 30) -> tuple[dict, list[dict]]:
+def make_match(
+    seed: int, minutes: int = 30, start_time: int = 1_770_000_000
+) -> tuple[dict, list[dict]]:
     """A random but well-formed match with `minutes` minute rows and ten players."""
     rng = random.Random(seed)
     length = minutes + 1
@@ -36,7 +38,9 @@ def make_match(seed: int, minutes: int = 30) -> tuple[dict, list[dict]]:
         kills = sorted(rng.randint(30, end) for _ in range(rng.randint(0, 9)))
         players.append(
             {
+                "match_id": 9_000_000_000 + seed,
                 "player_slot": slot,
+                "account_id": 1000 * (seed % 7) + slot,
                 "gold_t": gold_t,
                 "xp_t": list(gold_t),
                 "lh_t": lh_t,
@@ -60,6 +64,10 @@ def make_match(seed: int, minutes: int = 30) -> tuple[dict, list[dict]]:
     objectives.sort(key=lambda o: o["time"])
     match = {
         "match_id": 9_000_000_000 + seed,
+        "start_time": start_time,
+        "leagueid": 17,
+        "game_mode": 2,
+        "radiant_win": bool(rng.getrandbits(1)),
         "duration": end,
         "radiant_gold_adv": gold,
         "radiant_xp_adv": xp,

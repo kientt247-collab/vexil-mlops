@@ -1,0 +1,662 @@
+{
+ "weeks": {
+  "2025-12-29": {
+   "bytes": {
+    "matches": 936177,
+    "players": 2000648
+   },
+   "matches": 225,
+   "revision": 1,
+   "sha256": {
+    "matches": "5e00523db6d039e92640c68537886ab4f7b8812566f7b24af986d686a9122b80",
+    "players": "ec3b609d017e2aca5e916f7c2fe4cd71fc2353e5d4ff2d48d831dc876c275a23"
+   },
+   "source": "phase2-seed",
+   "usable": 225
+  },
+  "2026-01-05": {
+   "bytes": {
+    "matches": 3053347,
+    "players": 7394307
+   },
+   "matches": 795,
+   "revision": 1,
+   "sha256": {
+    "matches": "bd4d5c9b33fbd19ff255caf5f76c0d5510608fbd42c200039b19f23764bd1692",
+    "players": "7adb6f83b0c4e133efe7a369e4b4ec15547b6bc9052705342597d083b66d2e51"
+   },
+   "source": "phase2-seed",
+   "usable": 792
+  },
+  "2026-01-12": {
+   "bytes": {
+    "matches": 2578984,
+    "players": 5919511
+   },
+   "matches": 694,
+   "revision": 1,
+   "sha256": {
+    "matches": "65b96bcc8962869489b57fe289ff3d7885dc5e76b9da9733b8b3c91d5edcbab4",
+    "players": "58bf4eb0181ce454e3043ffdfab31fa60e415040e2065e2be6815a4eda1999cf"
+   },
+   "source": "phase2-seed",
+   "usable": 689
+  },
+  "2026-01-19": {
+   "bytes": {
+    "matches": 1752276,
+    "players": 3885167
+   },
+   "matches": 449,
+   "revision": 1,
+   "sha256": {
+    "matches": "21f7b25e983bea72a0c74944820e90d509c0018fe9eeee74615a783a67aee731",
+    "players": "1e405256609cb3ff3d326a5d0c8171c1a558c02b534dd73b90710af41f1979a7"
+   },
+   "source": "phase2-seed",
+   "usable": 448
+  },
+  "2026-01-26": {
+   "bytes": {
+    "matches": 2331684,
+    "players": 5769337
+   },
+   "matches": 622,
+   "revision": 1,
+   "sha256": {
+    "matches": "10c4adf3b6b4fec29c8dbdab7124d2632ee405cea4ac6d6470a5b0ad8321de9f",
+    "players": "86a40b49d43fc807d000df8219ace7590b8add87717f221b268844e130a6b296"
+   },
+   "source": "phase2-seed",
+   "usable": 621
+  },
+  "2026-02-02": {
+   "bytes": {
+    "matches": 2051123,
+    "players": 4836205
+   },
+   "matches": 538,
+   "revision": 1,
+   "sha256": {
+    "matches": "d3cb649faac25330221fdc752a9a9196017b8640b3e72cee2f6248abfcf82098",
+    "players": "cc690f4e976a7edbda6dd0c7d13bd03c969fefd288c6d8ee8cc665d8bbc2766f"
+   },
+   "source": "phase2-seed",
+   "usable": 536
+  },
+  "2026-02-09": {
+   "bytes": {
+    "matches": 2045223,
+    "players": 4550848
+   },
+   "matches": 516,
+   "revision": 1,
+   "sha256": {
+    "matches": "baaca22bddcd3ff52054aa1e88530b4d98fe60ea108e1c5fe2c0df196f9e640b",
+    "players": "ecd669b47a7126b5313bb12b14292c01950571ed47ac192d1563e2f4662b6227"
+   },
+   "source": "phase2-seed",
+   "usable": 514
+  },
+  "2026-02-16": {
+   "bytes": {
+    "matches": 2496987,
+    "players": 5885108
+   },
+   "matches": 643,
+   "revision": 1,
+   "sha256": {
+    "matches": "95afe0e5666b07466afcea0e2796e73526339c15d3b1d9bb7c33a312cafd28f7",
+    "players": "130fd59b3ef39f959b18fa5f873fc260f5bc847946c32fe5570940ad439a66fc"
+   },
+   "source": "phase2-seed",
+   "usable": 641
+  },
+  "2026-02-23": {
+   "bytes": {
+    "matches": 1950982,
+    "players": 4454809
+   },
+   "matches": 497,
+   "revision": 1,
+   "sha256": {
+    "matches": "67a2290566a6d121c4c7520f64f5955eed1418fe84bc11be2541eda2cd6a67f4",
+    "players": "18219c93da9b89e9bd1844eedd060e58e3117796e4aba446b05bf5fab48c6f1b"
+   },
+   "source": "phase2-seed",
+   "usable": 497
+  },
+  "2026-03-02": {
+   "bytes": {
+    "matches": 1867649,
+    "players": 4247062
+   },
+   "matches": 476,
+   "revision": 1,
+   "sha256": {
+    "matches": "4be43bb3fc6004b7153adc0da2a98172262aad3f5040de44bc046cbbd0b8fe09",
+    "players": "f31427cb86ec2ea1cb8a8dfe637b909d662579c490920e9322f12b121eaab21d"
+   },
+   "source": "phase2-seed",
+   "usable": 475
+  },
+  "2026-03-09": {
+   "bytes": {
+    "matches": 2086695,
+    "players": 4759921
+   },
+   "matches": 517,
+   "revision": 1,
+   "sha256": {
+    "matches": "a413acf27665bf90f5e3c16ba59cfd4217f48b4d2885c51aa70a00db96c22e6d",
+    "players": "dce16954ac9f740684d4f29be3e337f1aed11bf7885cf553c4e2e04658e4547d"
+   },
+   "source": "phase2-seed",
+   "usable": 517
+  },
+  "2026-03-16": {
+   "bytes": {
+    "matches": 2551987,
+    "players": 6245974
+   },
+   "matches": 650,
+   "revision": 1,
+   "sha256": {
+    "matches": "2040ae156bb526679a33ad7fc76469ae3c79bc36b1daa9fd979ad8d98b78f5a6",
+    "players": "18838db267007a3ccc1d4a50546e21eccac605dceafd56afe5d54f8af0445367"
+   },
+   "source": "phase2-seed",
+   "usable": 650
+  },
+  "2026-03-23": {
+   "bytes": {
+    "matches": 2370768,
+    "players": 5295332
+   },
+   "matches": 551,
+   "revision": 1,
+   "sha256": {
+    "matches": "f0c0ca3ddaf0a3d799486b68dccc1a32b4a5b27e575e8ca3b21a4174531af105",
+    "players": "b71c558dc4bd9d58f8064a3d7c1712915a08d507d0bfb4341914fab2ab2d60a3"
+   },
+   "source": "phase2-seed",
+   "usable": 549
+  },
+  "2026-03-30": {
+   "bytes": {
+    "matches": 1994116,
+    "players": 4399260
+   },
+   "matches": 479,
+   "revision": 1,
+   "sha256": {
+    "matches": "0ab6da6c5f07ae872ba5dc45c19c0f8eb388003b882118039fba74f3c158dfba",
+    "players": "2b6e7501706d7b4a6b64d70f6dd27551da4ed14df672710733f098cb2bfcfec1"
+   },
+   "source": "phase2-seed",
+   "usable": 479
+  },
+  "2026-04-06": {
+   "bytes": {
+    "matches": 2669354,
+    "players": 6261084
+   },
+   "matches": 654,
+   "revision": 1,
+   "sha256": {
+    "matches": "89ce3b5bec9b8d0fa1f1bfa3557ce615381d5c1de50a8e9736e79431f179e475",
+    "players": "d400aec0d4848e5343443c8d616f2395cf594adc3b63de93079b853d1d252ae6"
+   },
+   "source": "phase2-seed",
+   "usable": 652
+  },
+  "2026-04-13": {
+   "bytes": {
+    "matches": 2367665,
+    "players": 5830484
+   },
+   "matches": 598,
+   "revision": 1,
+   "sha256": {
+    "matches": "e9e212c7f7b2a166fd39f9f4a98ffdfdeaf6d01b547769472e92344f11e75162",
+    "players": "9f0453184f10367a5577b581587d1cfb9733fae3755fd8c8a42aefd4e49d09f6"
+   },
+   "source": "phase2-seed",
+   "usable": 595
+  },
+  "2026-04-20": {
+   "bytes": {
+    "matches": 2301616,
+    "players": 5707240
+   },
+   "matches": 584,
+   "revision": 1,
+   "sha256": {
+    "matches": "53af99b5b07e9d424ac59f5a176a55eee02e754ce0a7594fcfd39f426400f47e",
+    "players": "edf29bd0c193ce9f57c4368d467fc644fa8e53ddc997a81980b05941922a8c72"
+   },
+   "source": "phase2-seed",
+   "usable": 582
+  },
+  "2026-04-27": {
+   "bytes": {
+    "matches": 2200109,
+    "players": 4991311
+   },
+   "matches": 525,
+   "revision": 1,
+   "sha256": {
+    "matches": "5f32c7c00bdaba89f623c1c6ee6abfee0f12749161a64d975bee0220ac98ad36",
+    "players": "c9f6f45679caa892128328dad7f454bdc9f7711793039c9a065d6a7b0e2b749d"
+   },
+   "source": "phase2-seed",
+   "usable": 524
+  },
+  "2026-05-04": {
+   "bytes": {
+    "matches": 1873236,
+    "players": 4395042
+   },
+   "matches": 457,
+   "revision": 1,
+   "sha256": {
+    "matches": "3bc551e8702cd1256044de235ebcd03b6d2cc3e2fa3ad7251967c4e253326919",
+    "players": "9ca91455292b369d452122b943771ca496786230c125149e39bf39bf680baa1e"
+   },
+   "source": "phase2-seed",
+   "usable": 457
+  },
+  "2026-05-11": {
+   "bytes": {
+    "matches": 2311642,
+    "players": 5460573
+   },
+   "matches": 557,
+   "revision": 1,
+   "sha256": {
+    "matches": "9c8fdf379d5e0192cd90f60142bf621a7547f9a9eb4cc9c6a34092eebf3dd018",
+    "players": "c75c3becd44fd02a52f433c0c51bfee41d7cdd58a90e5f7dd5638fe2291b092e"
+   },
+   "source": "phase2-seed",
+   "usable": 545
+  },
+  "2026-05-18": {
+   "bytes": {
+    "matches": 2556664,
+    "players": 5640906
+   },
+   "matches": 581,
+   "revision": 1,
+   "sha256": {
+    "matches": "518cec9d38f7c5437b363cfb85e77cde23cb5c03afbf4ca358255f29d729e2c4",
+    "players": "a32854a6741704c93bb0f36f0d0a2350c0e700190221db574719ebce17ba4055"
+   },
+   "source": "phase2-seed",
+   "usable": 574
+  },
+  "2026-05-25": {
+   "bytes": {
+    "matches": 2796484,
+    "players": 6341698
+   },
+   "matches": 660,
+   "revision": 1,
+   "sha256": {
+    "matches": "c9b3908dbce3aee5d79c3f61ddcc5c63009c9e2103927329c624ea8e1b35c496",
+    "players": "8ddc6cbdbe36f9314b12a0598a97ea1926acbbd4eb2da337ece7c503947dc1cd"
+   },
+   "source": "phase2-seed",
+   "usable": 652
+  },
+  "2026-06-01": {
+   "bytes": {
+    "matches": 2341043,
+    "players": 5473957
+   },
+   "matches": 561,
+   "revision": 1,
+   "sha256": {
+    "matches": "2df6331cde4b749797054c7a6dda8a4fcb7f6f4590b9e4828627b98b30e02fab",
+    "players": "0f8d2ff5105a53d4bfc4f9ac795ccdc201ba5a3403db4971dabb83a600c190e1"
+   },
+   "source": "phase2-seed",
+   "usable": 561
+  },
+  "2026-06-08": {
+   "bytes": {
+    "matches": 717047,
+    "players": 1544473
+   },
+   "matches": 170,
+   "revision": 1,
+   "sha256": {
+    "matches": "4f0eb5ccf14bf4c5d0022418e88f90a2e1e2306fd07644e310db4267659ac707",
+    "players": "35144a92809f3e434d7dfc10e342c93b3dda952d9fa06f876412da2da4a10fbd"
+   },
+   "source": "phase2-seed",
+   "usable": 170
+  },
+  "2026-06-15": {
+   "bytes": {
+    "matches": 425152,
+    "players": 1421103
+   },
+   "matches": 121,
+   "revision": 1,
+   "sha256": {
+    "matches": "0d8220f1337445e7b52aa1787597167b727a3a5c603960cf3e7e855e98da4101",
+    "players": "c385fd1053132bf232a2164aba9ccca394d32ceff49a8d6bc06074a95f58390e"
+   },
+   "source": "phase2-seed",
+   "usable": 115
+  },
+  "2026-06-22": {
+   "bytes": {
+    "matches": 303280,
+    "players": 1083229
+   },
+   "matches": 85,
+   "revision": 1,
+   "sha256": {
+    "matches": "0f583c3dfc8eb0c8700ac58bce1691574646e7b9ae877af99bd8cb8e26fe03f1",
+    "players": "6340e50a4056c87f4cfee92211d5edf982b96917b967e3f42c92014be9929c4c"
+   },
+   "source": "phase2-seed",
+   "usable": 85
+  },
+  "2026-06-29": {
+   "bytes": {
+    "matches": 1063644,
+    "players": 2613886
+   },
+   "matches": 250,
+   "revision": 1,
+   "sha256": {
+    "matches": "c4986620682343c395869495480c853348a140876c010d5ba7a4b18ac4b42c67",
+    "players": "172951fe0803a2d5fc7dbd06bfee5f645e0c2dc5b51dff33768906cc479bba3d"
+   },
+   "source": "phase2-seed",
+   "usable": 249
+  },
+  "2026-07-06": {
+   "bytes": {
+    "matches": 431763,
+    "players": 1497739
+   },
+   "matches": 123,
+   "revision": 1,
+   "sha256": {
+    "matches": "0d88e104fa5fdb3a6bfdbffbb64ce3b07ee660e341860947ecdd1241be1fbb9f",
+    "players": "58e0eca227599ec12047c584e1d2c118c8a8bd4f5671eba23d9cc604467da7c2"
+   },
+   "source": "phase2-seed",
+   "usable": 123
+  },
+  "2026-07-13": {
+   "bytes": {
+    "matches": 137731,
+    "players": 497260
+   },
+   "matches": 37,
+   "revision": 1,
+   "sha256": {
+    "matches": "365c52413aff44c43540d8bf9d5726430a92e1de3749fc47cb455900e37f629c",
+    "players": "7a58eced62d647f11a74275293c6d68473d8c8fc6f44f20986486a603ffcfbec"
+   },
+   "source": "phase2-seed",
+   "usable": 37
+  },
+  "2026-07-20": {
+   "bytes": {
+    "matches": 361627,
+    "players": 1047420
+   },
+   "matches": 83,
+   "revision": 1,
+   "sha256": {
+    "matches": "26d75a4be68605e6618a06db46ab5308acd84c0b77ab53cac82e3b7d06bafc11",
+    "players": "8e310f995034c5e4e52856e999b93b4d890ca2b0ecf07871b53d55369f6be5bc"
+   },
+   "source": "phase2-seed",
+   "usable": 83
+  },
+  "2026-07-27": {
+   "bytes": {
+    "matches": 795105,
+    "players": 2253364
+   },
+   "matches": 186,
+   "revision": 1,
+   "sha256": {
+    "matches": "8ec162b269d71a721d38dd2dbff6cdec5c00a54470f225661d7839e1031f78f8",
+    "players": "577152c5bdfeb24a08288a540a4d3eee2c7ba45eea9088c49a7b6cc0bbc70eb5"
+   },
+   "source": "phase2-seed",
+   "usable": 186
+  },
+  "2026-08-03": {
+   "bytes": {
+    "matches": 342362,
+    "players": 1059063
+   },
+   "matches": 90,
+   "revision": 1,
+   "sha256": {
+    "matches": "1165a7d43d17cf0e42ad792a90fe4e77fa251c908e93e8600ece264a5ee8915b",
+    "players": "6e08274ed6f9c8d1010c76c70e86c8814266f1d86e76c908a486252c23efa8c5"
+   },
+   "source": "phase2-seed",
+   "usable": 90
+  },
+  "2026-08-10": {
+   "bytes": {
+    "matches": 496757,
+    "players": 1744815
+   },
+   "matches": 135,
+   "revision": 1,
+   "sha256": {
+    "matches": "0d2c1f04678a22ffe9204e58ab49521c0d5c3258f00c3bc79bd64a775dcf481a",
+    "players": "c48fcc378799f49db9cedc46946f13dba0e92432486cff7f0d5610fd0735b64e"
+   },
+   "source": "phase2-seed",
+   "usable": 135
+  },
+  "2026-08-17": {
+   "bytes": {
+    "matches": 131934,
+    "players": 522272
+   },
+   "matches": 39,
+   "revision": 1,
+   "sha256": {
+    "matches": "583d78b44bc1ba6c7f627f8df57e2aef48baf43f157b6949c9432846107f4b8b",
+    "players": "63b4119b534b1efa33006067fa54429b4ae7dd5152ac477d55f6946325d23433"
+   },
+   "source": "phase2-seed",
+   "usable": 39
+  },
+  "2026-08-24": {
+   "bytes": {
+    "matches": 1338613,
+    "players": 3274132
+   },
+   "matches": 316,
+   "revision": 1,
+   "sha256": {
+    "matches": "a0f9f5969e41a8a6f6c0df94d766eb7a62dc57ed508860d1fcd181afc9d060f3",
+    "players": "ff423f54a56546c0d6127cb997ff98d8191abb6b24f2e1ee6ec338999df86a6c"
+   },
+   "source": "phase2-seed",
+   "usable": 315
+  },
+  "2026-08-31": {
+   "bytes": {
+    "matches": 268978,
+    "players": 813981
+   },
+   "matches": 68,
+   "revision": 1,
+   "sha256": {
+    "matches": "4178fe7779fe7dc96b9106615e5296b30c40315f442c700cf59db7be969cce2a",
+    "players": "4adf373ba95318d6080a65e3d50673d89c5320f703e0c3c73ad18699074bd356"
+   },
+   "source": "phase2-seed",
+   "usable": 68
+  },
+  "2026-09-07": {
+   "bytes": {
+    "matches": 452798,
+    "players": 1396571
+   },
+   "matches": 113,
+   "revision": 1,
+   "sha256": {
+    "matches": "6ad80ef8b030d04d7f360d525db419ccf4bcbc8388f226effa634915b867855c",
+    "players": "5bf400059c292a08586925f70c6e48a2a19cc9cbb19030d7c7e759470724a376"
+   },
+   "source": "phase2-seed",
+   "usable": 113
+  },
+  "2026-09-14": {
+   "bytes": {
+    "matches": 176492,
+    "players": 539507
+   },
+   "matches": 43,
+   "revision": 1,
+   "sha256": {
+    "matches": "d89d4614cfb98098fca0ae89823e535b735cae75035d3d8571d7469345cd3a14",
+    "players": "f0aeddecd8f9bc43925aafb5d62a1033581b653b940fbf87bc3137d4d0235494"
+   },
+   "source": "phase2-seed",
+   "usable": 43
+  },
+  "2026-09-21": {
+   "bytes": {
+    "matches": 545416,
+    "players": 1709963
+   },
+   "matches": 138,
+   "revision": 1,
+   "sha256": {
+    "matches": "f1ada325dce8a380472fc3bef96b335fdbf25d204770b75900fdc1b32f90bfc6",
+    "players": "90e8a5ab12464cbc087bae4c1a738811abe856958c81ced2070212a694be7a24"
+   },
+   "source": "phase2-seed",
+   "usable": 138
+  },
+  "2026-09-28": {
+   "bytes": {
+    "matches": 244044,
+    "players": 823393
+   },
+   "matches": 66,
+   "revision": 1,
+   "sha256": {
+    "matches": "31077aef7715df946bc254416b3d1a0f9e6dca796a415a2516e128c603b831e1",
+    "players": "71ccbb82d9a9a0442f849e36e9fa3474d5f527c6abae74108d1cd851c6729707"
+   },
+   "source": "phase2-seed",
+   "usable": 66
+  },
+  "2026-10-05": {
+   "bytes": {
+    "matches": 701801,
+    "players": 1923019
+   },
+   "matches": 171,
+   "revision": 1,
+   "sha256": {
+    "matches": "cc783b9d6bd114b7573dbdfacb011c6130f272d1244974edf04a2b17eb167896",
+    "players": "8e3c43fc77cef4782110e31b7b2d9fb1905287f9ab1843f8d51f6d5d1aef3ffa"
+   },
+   "source": "phase2-seed",
+   "usable": 170
+  },
+  "2026-10-12": {
+   "bytes": {
+    "matches": 1298725,
+    "players": 3967138
+   },
+   "matches": 345,
+   "revision": 1,
+   "sha256": {
+    "matches": "e59fe9d633e16ca3129a925cb7cd3f1fb5d3b3b1a4100efcabdbf60bcca119ce",
+    "players": "bfe084ef14eb7add779c46e7cf81b9b60e8a1d226745a14c8b9f2578cdb5059e"
+   },
+   "source": "phase2-seed",
+   "usable": 345
+  },
+  "2026-10-19": {
+   "bytes": {
+    "matches": 537177,
+    "players": 1506973
+   },
+   "matches": 131,
+   "revision": 1,
+   "sha256": {
+    "matches": "61440f1c304ac934a2bad477ad6eb96806c8c8f3314ab65414cb6eda0cd11510",
+    "players": "0c2d3ebdf522bd5fad7d317687835abac4cf4d2bb87b7c898dba350a0beb674c"
+   },
+   "source": "phase2-seed",
+   "usable": 131
+  },
+  "2026-10-26": {
+   "bytes": {
+    "matches": 285219,
+    "players": 851925
+   },
+   "matches": 72,
+   "revision": 1,
+   "sha256": {
+    "matches": "fff640d2bc9fe0ad45bba24088d5350f0d90070657722660071aa05d8a5f6097",
+    "players": "ce57e6d55a058bac2bd0a3c843a4336c4ce7409e99e3b36053587d224f8b1ca4"
+   },
+   "source": "phase2-seed",
+   "usable": 72
+  },
+  "2026-11-02": {
+   "bytes": {
+    "matches": 510645,
+    "players": 1582909
+   },
+   "matches": 140,
+   "revision": 1,
+   "sha256": {
+    "matches": "fa329eec311cd15c6b984125010291369cdb195e6436b0c4f9927e52f53bda10",
+    "players": "9ebdb6e211bf8c61587053d5bac369657ca8180f81d58d2438fe735db44df349"
+   },
+   "source": "phase2-seed",
+   "usable": 137
+  },
+  "2026-11-09": {
+   "bytes": {
+    "matches": 696707,
+    "players": 2265095
+   },
+   "matches": 185,
+   "revision": 1,
+   "sha256": {
+    "matches": "14fed354b60a95138672e0577ec143bb591b28c9b4af56e712b1568a7858c5e4",
+    "players": "6d3efc0b19f52f657b109cb9ae6a4ef46095eefc0fff8596eb072853da089dab"
+   },
+   "source": "phase2-seed",
+   "usable": 184
+  },
+  "2026-11-16": {
+   "bytes": {
+    "matches": 228465,
+    "players": 699839
+   },
+   "matches": 59,
+   "revision": 1,
+   "sha256": {
+    "matches": "55f46e2265f02be114310120c273677697d764cd9a271e7eec2300660ca62e89",
+    "players": "90db16af76894cd176b88edfdcff6eb0834d65d5b838f3cf49152cea8cc3d68a"
+   },
+   "source": "phase2-seed",
+   "usable": 59
+  }
+ }
+}

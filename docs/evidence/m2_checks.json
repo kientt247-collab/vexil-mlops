@@ -1,0 +1,73 @@
+{
+ "weeks pulled again": {
+  "2026-03-02": {
+   "matches stored": 476,
+   "matches now": 476,
+   "only stored": 0,
+   "only now": 0,
+   "match-id difference, share": 0.0,
+   "arrays equal, share of common matches": 1.0,
+   "patch or tier changed": 0,
+   "usable stored": 475,
+   "usable now": 475,
+   "rejected by shape checks": 0
+  },
+  "2026-08-10": {
+   "matches stored": 135,
+   "matches now": 135,
+   "only stored": 0,
+   "only now": 0,
+   "match-id difference, share": 0.0,
+   "arrays equal, share of common matches": 1.0,
+   "patch or tier changed": 0,
+   "usable stored": 135,
+   "usable now": 135,
+   "rejected by shape checks": 0
+  },
+  "2026-11-02": {
+   "matches stored": 140,
+   "matches now": 140,
+   "only stored": 0,
+   "only now": 0,
+   "match-id difference, share": 0.0,
+   "arrays equal, share of common matches": 1.0,
+   "patch or tier changed": 0,
+   "usable stored": 137,
+   "usable now": 137,
+   "rejected by shape checks": 0
+  }
+ },
+ "writing the same pull twice": {
+  "first write stored": true,
+  "second write stored": false,
+  "manifest unchanged": true
+ },
+ "explorer calls": 19,
+ "usable share of judged-tier matches by age at the phase 2 pull": {
+  "0-7 days": {
+   "usable": 119,
+   "matches": 119,
+   "share": 1.0
+  },
+  "7-14 days": {
+   "usable": 209,
+   "matches": 212,
+   "share": 0.9858
+  },
+  "14-21 days": {
+   "usable": 73,
+   "matches": 74,
+   "share": 0.9865
+  },
+  "21-28 days": {
+   "usable": 113,
+   "matches": 113,
+   "share": 1.0
+  },
+  "older": {
+   "usable": 5832,
+   "matches": 5853,
+   "share": 0.9964
+  }
+ }
+}
