@@ -27,8 +27,10 @@ one side ("Radiant") wins. Every Monday at 03:17 UTC a job on GitHub does this, 
    `challenger` is scored the same way.
 6. **Dashboard.** Rebuild the static page and commit the week's tables.
 
-A person decides two things only: whether a proposed challenger replaces the champion,
-and whether a locked rule may change.
+In normal operation a person decides two things only: whether a proposed challenger
+replaces the champion, and whether a locked rule may change. Committing the tables and
+publishing the page are steps of the workflow file (`.github/workflows/weekly.yml`), not
+of the Python job.
 
 ### One week on the calendar
 
@@ -44,8 +46,11 @@ A week is named by its Monday and runs to the next Monday, 00:00 UTC. Take the w
 So each run pulls three weeks, and those three are exactly the weeks that are not final
 before the run. If a Monday run fails, nothing is committed. The following Monday pulls
 its own three weeks; the week that should have become final in the failed run is no
-longer among them, so it keeps the numbers of its second pull. Starting the job by hand
-before the next Monday avoids that. A match that OpenDota processes more than 14 days
+longer among them, so it keeps the numbers of its second pull. It still gets its alarm
+evaluation: the job remembers which weeks it has already treated as final
+(`monitoring/final_weeks.json`) and handles every week that is final and not yet in that
+list. Starting the job by hand before the next Monday avoids the missed third pull
+(section 6). A match that OpenDota processes more than 14 days
 late is never scored.
 
 ## 2. Map of the repository
@@ -115,7 +120,9 @@ A new module must be added there, and an import that points to a larger number f
 the test.
 
 **Layer 1: arithmetic and rules.** Functions take numbers or records and return numbers.
-No network, no clock, no knowledge of where the project's files are.
+No network, no clock, no knowledge of where the project's files are. A few functions read
+or write a file whose path they are handed: `hashing.sha256_file`, the save and load of
+`ratings.py`, and `models.linear.load_model`.
 
 | Module | What it holds |
 |---|---|
@@ -128,14 +135,11 @@ No network, no clock, no knowledge of where the project's files are.
 | `alerts.py` | alarm statistics: rolling sums, CUSUM, one-step slope |
 | `hashing.py` | the fingerprint of a file |
 
-Two deliberate exceptions to "no files": `hashing.py` reads the file it is handed, and
-`ratings.py` can save and load its own state to a path it is handed.
-
 **Layer 2: one step each.** They combine layer 1 into a decision.
 
 | Module | What it holds | Files it touches |
 |---|---|---|
-| `scoring.py` | which matches are judged; assembles all inputs of one match (the ten from `features/a1.py`, the rating, the gold lead) and predicts | none |
+| `scoring.py` | which matches are judged; assembles all inputs of one match and predicts. The inputs are the ten from `features/a1.py`, the rating from `ratings.py`, and the raw gold lead, which only the anchor uses and which is read straight from the match record here | none |
 | `registry.py` | reads and checks `models/registry.yaml` | that file and the model files |
 | `monitor.py` | applies the rules, passed in as a dictionary, to weekly tables | none |
 | `investigate.py` | recommendation and report text for an alarm | none |
@@ -143,8 +147,9 @@ Two deliberate exceptions to "no files": `hashing.py` reads the file it is hande
 | `models/fit.py` | fitting; the only module that imports scikit-learn | none |
 | `leakcheck.py` | the "poison" tool used by leak tests | none |
 
-**Layer 3: the edges.** Everything that knows where files are, calls the network or
-talks to GitHub.
+**Layer 3: the edges.** Everything that decides where files go, calls the network or
+talks to GitHub. (`registry.py` in layer 2 is the one module outside this layer that
+opens a project file by itself.)
 
 | Module | What it holds |
 |---|---|
@@ -158,7 +163,7 @@ talks to GitHub.
 | `cli.py` | the commands of `python -m vexil` |
 
 Why layers matter: when a number is wrong, the search is short. If an in-game input looks
-wrong at minute 12 of a match, its definition is in `features/a1.py` and nowhere else; if
+wrong at minute 12 of a match, its definition is in `features/a1.py`; if
 the rating input looks wrong, it is `ratings.py`; if the right inputs were put together
 wrongly, it is `scoring.match_inputs`. And layer 1 can be used in a notebook without
 GitHub or a data store.
@@ -189,15 +194,21 @@ GitHub or a data store.
    none is claimed.
 3. **Sums, not averages, are stored.** `match_scores` keeps, per match and model, the
    number of minute rows and the sum of their losses. Any weekly, rolling or per-league
-   number is then a group-by, and a pooled number is exactly the sum of the weekly ones.
+   number is then a group-by, add the sums, add the counts, divide. A number over many weeks is therefore exactly
+   consistent with the weekly ones.
    One metric does not add up: the calibration slope (glossary) is a fitted coefficient.
    The alarms therefore use a one-step approximation,
    `1 + sum(x * (y - p)) / sum(x^2 * p * (1 - p))` with `x = ln(p / (1 - p))`, `p` the
-   prediction and `y` the outcome; its two sums are stored per match like the losses.
-4. **The replay is the job.** `replay(first_week, last_week)` calls `run_job` once per
-   Monday. Three things differ from a live Monday, and only these: no pull (the weekly
-   files already in the store are read), alarms go to `monitoring/replay_issues.jsonl`
-   instead of GitHub issues, and the clock is the replayed Monday. Each replayed run
+   prediction and `y` the outcome (one Newton step from a slope of 1); its two sums are
+   stored per match like the losses. The gate, which runs rarely, fits the slope exactly.
+4. **The replay is the job.** `replay(first_week, last_week)` takes two data weeks and
+   calls `run_job` once for every Monday from the one after `first_week` to the one
+   after `last_week` (a run on Monday reads the weeks that ended before it, so the first
+   run reads `first_week`). Inside `run_job` three things differ from a live Monday, and
+   only these: no pull (the weekly files already in the store are read), alarms go to
+   `monitoring/replay_issues.jsonl` instead of GitHub issues, and the clock is the
+   replayed Monday. Nothing is committed or published by a replay, because those are
+   workflow steps. Each replayed run
    reads only weeks that ended before its Monday. What a replay cannot reproduce is the
    state of OpenDota on that past Monday: it sees each week as it is stored today. The
    history from week 2025-12-29 to week 2026-11-16 (47 weeks) was produced this way.
@@ -319,7 +330,8 @@ uv run python -m vexil --root /tmp/scratch --store _store replay --first-week 20
 It prints the number of runs and the actions taken, and writes its tables under
 `/tmp/scratch/monitoring`. `lock.json` and `state/` are not needed: without a lock the
 job runs unlocked, and without a snapshot it rebuilds the ratings from the first stored
-week. The full history is `--first-week 2025-12-29 --last-week 2026-11-16` (about six
+week. Without a lock the cutoff rule also holds back results from 2026-11-20 on, so a
+scratch replay scores no match after that date. The full history is `--first-week 2025-12-29 --last-week 2026-11-16` (about six
 minutes).
 
 **Put a model under monitoring.** No new lock version if the model is of a known kind.
@@ -336,17 +348,21 @@ code change, so it needs a new lock version.
 predictions stay in the tables. The champion cannot simply be retired: the registry
 requires exactly one champion.
 
-**Promote a challenger.** No new lock version. Do it only after the pipeline has opened an
+**Promote a challenger.** New lock version, because the alarm rules in `rules.yaml` are
+keyed by model id: copy the old champion's entries under `performance` and `calibration`
+to the new id, then make the lock. Without those entries the new champion would run
+with no performance or calibration alarm. Do it only after the pipeline has opened an
 issue "[challenger] <id>" that says "Promotion proposed"; the registry does not check
 that such an issue exists, so this is a rule for people. In a pull request, set the old
 champion to `retired`, the challenger to `champion`, and add `approval` with `by` and
 `date` (a quoted `"YYYY-MM-DD"`). The owner of the repository approves.
 
 **Change an alarm limit or the gate.** New lock version. A limit is the result of a
-simulation, so first rerun `scripts/m6_alert_rules.py` (or `m8_gate.py`) with the change
-and keep its output in `docs/evidence/`; these scripts need the data store and, for the
-development region, files of the research project. Then put into one pull request: the
-edited `rules.yaml`, the new evidence, and the new `lock.json` (next recipe).
+simulation, so first make the change in `scripts/m6_alert_rules.py` (or `m8_gate.py`),
+rerun it, and keep its output in `docs/evidence/`. These scripts need the data store
+and, for the development region, tables of the research project that only the
+repository owner holds. Then put into one pull request: the edited `rules.yaml` or
+`gate.yaml`, the new evidence, and the new `lock.json` (next recipe).
 
 **Make a new lock version.** The current number is the `version` field of `lock.json`.
 In the same pull request as the change, run
@@ -355,7 +371,9 @@ In the same pull request as the change, run
 uv run python -m vexil lock --version <n+1> --approved-by <name> --reason "<why>"
 ```
 
-and commit `lock.json`. CI does not read the lock. The weekly job does, and it stops
+and commit `lock.json`. Run it after the last edit to any locked file or to any file
+under `src/vexil`; an edit after it makes the lock stale. CI does not read the lock, so
+a stale lock passes review. The weekly job does, and it stops
 with `LockError` if a locked file or the code differs from the lock. The dashboard shows
 the version and its date. Numbers from before and after a lock change were produced
 under different rules; say so when quoting them.
@@ -363,8 +381,13 @@ under different rules; say so when quoting them.
 **Add an alarm rule.** New lock version. Write the statistic in `alerts.py` (layer 1, on
 arrays). Measure its false-alarm rate with a script like `scripts/m6_alert_rules.py`;
 the budget used so far is at most 1 false alarm per 52 weeks per model and alarm family.
-Add its limit to `rules.yaml`, apply it in `monitor.evaluate_rules`, and add a
-planted-fault test in `tests/test_monitor.py`.
+Add its limit to `rules.yaml`, apply it in `monitor.evaluate_rules`, decide in
+`investigate.recommend` which action it leads to, and add a planted-fault test in
+`tests/test_monitor.py`.
+
+**Start the job by hand.** In the repository's "Actions" tab choose the workflow
+"weekly" and "Run workflow". Tick "dry run" to run everything without committing or
+publishing.
 
 **Read a failed run.** Open the run in the repository's "Actions" tab; the failing step
 names the stage. What each message means and what to do about it is in
@@ -410,7 +433,10 @@ leaves the repository as it was.
   until `lock.json` exists.
 - **Data regions.** Development (to 2026-07-30; the models were fitted there), holdout
   (2026-08-01 to 2026-11-19; used once to judge the models), prospective (from
-  2026-11-23). Numbers mean different things in each, and the dashboard marks them.
+  2026-11-23). Numbers mean different things in each, and the dashboard marks them. Two
+  gaps are never scored: 2026-07-31 (a day left between fitting and judging) and
+  2026-11-20 to 2026-11-22 (between the end of the research data and the first full
+  prospective week).
 - **Final week.** A week whose data will not be pulled again: 14 days after it ends.
 - **Game patch.** A new version of the game. It can change how much gold or experience
   players earn, and so shift the model inputs.
@@ -420,9 +446,17 @@ leaves the repository as it was.
 - **Log loss.** Mean of minus the log of the probability given to what happened, over
   game minutes 0 to 29; a coin flip scores 0.693; lower is better. Later minutes are
   left out because few matches reach them and they are easy to predict.
+- **Minute phase.** Game minutes 0-9, 10-19, 20-29, and 30 or later. Losses are stored
+  per phase; the headline log loss uses the first three.
 - **Paired gain.** Log loss of a reference minus log loss of a model on the same matches.
+- **PASS-RESOLVED, R\*.** Names from the research phase. R* was its strongest simple
+  baseline (`rstar` here). PASS-RESOLVED was its verdict that the final model beat R* on
+  the holdout by more than the required margin.
 - **Pull request.** A proposed change on GitHub that is reviewed before it is merged.
 - **Registry.** `models/registry.yaml`: the list of models the job scores, with roles.
 - **Research phase, phase 2.** The earlier project that built and judged the models with
   scripts. This repository is its engineered version.
 - **Starting models.** The three models present at go-live: `final-model`, `rstar`, `anchor`.
+- **Usable match.** Processed by OpenDota (it has per-minute data) and at least 10
+  minutes long. In the manifest, `"source": "phase2-seed"` marks a week copied from the
+  research data instead of pulled by this pipeline.
