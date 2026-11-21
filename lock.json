@@ -1,6 +1,6 @@
 {
- "version": 1,
- "locked_at": "2026-11-21 13:18 UTC",
+ "version": 2,
+ "locked_at": "2026-11-21 13:47 UTC",
  "files": {
   "monitoring/rules.yaml": "764827cd2233f75cee48d06ac19167c63e6492724e99f76eb935cf81e80421f9",
   "monitoring/gate.yaml": "775ed1fa7f8ec166bf947528d503290adeb63a24930d765fe303cb996c50cc0e",
@@ -8,7 +8,7 @@
   "models/rstar.json": "87a22e23efe8b1a29d5573ee71cf7f031afc055bf917e80e42385a9f22238ee5",
   "models/anchor.json": "102adcb55f41036b3090568e9ad7bc8a48498101ba22d9333976935ab6671446"
  },
- "source_tree_sha256": "2f085cc00d9448ab536638c1794515a52eb94815b51f81804ac58f62e2225207",
+ "source_tree_sha256": "3f813efd47dd58ce3532547fe0d8c8e3a004235ecf6a7b1b3834ee7d9c267404",
  "approved_by": "Kien",
- "reason": "Go-live of the weekly pipeline (action map v1, node M11). Kien answered the go question on 2026-11-21 at about 13:15 UTC: lock version 1 and start the Monday schedule."
+ "reason": "Code fixes found by a dry run under lock version 1, before any real run: upload under the asset name, change detection on rows instead of compressed bytes, a dry run without side effects, refusal of a real run earlier than the last recorded run. Rules, gate and models unchanged. Kien approved on 2026-11-21 20:45 UTC+7: lock version 2 and the Monday schedule back on."
 }
