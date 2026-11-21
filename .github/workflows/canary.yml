@@ -1,0 +1,18 @@
+# Temporary: shows whether GitHub starts scheduled runs in this repository at all.
+# The schedule of the first hours after the repository was created never fired
+# (row O15 of the experiment log). Remove this file after the first scheduled run.
+name: canary
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+
+permissions: {}
+
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - run: echo "started by ${{ github.event_name }} at $(date -u +%FT%TZ)"

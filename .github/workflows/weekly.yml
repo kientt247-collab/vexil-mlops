@@ -1,9 +1,11 @@
 # The weekly job: pull, score, evaluate, alarms, challengers, dashboard.
-# It can always be started by hand. The Monday schedule is added at go-live
-# (node M11 of the action map), after the rules are locked.
+# It runs every Monday at 03:17 UTC (added at go-live, node M11 of the action map,
+# after the rules were locked) and can always be started by hand.
 name: weekly
 
 on:
+  schedule:
+    - cron: "17 3 * * 1"
   workflow_dispatch:
     inputs:
       dry_run:

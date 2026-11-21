@@ -15,7 +15,7 @@ LAYER = {
     "models.fit": 2,
     "data.schema": 3, "data.store": 3, "data.opendota": 3, "data.pull": 3, "data.remote": 3,
     "labels": 3, "pipeline": 3, "run": 3, "issues": 3, "job": 3, "dashboard": 3, "cli": 3,
-    "smoke": 3, "__main__": 3,
+    "__main__": 3,
 }  # fmt: skip
 
 
