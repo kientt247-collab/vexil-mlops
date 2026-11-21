@@ -44,6 +44,7 @@ every week that is not final, so one missed Monday loses nothing.
 |---|---|---|
 | `LockError` | a locked file or the code differs from `lock.json` | if the change is intended, make a new lock version (below); if not, revert it |
 | `RegistryError` | a model file does not match its registered hash, or roles are inconsistent | restore the file or correct the registry |
+| `RulesError` | the champion has no entry under `performance` or `calibration` in `monitoring/rules.yaml` (this happens after a promotion) | add the entries for the new champion and make a new lock version |
 | "fail the shape checks" | more than 5% of pulled matches are malformed | look at one rejected match; OpenDota may have changed a table |
 | "giving up on the OpenDota explorer" | OpenDota did not answer after retries | start the workflow again by hand later |
 | `git push` rejected | someone pushed while the job ran | start the workflow again |

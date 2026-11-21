@@ -33,7 +33,7 @@ from vexil.hashing import sha256_file
 from vexil.investigate import recommend, report
 from vexil.issues import Channel, sync
 from vexil.labels import LabelLoader
-from vexil.monitor import evaluate_rules
+from vexil.monitor import check_coverage, evaluate_rules
 from vexil.pipeline import process_week
 from vexil.ratings import MatchMeta, RatingState
 from vexil.registry import append_entry, load_registry, set_role
@@ -285,6 +285,7 @@ def run_job(
     registry = load_registry(layout.registry, layout.root)
     rules = yaml.safe_load(layout.rules.read_text())
     gate = yaml.safe_load(layout.gate.read_text())
+    check_coverage(rules, [registry.one("champion").id])
     loader = LabelLoader(store, layout.label_log, layout.lock)
 
     # 2. ratings and scores of the open weeks

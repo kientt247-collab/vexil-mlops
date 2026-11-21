@@ -30,6 +30,23 @@ STATE_SCHEMA = {
 }  # fmt: skip
 
 
+class RulesError(ValueError):
+    """The rules file does not cover a model that must be watched."""
+
+
+def check_coverage(rules: dict, model_ids: list[str]) -> None:
+    """Refuse to run when a watched model has no performance or calibration rule.
+
+    The rules are keyed by model id, so a newly promoted champion has none until
+    its entries are added (which needs a new lock version).
+    """
+    for family in ("performance", "calibration"):
+        missing = [m for m in model_ids if m not in rules[family]["models"]]
+        if missing:
+            names = ", ".join(missing)
+            raise RulesError(f"no {family} rule for {names} in the rules file")
+
+
 @dataclass
 class MonitorResult:
     states: pl.DataFrame  # one row per week, family and subject

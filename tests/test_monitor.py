@@ -11,7 +11,7 @@ import yaml
 
 from vexil.investigate import recommend, report
 from vexil.issues import LogChannel, issue_title, sync
-from vexil.monitor import evaluate_rules
+from vexil.monitor import RulesError, check_coverage, evaluate_rules
 from vexil.weeks import WEEK_SECONDS, week_bounds, week_label
 
 REPO = Path(__file__).resolve().parents[1]
@@ -190,3 +190,13 @@ def test_rules_file_matches_the_registry():
     assert RULES["performance"]["arm"] == "B" and RULES["inputs"][
         "relative_limit"
     ] == pytest.approx(0.0418, abs=1e-3)
+
+
+def test_a_champion_without_rules_is_refused():
+    rules = yaml.safe_load((Path(__file__).parents[1] / "monitoring" / "rules.yaml").read_text())
+    check_coverage(rules, ["final-model"])
+    with pytest.raises(RulesError, match="no performance rule for refit-x"):
+        check_coverage(rules, ["refit-x"])
+    del rules["calibration"]["models"]["final-model"]
+    with pytest.raises(RulesError, match="no calibration rule for final-model"):
+        check_coverage(rules, ["final-model"])

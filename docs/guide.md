@@ -350,8 +350,8 @@ requires exactly one champion.
 
 **Promote a challenger.** New lock version, because the alarm rules in `rules.yaml` are
 keyed by model id: copy the old champion's entries under `performance` and `calibration`
-to the new id, then make the lock. Without those entries the new champion would run
-with no performance or calibration alarm. Do it only after the pipeline has opened an
+to the new id, then make the lock. Without those entries the job stops with
+`RulesError`, so a champion never runs without its alarms. Do it only after the pipeline has opened an
 issue "[challenger] <id>" that says "Promotion proposed"; the registry does not check
 that such an issue exists, so this is a rule for people. In a pull request, set the old
 champion to `retired`, the challenger to `champion`, and add `approval` with `by` and
