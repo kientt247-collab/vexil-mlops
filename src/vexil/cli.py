@@ -9,6 +9,7 @@ import argparse
 import json
 import os
 import shutil
+import tempfile
 import time
 from pathlib import Path
 
@@ -55,13 +56,17 @@ def cmd_verify_remote(args: argparse.Namespace) -> int:
 
 def cmd_run(args: argparse.Namespace) -> int:
     """The weekly job: pull, score, evaluate, alarms, challengers."""
-    from vexil.issues import GitHubChannel
+    from vexil.issues import GitHubChannel, LogChannel
     from vexil.job import Layout, run_job
 
     layout = Layout(args.root, args.store)
+    if args.dry_run:  # nothing leaves this machine: no issue is opened, no file is uploaded
+        channel = LogChannel(Path(tempfile.mkdtemp()) / "issues.jsonl")
+    else:
+        channel = GitHubChannel(args.repository)
     summary = run_job(
-        layout, args.now, GitHubChannel(args.repository), OpenDotaClient().explorer,
-        repository=args.repository, upload=True,
+        layout, args.now, channel, OpenDotaClient().explorer,
+        repository=args.repository, upload=not args.dry_run,
     )  # fmt: skip
     print(json.dumps(summary, indent=1))
     return 0
@@ -147,6 +152,7 @@ def main(argv: list[str] | None = None) -> int:
 
     run = commands.add_parser("run", help=cmd_run.__doc__)
     run.add_argument("--now", type=int, default=int(time.time()), help="run time, Unix seconds")
+    run.add_argument("--dry-run", action="store_true", help="open no issue and upload no file")
     run.set_defaults(run=cmd_run)
 
     replay = commands.add_parser("replay", help=cmd_replay.__doc__)

@@ -30,13 +30,23 @@ from vexil.matchdata import is_usable
 FILES = ("matches", "players")
 
 
+def jsonl_bytes(rows: list[dict]) -> bytes:
+    """Rows as JSON lines with sorted keys: the content of a weekly file before compression."""
+    return "".join(
+        json.dumps(row, separators=(",", ":"), sort_keys=True) + "\n" for row in rows
+    ).encode()
+
+
 def write_jsonl_gz(path: Path, rows: list[dict]) -> None:
-    """Write rows as gzip JSON lines with a fixed header (mtime 0), so bytes are reproducible."""
+    """Write rows as gzip JSON lines with a fixed header (mtime 0).
+
+    The compressed bytes are the same on one machine, but another compression library can
+    give other bytes for the same rows, so content is compared before compression.
+    """
     path.parent.mkdir(parents=True, exist_ok=True)
-    text = "".join(json.dumps(row, separators=(",", ":"), sort_keys=True) + "\n" for row in rows)
     buffer = io.BytesIO()
     with gzip.GzipFile(fileobj=buffer, mode="wb", mtime=0, compresslevel=6) as handle:
-        handle.write(text.encode())
+        handle.write(jsonl_bytes(rows))
     path.write_bytes(buffer.getvalue())
 
 
@@ -75,6 +85,8 @@ class Store:
         matches = sorted(matches, key=lambda m: m["match_id"])
         players = sorted(players, key=lambda p: (p["match_id"], p["player_slot"]))
         entry = self.manifest["weeks"].get(week)
+        if entry and self._same_rows(week, entry, {"matches": matches, "players": players}):
+            return False
         revision = entry["revision"] + 1 if entry else 1
         paths = {name: self.file_path(week, revision, name) for name in FILES}
         write_jsonl_gz(paths["matches"], matches)
@@ -94,6 +106,18 @@ class Store:
             "source": source,
         }
         self.save_manifest()
+        return True
+
+    def _same_rows(self, week: str, entry: dict, rows: dict[str, list[dict]]) -> bool:
+        """True if the stored revision of a week holds exactly these rows.
+
+        Compared before compression. If the stored files are not in the local store, the
+        answer is False and the hash comparison in `write_week` decides.
+        """
+        for name in FILES:
+            path = self.file_path(week, entry["revision"], name)
+            if not path.exists() or gzip.decompress(path.read_bytes()) != jsonl_bytes(rows[name]):
+                return False
         return True
 
     def save_manifest(self) -> None:

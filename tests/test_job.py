@@ -11,7 +11,7 @@ from vexil.dashboard import build, build_data
 from vexil.data.store import Store
 from vexil.evaluate import paired_gain
 from vexil.issues import LogChannel
-from vexil.job import Layout, LockError, lock_contents, replay, run_job
+from vexil.job import ClockError, Layout, LockError, lock_contents, replay, run_job
 from vexil.run import effective_scores
 from vexil.weeks import week_bounds, weeks_between
 
@@ -135,3 +135,16 @@ def test_a_locked_file_that_changes_stops_the_job(replayed, tmp_path):
     (layout.root / "src" / "vexil" / "alerts.py").write_text("# changed\n")
     with pytest.raises(LockError, match="code"):
         run_job(layout, week_bounds(WEEKS[3])[0] + 11820, channel)
+
+
+def test_a_live_run_earlier_than_the_last_run_is_refused(tmp_path):
+    layout = make_root(tmp_path, WEEKS[:3])
+    channel = LogChannel(layout.monitoring / "issues.jsonl")
+    monday = week_bounds(WEEKS[3])[0] + 11820
+    run_job(layout, monday, channel)
+
+    def explorer(sql):
+        raise AssertionError("the pull must not start")
+
+    with pytest.raises(ClockError, match="earlier than the last recorded run"):
+        run_job(layout, monday - 86400, channel, explorer)

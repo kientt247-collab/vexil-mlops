@@ -79,6 +79,10 @@ LOCKED_FILES = (
 )  # fmt: skip
 
 
+class ClockError(RuntimeError):
+    """A live run was started with a clock earlier than the last recorded run."""
+
+
 class LockError(RuntimeError):
     """A locked file changed. The job refuses to run until a new lock version is approved."""
 
@@ -265,6 +269,12 @@ def run_job(
     weeks = open_weeks(now)
     summary: dict = {"now": now, "open_weeks": weeks}
     if explorer is not None:
+        last_run = layout.monitoring / "last_run.json"
+        if last_run.exists() and now < json.loads(last_run.read_text())["now"]:
+            raise ClockError(
+                "this run is earlier than the last recorded run (monitoring/last_run.json); "
+                "running it would move the stored state back in time"
+            )
         for week in weeks:
             if week in store.manifest["weeks"] and repository:
                 remote.download_week(store, week, repository)

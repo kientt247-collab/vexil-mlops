@@ -1,11 +1,13 @@
+import gzip
 import json
 
 import pytest
 
 from vexil.data.pull import check_rows, pull_weeks
-from vexil.data.remote import release_tag
+from vexil.data.remote import release_tag, upload_week
 from vexil.data.schema import match_problems
 from vexil.data.store import Store
+from vexil.hashing import sha256_file
 from vexil.labels import LabelLoader
 from vexil.weeks import CUTOFF, week_bounds
 
@@ -139,3 +141,35 @@ def test_pull_keeps_history_before_the_cutoff_and_adds_later_matches(store):
 def test_release_tag_uses_the_iso_year():
     assert release_tag("2025-12-29") == "data-2026"
     assert release_tag("2026-11-16") == "data-2026"
+
+
+def test_same_rows_compressed_differently_are_not_a_change(store):
+    """Another machine can compress the same rows to other bytes (seen on a GitHub runner)."""
+    matches, players = rows(range(3), week_bounds(WEEK)[0])
+    store.write_week(WEEK, matches, players, source="test")
+    entry = store.manifest["weeks"][WEEK]
+    for name in ("matches", "players"):
+        path = store.file_path(WEEK, 1, name)
+        content = gzip.decompress(path.read_bytes())
+        path.write_bytes(gzip.compress(content, compresslevel=1, mtime=0))
+        assert sha256_file(path) != entry["sha256"][name]
+        entry["sha256"][name] = sha256_file(path)
+    assert store.write_week(WEEK, matches, players, source="test") is False
+    assert store.manifest["weeks"][WEEK]["revision"] == 1
+
+
+def test_upload_gives_each_file_its_asset_name(store, monkeypatch):
+    """The download builds its address from the asset name, so the upload must use it."""
+    matches, players = rows(range(2), week_bounds(WEEK)[0])
+    store.write_week(WEEK, matches, players, source="test")
+    uploaded = []
+
+    def fake_run(command, **_):
+        if command[:3] == ["gh", "release", "upload"]:
+            uploaded.append(command[4].rsplit("/", 1)[-1])
+        return type("Done", (), {"returncode": 0})()
+
+    monkeypatch.setattr("vexil.data.remote.subprocess.run", fake_run)
+    upload_week(store, WEEK, "owner/repository")
+    assert uploaded == [store.asset_name(WEEK, 1, name) for name in ("matches", "players")]
+    assert uploaded[0] == f"week-{WEEK}.r1.matches.jsonl.gz"

@@ -8,8 +8,11 @@ One release per year holds the weeks of that year (a release takes up to 1,000 a
 from __future__ import annotations
 
 import datetime as dt
+import shutil
 import subprocess
+import tempfile
 import urllib.request
+from pathlib import Path
 
 from vexil.data.store import FILES, Store
 from vexil.hashing import sha256_file
@@ -63,19 +66,14 @@ def upload_week(store: Store, week: str, repository: str) -> None:
             ],
             check=True,
         )
-    for name in FILES:
-        source = store.file_path(week, entry["revision"], name)
-        asset = store.asset_name(week, entry["revision"], name)
-        subprocess.run(
-            [
-                "gh",
-                "release",
-                "upload",
-                tag,
-                f"{source}#{asset}",
-                "--repo",
-                repository,
-                "--clobber",
-            ],
-            check=True,
-        )
+    # gh names an asset after the file it is given (text after "#" is only a display
+    # label), so each file is copied under its asset name first
+    with tempfile.TemporaryDirectory() as folder:
+        for name in FILES:
+            source = store.file_path(week, entry["revision"], name)
+            named = Path(folder) / store.asset_name(week, entry["revision"], name)
+            shutil.copy(source, named)
+            subprocess.run(
+                ["gh", "release", "upload", tag, str(named), "--repo", repository, "--clobber"],
+                check=True,
+            )
