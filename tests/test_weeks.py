@@ -47,3 +47,9 @@ def test_a_run_pulls_the_three_most_recent_ended_weeks():
 )
 def test_regions(when, expected):
     assert weeks.region(when) == expected
+
+
+def test_history_weeks_are_final_once_the_prospective_region_starts():
+    assert not weeks.is_final("2026-11-09", ts(2026, 11, 22, 23))
+    assert weeks.is_final("2026-11-16", ts(2026, 11, 23))  # frozen history, no 14-day wait
+    assert not weeks.is_final("2026-11-23", ts(2026, 12, 7))

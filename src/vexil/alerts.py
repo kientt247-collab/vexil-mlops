@@ -20,6 +20,8 @@ def rolling_sum(values: np.ndarray, window: int = WINDOW_WEEKS) -> np.ndarray:
     values = np.asarray(values, dtype=float)
     total = np.cumsum(values, axis=-1)
     out = np.full(values.shape, np.nan)
+    if values.shape[-1] < window:
+        return out
     out[..., window - 1] = total[..., window - 1]
     out[..., window:] = total[..., window:] - total[..., :-window]
     return out

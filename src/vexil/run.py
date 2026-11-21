@@ -11,16 +11,21 @@ Tables live under ``monitoring/``:
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
+import numpy as np
 import polars as pl
 
 from vexil.data.store import Store
 from vexil.evaluate import match_scores
+from vexil.hashing import sha256_file
 from vexil.labels import LabelLoader
+from vexil.matchdata import is_usable
 from vexil.pipeline import MATCH_SCHEMA, WeekOutput, process_week
-from vexil.ratings import RatingState
+from vexil.ratings import MatchMeta, RatingState
 from vexil.registry import Registry
+from vexil.scoring import JUDGED_TIERS, match_inputs
 
 
 def score_weeks(
@@ -92,3 +97,38 @@ def effective_scores(folder: Path) -> pl.DataFrame:
         )
         scores = pl.concat([oof.select(scores.columns), scores])
     return scores.sort(["week", "match_id", "model_id"])
+
+
+def training_rows(store: Store, loader: LabelLoader, weeks: list[str], until: int, purpose: str):
+    """Minute rows and outcomes of every usable judged-tier match that started before `until`.
+
+    Ratings are replayed from the first stored week, so each row carries the rating input
+    exactly as the pipeline would have computed it at the time.
+    """
+    state = RatingState()
+    columns: dict[str, list] = {}
+    y_rows = []
+    for week in weeks:
+        results = loader.week_labels(week, purpose=purpose)
+        rows = list(store.read_week(week))
+        metas = [MatchMeta.from_rows(match, players) for match, players in rows]
+        ratings = state.process(metas, results)
+        for match, players in rows:
+            match_id = match["match_id"]
+            keep = is_usable(match) and match.get("league_tier") in JUDGED_TIERS
+            if not keep or match["start_time"] >= until or match_id not in results:
+                continue
+            inputs = match_inputs(match, players, ratings[match_id])
+            for name, values in inputs.items():
+                columns.setdefault(name, []).append(values)
+            y_rows.append(np.full(len(inputs["t"]), results[match_id]))
+    table = {name: np.concatenate(parts) for name, parts in columns.items()}
+    return table, np.concatenate(y_rows)
+
+
+def write_challenger(folder: Path, model_id: str, spec: dict) -> tuple[Path, str]:
+    """Save a challenger model file. Returns its path and SHA-256."""
+    path = Path(folder) / f"{model_id}.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(spec, indent=1, sort_keys=True) + "\n")
+    return path, sha256_file(path)

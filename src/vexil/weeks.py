@@ -56,8 +56,14 @@ def weeks_between(first: str, last: str) -> list[str]:
 
 
 def is_final(label: str, now: int) -> bool:
-    """A week is final once 14 days have passed since it ended."""
+    """A week is final once 14 days have passed since it ended.
+
+    Weeks of the phase 2 history (up to the week of the cutoff) hold data that is frozen,
+    so from the start of the prospective region on they all count as final.
+    """
     _, end = week_bounds(label)
+    if label <= week_label(CUTOFF) and now >= PROSPECTIVE_START:
+        return True
     return now >= end + FINAL_AFTER_DAYS * 86400
 
 

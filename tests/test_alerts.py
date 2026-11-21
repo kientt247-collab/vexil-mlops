@@ -9,6 +9,9 @@ def test_rolling_sum_and_ratio():
     assert np.isnan(rolled[:2]).all()
     assert rolled[2:].tolist() == [6, 9, 12, 15, 18, 21, 24, 27]
     assert np.isnan(alerts.ratio(np.array([1.0]), np.array([0.0]))[0])
+    assert np.isnan(
+        alerts.rolling_sum(np.ones(5), window=8)
+    ).all()  # history shorter than the window
 
 
 def test_missing_values_never_fire():

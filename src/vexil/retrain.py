@@ -15,8 +15,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import numpy as np
+import polars as pl
 
 from vexil.evaluate import calibration
+from vexil.models.fit import fit_recalibration, fit_ridge_a1
 
 GATE_DEFAULTS = {"min_matches": 600, "min_gain": 0.002, "slope_low": 0.9, "slope_high": 1.1}
 BOOTSTRAP_DRAWS = 2000
@@ -73,9 +75,23 @@ def gate(
     if gain < settings["min_gain"]:
         reasons.append(f"gain {gain:+.4f} is below {settings['min_gain']}")
     if interval[0] <= 0:
-        reasons.append(f"95% interval {interval[0]:+.4f} to {interval[1]:+.4f} includes 0")
+        reasons.append(f"95% interval {interval[0]:+.4f} to {interval[1]:+.4f} is not above 0")
     if not settings["slope_low"] <= slope <= settings["slope_high"]:
         reasons.append(
             f"slope {slope:.3f} is outside {settings['slope_low']} to {settings['slope_high']}"
         )
     return GateResult(not reasons, len(rows), gain, interval, slope, reasons)
+
+
+def refit_spec(table: dict, y: np.ndarray, recipe: dict) -> dict:
+    """K1: the champion's recipe fitted on the given rows."""
+    return fit_ridge_a1(table, y, added=tuple(recipe["added"]), c_value=recipe["c_value"])
+
+
+def recalibration_spec(predictions: pl.DataFrame, results: dict[int, int], base_file: str) -> dict:
+    """K2: slope and shift of the champion's log-odds, fitted on its minute rows 0-29."""
+    rows = predictions.filter((pl.col("t") < 30) & pl.col("match_id").is_in(list(results)))
+    p = np.clip(rows["p"].to_numpy().astype(float), 1e-6, 1 - 1e-6)
+    y = np.array([results[m] for m in rows["match_id"]])
+    layer = fit_recalibration(np.log(p / (1 - p)), y)
+    return {"kind": "recalibrated", "base_file": base_file, **layer}

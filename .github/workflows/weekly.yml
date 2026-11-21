@@ -1,0 +1,69 @@
+# The weekly job: pull, score, evaluate, alarms, challengers, dashboard.
+# It can always be started by hand. The Monday schedule is added at go-live
+# (node M11 of the action map), after the rules are locked.
+name: weekly
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run everything but do not commit or publish"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write   # commit the weekly tables, upload weekly data files to the release
+  issues: write     # open, comment on and close alarm issues
+  pages: write
+  id-token: write
+
+concurrency:
+  group: weekly
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --locked --no-dev
+
+      - name: Pull, score, evaluate, raise alarms
+        run: uv run --no-dev python -m vexil run
+
+      - name: Build the dashboard
+        run: uv run --no-dev python -m vexil dashboard --out site
+
+      - name: Commit the weekly tables
+        if: ${{ !inputs.dry_run }}
+        run: |
+          git config user.name "vexil-weekly"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/manifest.json monitoring state models
+          git diff --cached --quiet || git commit -m "weekly run $(date -u +%Y-%m-%d)"
+          git push
+
+      - name: Show what changed (dry run)
+        if: ${{ inputs.dry_run }}
+        run: git status --short | head -40; cat monitoring/last_run.json
+
+      - uses: actions/upload-pages-artifact@v3
+        if: ${{ !inputs.dry_run }}
+        with:
+          path: site
+
+  pages:
+    if: ${{ !inputs.dry_run }}
+    needs: run
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

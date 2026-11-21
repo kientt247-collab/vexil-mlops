@@ -6,6 +6,7 @@ model in code, which is what makes adding or retiring a model a one-file change.
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -97,3 +98,31 @@ def _check(entries: list[ModelEntry]) -> None:
     approval = champion.approval or {}
     if not approval.get("by") or not approval.get("date"):
         raise RegistryError(f"{champion.id}: the champion needs approval fields 'by' and 'date'")
+
+
+def append_entry(path: Path, entry: dict) -> None:
+    """Add a model to the registry file as text, so that comments in the file survive."""
+    lines = ["", f"  - id: {entry['id']}"]
+    for key in ("role", "kind", "file", "sha256"):
+        lines.append(f"    {key}: {entry[key]}")
+    lines.append(
+        f"    description: {json.dumps(entry['description'])}"
+    )  # quoted: it may hold colons
+    path = Path(path)
+    path.write_text(path.read_text().rstrip("\n") + "\n" + "\n".join(lines) + "\n")
+
+
+def set_role(path: Path, model_id: str, role: str) -> None:
+    """Change the role of one entry in the registry file (text edit; the file is re-checked on load)."""  # noqa: E501
+    if role not in ROLES:
+        raise RegistryError(f"unknown role {role!r}")
+    lines = Path(path).read_text().split("\n")
+    inside = False
+    for i, line in enumerate(lines):
+        if line.strip().startswith("- id:"):
+            inside = line.split("- id:")[1].strip() == model_id
+        elif inside and line.strip().startswith("role:"):
+            lines[i] = line.split("role:")[0] + f"role: {role}"
+            Path(path).write_text("\n".join(lines))
+            return
+    raise RegistryError(f"{model_id}: no such entry")

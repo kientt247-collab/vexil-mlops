@@ -52,8 +52,64 @@ def cmd_verify_remote(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_run(args: argparse.Namespace) -> int:
+    """The weekly job: pull, score, evaluate, alarms, challengers."""
+    from vexil.issues import GitHubChannel
+    from vexil.job import Layout, run_job
+
+    layout = Layout(args.root, args.store)
+    summary = run_job(
+        layout, args.now, GitHubChannel(args.repository), OpenDotaClient().explorer,
+        repository=args.repository, upload=True,
+    )  # fmt: skip
+    print(json.dumps(summary, indent=1))
+    return 0
+
+
+def cmd_replay(args: argparse.Namespace) -> int:
+    """Replay past weeks from the local store as if the job had run every Monday."""
+    from vexil.issues import LogChannel
+    from vexil.job import Layout, replay
+
+    layout = Layout(args.root, args.store)
+    log = layout.monitoring / "replay_issues.jsonl"
+    log.unlink(missing_ok=True)
+    summaries = replay(layout, args.first_week, args.last_week, LogChannel(log))
+    actions = [a for s in summaries for a in s.get("actions", [])]
+    print(json.dumps({"runs": len(summaries), "actions": actions}, indent=1))
+    return 0
+
+
+def cmd_dashboard(args: argparse.Namespace) -> int:
+    """Build the static dashboard from the monitoring tables."""
+    from vexil.dashboard import build
+    from vexil.job import Layout
+
+    print(build(Layout(args.root, args.store), args.out))
+    return 0
+
+
+def cmd_lock(args: argparse.Namespace) -> int:
+    """Write lock.json: hashes of the rules, the gate, the starting models and the code."""
+    import datetime as dt
+
+    from vexil.job import Layout, lock_contents
+
+    layout = Layout(args.root, args.store)
+    stamp = dt.datetime.now(dt.UTC).strftime("%Y-%m-%d %H:%M UTC")
+    contents = {
+        **lock_contents(layout, args.version, stamp),
+        "approved_by": args.approved_by,
+        "reason": args.reason,
+    }
+    layout.lock.write_text(json.dumps(contents, indent=1) + "\n")
+    print(json.dumps(contents, indent=1))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="vexil", description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path("."), help="repository root")
     parser.add_argument("--store", type=Path, default=Path("_store"))
     parser.add_argument("--manifest", type=Path, default=Path("data/manifest.json"))
     parser.add_argument(
@@ -68,6 +124,27 @@ def main(argv: list[str] | None = None) -> int:
 
     verify = commands.add_parser("verify-remote", help=cmd_verify_remote.__doc__)
     verify.set_defaults(run=cmd_verify_remote)
+
+    run = commands.add_parser("run", help=cmd_run.__doc__)
+    run.add_argument("--now", type=int, default=int(time.time()), help="run time, Unix seconds")
+    run.set_defaults(run=cmd_run)
+
+    replay = commands.add_parser("replay", help=cmd_replay.__doc__)
+    replay.add_argument(
+        "--first-week", required=True, help="Monday of the first week, e.g. 2025-12-29"
+    )
+    replay.add_argument("--last-week", required=True, help="Monday of the last week")
+    replay.set_defaults(run=cmd_replay)
+
+    dashboard = commands.add_parser("dashboard", help=cmd_dashboard.__doc__)
+    dashboard.add_argument("--out", type=Path, default=Path("site"))
+    dashboard.set_defaults(run=cmd_dashboard)
+
+    lock = commands.add_parser("lock", help=cmd_lock.__doc__)
+    lock.add_argument("--version", type=int, required=True)
+    lock.add_argument("--approved-by", required=True)
+    lock.add_argument("--reason", required=True)
+    lock.set_defaults(run=cmd_lock)
 
     args = parser.parse_args(argv)
     return args.run(args)
