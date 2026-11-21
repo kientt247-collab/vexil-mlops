@@ -1,0 +1,80 @@
+{
+ "pipeline-level leak test": {
+  "2026-03-02": {
+   "weeks": 10,
+   "prediction files byte-identical": "10 of 10",
+   "tables": {
+    "match_scores": {
+     "rows": 5997,
+     "identical": true
+    },
+    "matches": {
+     "rows": 1999,
+     "identical": true
+    },
+    "weekly_counts": {
+     "rows": 10,
+     "identical": true
+    },
+    "alert_states": {
+     "rows": 80,
+     "identical": true
+    }
+   }
+  },
+  "2026-06-29": {
+   "weeks": 27,
+   "prediction files byte-identical": "27 of 27",
+   "tables": {
+    "match_scores": {
+     "rows": 13640,
+     "identical": true
+    },
+    "matches": {
+     "rows": 4170,
+     "identical": true
+    },
+    "weekly_counts": {
+     "rows": 27,
+     "identical": true
+    },
+    "alert_states": {
+     "rows": 216,
+     "identical": true
+    }
+   }
+  },
+  "2026-09-28": {
+   "weeks": 40,
+   "prediction files byte-identical": "40 of 40",
+   "tables": {
+    "match_scores": {
+     "rows": 16955,
+     "identical": true
+    },
+    "matches": {
+     "rows": 5174,
+     "identical": true
+    },
+    "weekly_counts": {
+     "rows": 40,
+     "identical": true
+    },
+    "alert_states": {
+     "rows": 320,
+     "identical": true
+    }
+   }
+  }
+ },
+ "scores of the replay against the one-pass tables of M5": {
+  "rows": 18396,
+  "identical": true
+ },
+ "holdout numbers from the replay": {
+  "final model": 0.5221476752627469,
+  "R*": 0.5455680994884586,
+  "gain": 0.02342042422571178
+ },
+ "seconds": 637.7
+}
