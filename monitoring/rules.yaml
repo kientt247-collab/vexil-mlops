@@ -1,0 +1,41 @@
+version: 1
+window_weeks: 8
+minimum_matches: 20
+anchor: anchor
+performance:
+  arm: B
+  cusum_slack: 0.5
+  models:
+    final-model:
+      reference_gain: 0.017453857067202767
+      weekly_sd: 0.01943083020207872
+      typical_rows: 3714.5555555555557
+      limit: 0.8011340624761942
+    rstar:
+      reference_gain: 0.0021186136125659477
+      weekly_sd: 0.004752378367499375
+      typical_rows: 3714.5555555555557
+      limit: 1.7009788557061256
+  detectable_loss_increase: 0.01
+calibration:
+  models:
+    final-model:
+      reference_slope: 1.008609318299434
+      slope_limit: 0.13387612325459486
+      reference_bias: 0.0024412902444344983
+      bias_limit: 0.032881914744393725
+    rstar:
+      reference_slope: 0.9869772473967906
+      slope_limit: 0.12769828924047033
+      reference_bias: 0.0008849913500061084
+      bias_limit: 0.030972853250204935
+inputs:
+  relative_limit: 0.04176341441166187
+  minimum_matches: 20
+  development_mean:
+    total_gold_10: 30571.378798109385
+    total_gold_20: 77398.41311011554
+    total_xp_10: 31884.111636281792
+    total_xp_20: 89206.88446121197
+  displayed_only:
+    total_kills_20: 24.94506012732846

@@ -1,0 +1,125 @@
+{
+ "statistics": [
+  "total_gold_10",
+  "total_gold_20",
+  "total_xp_10",
+  "total_xp_20",
+  "total_kills_20"
+ ],
+ "matches": 4443,
+ "weeks": 31,
+ "development mean": {
+  "total_gold_10": 30571.4,
+  "total_gold_20": 77398.4,
+  "total_xp_10": 31884.1,
+  "total_xp_20": 89206.9,
+  "total_kills_20": 24.9
+ },
+ "between-match sd": {
+  "total_gold_10": 1864.9,
+  "total_gold_20": 3968.8,
+  "total_xp_10": 1879.6,
+  "total_xp_20": 5835.8,
+  "total_kills_20": 9.0
+ },
+ "weekly mean over the development mean, weeks with at least 20 matches (min, max)": {
+  "total_gold_10": [
+   0.984,
+   1.021
+  ],
+  "total_gold_20": [
+   0.979,
+   1.035
+  ],
+  "total_xp_10": [
+   0.987,
+   1.014
+  ],
+  "total_xp_20": [
+   0.977,
+   1.031
+  ],
+  "total_kills_20": [
+   0.79,
+   1.227
+  ]
+ },
+ "largest standardised shift in the real weeks": [
+  3.5,
+  4.79,
+  7.41,
+  3.24,
+  4.02,
+  2.51,
+  1.38,
+  3.05,
+  2.6,
+  2.65,
+  4.09,
+  2.42,
+  2.68,
+  3.04,
+  3.21,
+  3.76,
+  4.21,
+  2.66,
+  2.46,
+  2.6,
+  2.24,
+  1.71,
+  1.15,
+  1.8,
+  4.05,
+  5.32,
+  9.54,
+  4.57,
+  3.26,
+  4.56,
+  3.89
+ ],
+ "limits per noise version": {
+  "N1": 3.0372982764674816,
+  "N2": 9.537485269893295
+ },
+ "limit": 9.537485269893295,
+ "false alarms per 52 weeks under N2 with the N1 limit": 9.4844,
+ "false alarms per 52 weeks under N1 with the N2 limit": 0.0044,
+ "false alarms per 52 weeks at the final limit": {
+  "N1": 0.004,
+  "N2": 0.0
+ },
+ "planted cases": {
+  "gold totals x 1.05": {
+   "N1": {
+    "found within 12 weeks": 1.0,
+    "median delay, weeks": 1.0
+   },
+   "N2": {
+    "found within 12 weeks": 1.0,
+    "median delay, weeks": 1.0
+   }
+  },
+  "gold totals x 1.1": {
+   "N1": {
+    "found within 12 weeks": 1.0,
+    "median delay, weeks": 1.0
+   },
+   "N2": {
+    "found within 12 weeks": 1.0,
+    "median delay, weeks": 1.0
+   }
+  },
+  "gold totals x 1.15": {
+   "N1": {
+    "found within 12 weeks": 1.0,
+    "median delay, weeks": 1.0
+   },
+   "N2": {
+    "found within 12 weeks": 1.0,
+    "median delay, weeks": 1.0
+   }
+  }
+ },
+ "keep rule passed (cross-version rate at most 3, x 1.15 found within 12 weeks in 80%)": false,
+ "seconds": 154.8
+}

@@ -1,0 +1,81 @@
+{
+ "statistics": [
+  "total_gold_10",
+  "total_gold_20",
+  "total_xp_10",
+  "total_xp_20"
+ ],
+ "largest relative deviation in the real weeks": [
+  0.0225,
+  0.0136,
+  0.0214,
+  0.0164,
+  0.0074,
+  0.0086,
+  0.0081,
+  0.0125,
+  0.0135,
+  0.0162,
+  0.0139,
+  0.0142,
+  0.0119,
+  0.0162,
+  0.0096,
+  0.0154,
+  0.0129,
+  0.0052,
+  0.0,
+  0.0117,
+  0.0197,
+  0.0061,
+  0.0054,
+  0.0,
+  0.0205,
+  0.0194,
+  0.0139,
+  0.0215,
+  0.0278,
+  0.0256,
+  0.0348
+ ],
+ "limit under N2 (1 false alarm per 52 weeks)": 0.027842276274441247,
+ "limit under N1, reported only": 0.018363604797286825,
+ "final limit (N2 limit x 1.5)": 0.04176341441166187,
+ "false alarms per 52 weeks at the final limit": {
+  "N1": 0.0263,
+  "N2": 0.0
+ },
+ "planted cases": {
+  "gold totals x 1.05": {
+   "N1": {
+    "found within 12 weeks": 1.0,
+    "median delay, weeks": 1.0
+   },
+   "N2": {
+    "found within 12 weeks": 1.0,
+    "median delay, weeks": 1.0
+   }
+  },
+  "gold totals x 1.1": {
+   "N1": {
+    "found within 12 weeks": 1.0,
+    "median delay, weeks": 1.0
+   },
+   "N2": {
+    "found within 12 weeks": 1.0,
+    "median delay, weeks": 1.0
+   }
+  },
+  "gold totals x 1.15": {
+   "N1": {
+    "found within 12 weeks": 1.0,
+    "median delay, weeks": 1.0
+   },
+   "N2": {
+    "found within 12 weeks": 1.0,
+    "median delay, weeks": 1.0
+   }
+  }
+ },
+ "keep rule passed": true
+}

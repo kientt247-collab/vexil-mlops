@@ -24,7 +24,13 @@ MATCH_SCHEMA = {
     "rows": pl.Int32, "rating_input": pl.Float64, "new_player_share": pl.Float64,
     "abs_gold_10": pl.Float64, "abs_gold_20": pl.Float64, "abs_xp_pm_10": pl.Float64,
     "abs_xp_pm_20": pl.Float64, "abs_kill_diff_20": pl.Float64,
+    "total_gold_10": pl.Float64, "total_gold_20": pl.Float64, "total_xp_10": pl.Float64,
+    "total_xp_20": pl.Float64, "total_kills_20": pl.Float64,
 }  # fmt: skip
+# Size of the economy: totals over the ten players. They barely depend on which leagues
+# play in a week, unlike the leads above, so a patch that changes gold or experience
+# income shows up here. The input alarm watches these columns.
+ECONOMY_COLUMNS = ("total_gold_10", "total_gold_20", "total_xp_10", "total_xp_20", "total_kills_20")
 # Inputs watched by the input alarm: (column, input name, minute). Absolute values, because
 # a signed lead averages to zero over matches and would hide a change of scale.
 WATCHED_INPUTS = (
@@ -42,6 +48,22 @@ class WeekOutput:
     matches: pl.DataFrame  # judged matches outside the gaps, one row each
     predictions: pl.DataFrame  # one row per match, minute and model
     counts: dict  # data-health counts for the week
+
+
+def economy_totals(players: list[dict]) -> dict[str, float | None]:
+    """Totals over the ten players at minutes 10 and 20 (None if the match is shorter)."""
+    out: dict[str, float | None] = {}
+    for minute in (10, 20):
+        for name, series in (("gold", "gold_t"), ("xp", "xp_t")):
+            values = [p.get(series) or [] for p in players]
+            complete = all(len(v) > minute for v in values)
+            out[f"total_{name}_{minute}"] = (
+                float(sum(v[minute] for v in values)) if complete else None
+            )
+    long_enough = all(len(p.get("gold_t") or []) > 20 for p in players)
+    kills = sum(1 for p in players for e in (p.get("kills_log") or []) if e["time"] <= 1200)
+    out["total_kills_20"] = float(kills) if long_enough else None
+    return out
 
 
 def pair_key(match: dict, meta: MatchMeta) -> str:
@@ -101,6 +123,7 @@ def process_week(
                     column: abs(float(inputs[name][minute])) if len(inputs["t"]) > minute else None
                     for column, name, minute in WATCHED_INPUTS
                 },
+                **economy_totals(players),
             }  # fmt: skip
         )
         for model_id, p in score_match(entries, inputs).items():
