@@ -1,0 +1,35 @@
+# The registry: every model the pipeline scores, with its role.
+#
+# To put a model under monitoring, add an entry. To take it out, set its role to
+# "retired". Nothing else has to change, as long as the model is of a kind the code
+# already knows (see vexil/models/linear.py). The role "champion" needs the approval
+# fields, because only a person may decide which model is in use.
+#
+# Roles: champion (the model in use), baseline, anchor (a fixed ruler for the weekly
+# noise, never a product), challenger (scored next to the champion), retired.
+
+models:
+  - id: final-model
+    role: champion
+    kind: ridge_a1
+    file: models/candidate.json
+    sha256: a24854dc32cb6e5b2e1eb37c8f2560ba0b868f10455d2cd6d8862cdbadaff072
+    description: R* plus the player rating; confirmed in phase 2 (PASS-RESOLVED).
+    approval:
+      by: Kien
+      date: "2026-11-21"
+      note: Phase 2 holdout verdict of 2026-11-21.
+
+  - id: rstar
+    role: baseline
+    kind: ridge_a1
+    file: models/rstar.json
+    sha256: 87a22e23efe8b1a29d5573ee71cf7f031afc055bf917e80e42385a9f22238ee5
+    description: Ridge logistic regression on ten in-game inputs and a time term.
+
+  - id: anchor
+    role: anchor
+    kind: gold_time
+    file: models/anchor.json
+    sha256: 102adcb55f41036b3090568e9ad7bc8a48498101ba22d9333976935ab6671446
+    description: Logistic regression on the gold lead, time and their product.
