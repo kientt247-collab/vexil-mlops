@@ -41,7 +41,8 @@ uv run python -m vexil replay --first-week 2026-10-26 --last-week 2026-11-09 --s
 ```
 
 The first line installs and runs the tests. The second downloads the weekly match files
-(about 220 MB, no credentials) and replays three Mondays into `/tmp/scratch`.
+(about 220 MB, no credentials) and replays three weeks into `/tmp/scratch`: five Monday
+runs, because a week becomes final 14 days after it ends.
 `uv run python -m vexil --help` lists the other commands; `docs/guide.md` explains the
 code.
 
