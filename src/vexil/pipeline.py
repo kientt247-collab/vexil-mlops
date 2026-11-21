@@ -1,0 +1,113 @@
+"""One week through the pipeline: ratings, inputs and predictions for every model.
+
+``process_week`` is the unit of work of both the weekly job and the replay. It reads a
+week from the store, advances the rating state with the results the caller passes in, and
+returns two tables: one row per match, and one row per (match, minute, model) with the
+predicted probability. It does not evaluate anything; that is ``vexil.evaluate``.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+import polars as pl
+
+from vexil.data.store import Store
+from vexil.ratings import MatchMeta, RatingState
+from vexil.registry import Registry
+from vexil.scoring import is_judged, match_inputs, score_match
+from vexil.weeks import region
+
+MATCH_SCHEMA = {
+    "week": pl.String, "match_id": pl.Int64, "start_time": pl.Int64, "region": pl.String,
+    "league_tier": pl.String, "league_name": pl.String, "patch": pl.String, "pair": pl.String,
+    "rows": pl.Int32, "rating_input": pl.Float64, "new_player_share": pl.Float64,
+}  # fmt: skip
+PREDICTION_SCHEMA = {
+    "week": pl.String, "match_id": pl.Int64, "t": pl.Int16, "model_id": pl.String,
+    "p": pl.Float64,
+}  # fmt: skip
+
+
+@dataclass
+class WeekOutput:
+    matches: pl.DataFrame  # judged matches outside the gaps, one row each
+    predictions: pl.DataFrame  # one row per match, minute and model
+    counts: dict  # data-health counts for the week
+
+
+def pair_key(match: dict, meta: MatchMeta) -> str:
+    """The two sides of a match, in an order-free form (team ids, else account sets)."""
+    radiant_team, dire_team = match.get("radiant_team_id"), match.get("dire_team_id")
+    if radiant_team and dire_team:
+        low, high = sorted((radiant_team, dire_team))
+        return f"t:{low}-{high}"
+    sides = sorted(
+        ",".join(str(a) for a in sorted(side, key=str)) for side in (meta.radiant, meta.dire)
+    )
+    return "a:" + "|".join(sides)
+
+
+def process_week(
+    store: Store, week: str, registry: Registry, state: RatingState, results: dict[int, int]
+) -> WeekOutput:
+    """Score one week. `results` are the match results the rating may use (from the loader)."""
+    rows = list(store.read_week(week))
+    metas = {match["match_id"]: MatchMeta.from_rows(match, players) for match, players in rows}
+    shares = {}
+    rating_inputs = {}
+    for meta in sorted(metas.values(), key=lambda m: (m.start, m.match_id)):
+        rating_inputs[meta.match_id] = state.read(meta)
+        shares[meta.match_id] = state.new_player_share(meta)
+        if meta.match_id in results:
+            state.add_result(meta, results[meta.match_id])
+
+    entries = registry.active()
+    match_rows, prediction_frames = [], []
+    counts = {"matches": len(rows), "judged_tier": 0, "judged": 0, "gap": 0}
+    for match, players in rows:
+        counts["judged_tier"] += match.get("league_tier") in ("professional", "premium")
+        if not is_judged(match):
+            continue
+        match_region = region(match["start_time"])
+        if match_region == "gap":
+            counts["gap"] += 1
+            continue
+        counts["judged"] += 1
+        match_id = match["match_id"]
+        inputs = match_inputs(match, players, rating_inputs[match_id])
+        match_rows.append(
+            {
+                "week": week,
+                "match_id": match_id,
+                "start_time": match["start_time"],
+                "region": match_region,
+                "league_tier": match.get("league_tier"),
+                "league_name": match.get("league_name"),
+                "patch": match.get("patch"),
+                "pair": pair_key(match, metas[match_id]),
+                "rows": len(inputs["t"]),
+                "rating_input": rating_inputs[match_id],
+                "new_player_share": shares[match_id],
+            }  # fmt: skip
+        )
+        for model_id, p in score_match(entries, inputs).items():
+            prediction_frames.append(
+                pl.DataFrame(
+                    {
+                        "week": week,
+                        "match_id": match_id,
+                        "t": inputs["t"].astype("int16"),
+                        "model_id": model_id,
+                        "p": p,
+                    },
+                    schema=PREDICTION_SCHEMA,
+                )  # fmt: skip
+            )
+    matches = pl.DataFrame(match_rows, schema=MATCH_SCHEMA)
+    predictions = (
+        pl.concat(prediction_frames)
+        if prediction_frames
+        else pl.DataFrame(schema=PREDICTION_SCHEMA)
+    )
+    return WeekOutput(matches, predictions, counts)

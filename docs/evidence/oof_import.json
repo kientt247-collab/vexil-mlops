@@ -1,0 +1,14 @@
+{
+ "matches": 3702,
+ "minute rows per model": 144282,
+ "weeks": [
+  "2026-01-12",
+  "2026-07-27"
+ ],
+ "pooled out-of-fold log loss 0-29": {
+  "final-model": 0.5094605736188363,
+  "rstar": 0.5247958170734731,
+  "anchor": 0.526914430686039
+ },
+ "phase 2 number for R* (out-of-fold, minutes 0-29)": 0.5247958168332587
+}

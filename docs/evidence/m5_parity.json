@@ -1,0 +1,109 @@
+{
+ "weeks": 47,
+ "scored matches by region": {
+  "development": 4443,
+  "holdout": 1689
+ },
+ "prediction rows": 716730,
+ "holdout match set": {
+  "phase 2": 1689,
+  "this pipeline": 1689,
+  "only in this pipeline": 0,
+  "only in phase 2": 0
+ },
+ "parity with phase 2 on its holdout set": {
+  "rows 0-29": {
+   "ours": 49283,
+   "phase 2": 49283,
+   "difference": 0
+  },
+  "candidate log loss 0-29": {
+   "ours": 0.5221476752627469,
+   "phase 2": 0.5221476752627469,
+   "difference": 0.0
+  },
+  "R* log loss 0-29": {
+   "ours": 0.5455680994884586,
+   "phase 2": 0.5455680994884585,
+   "difference": 1.1102230246251565e-16
+  },
+  "gain": {
+   "ours": 0.02342042422571178,
+   "phase 2": 0.023420424225711667,
+   "difference": 1.1449174941446927e-16
+  },
+  "candidate slope 0-29": {
+   "ours": 0.9556946463140321,
+   "phase 2": 0.955694646314032,
+   "difference": 1.1102230246251565e-16
+  },
+  "R* slope 0-29": {
+   "ours": 0.9292390212810986,
+   "phase 2": 0.9292390212810985,
+   "difference": 1.1102230246251565e-16
+  },
+  "candidate log loss 0-9": {
+   "ours": 0.6105554060574704,
+   "phase 2": 0.6105554060574704,
+   "difference": 0.0
+  },
+  "candidate log loss 10-19": {
+   "ours": 0.5208563306922818,
+   "phase 2": 0.5208563306922819,
+   "difference": 1.1102230246251565e-16
+  },
+  "candidate log loss 20-29": {
+   "ours": 0.4279801517422717,
+   "phase 2": 0.4279801517422717,
+   "difference": 0.0
+  },
+  "candidate log loss 30+": {
+   "ours": 0.42780529883596335,
+   "phase 2": 0.42780529883596335,
+   "difference": 0.0
+  },
+  "R* log loss 0-9": {
+   "ours": 0.6490128197197915,
+   "phase 2": 0.6490128197197915,
+   "difference": 0.0
+  },
+  "R* log loss 10-19": {
+   "ours": 0.5411784497338864,
+   "phase 2": 0.5411784497338863,
+   "difference": 1.1102230246251565e-16
+  },
+  "R* log loss 20-29": {
+   "ours": 0.43847240249466224,
+   "phase 2": 0.43847240249466224,
+   "difference": 0.0
+  },
+  "R* log loss 30+": {
+   "ours": 0.43390274384113175,
+   "phase 2": 0.43390274384113164,
+   "difference": 1.1102230246251565e-16
+  },
+  "candidate slope 0-9": {
+   "ours": 0.9913925822012406,
+   "phase 2": 0.9913925822012408,
+   "difference": 2.220446049250313e-16
+  },
+  "candidate slope 10-19": {
+   "ours": 0.8923229539503718,
+   "phase 2": 0.8923229539503719,
+   "difference": 1.1102230246251565e-16
+  },
+  "candidate slope 20-29": {
+   "ours": 1.0033242745826665,
+   "phase 2": 1.0033242745826665,
+   "difference": 0.0
+  }
+ },
+ "largest difference": 2.220446049250313e-16,
+ "weekly numbers added back, largest difference to pooled": 1.1102230246251565e-16,
+ "anchor on the phase 2 holdout set (POST-HOC)": {
+  "log loss 0-29": 0.5482338508537287,
+  "gain of the final model over the anchor": 0.026086175590981912,
+  "gain of R* over the anchor": 0.0026657513652701315
+ },
+ "seconds": 79.8
+}
