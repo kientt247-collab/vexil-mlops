@@ -1,0 +1,7 @@
+{
+ "base_file": "../candidate.json",
+ "kind": "recalibrated",
+ "n_rows": 32816,
+ "shift": -0.1184019942313794,
+ "slope": 0.9720504720375209
+}

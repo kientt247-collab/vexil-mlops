@@ -33,3 +33,17 @@ models:
     file: models/anchor.json
     sha256: 102adcb55f41036b3090568e9ad7bc8a48498101ba22d9333976935ab6671446
     description: Logistic regression on the gold lead, time and their product.
+
+  - id: refit-2026-04-27
+    role: retired
+    kind: ridge_a1
+    file: models/challengers/refit-2026-04-27.json
+    sha256: effc87d23b5bb9dcefe6eb8117831d71e0fb7a676b97c02d4a0cbd743c2c1ebc
+    description: "refit challenger created in week 2026-04-27; trigger: patch 7.41"
+
+  - id: recalibration-2026-09-14
+    role: retired
+    kind: recalibrated
+    file: models/challengers/recalibration-2026-09-14.json
+    sha256: 62ed6f23b02d1e568f2cf1cf89786ee0ed526dc309446b28abc8baa10a2cd375
+    description: "recalibration challenger created in week 2026-09-14; trigger: calibration alarm on final-model, week 2026-08-24"

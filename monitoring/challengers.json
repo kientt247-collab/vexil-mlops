@@ -1,0 +1,38 @@
+[
+ {
+  "id": "refit-2026-04-27",
+  "kind": "refit",
+  "trigger": "patch 7.41",
+  "shadow_from": "2026-04-27",
+  "status": "rejected",
+  "gain": -0.00020979509048997086,
+  "interval": [
+   -0.0008364918984755432,
+   0.00039024900036059297
+  ],
+  "slope": 1.0691069443368189,
+  "matches": 737,
+  "reasons": [
+   "gain -0.0002 is below 0.002",
+   "95% interval -0.0008 to +0.0004 is not above 0"
+  ]
+ },
+ {
+  "id": "recalibration-2026-09-14",
+  "kind": "recalibration",
+  "trigger": "calibration alarm on final-model, week 2026-08-24",
+  "shadow_from": "2026-09-14",
+  "status": "rejected",
+  "gain": 2.666369426811191e-05,
+  "interval": [
+   -0.0028057088874558463,
+   0.002936898711361098
+  ],
+  "slope": 1.029841020297382,
+  "matches": 918,
+  "reasons": [
+   "gain +0.0000 is below 0.002",
+   "95% interval -0.0028 to +0.0029 is not above 0"
+  ]
+ }
+]
