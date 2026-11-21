@@ -386,8 +386,9 @@ Add its limit to `rules.yaml`, apply it in `monitor.evaluate_rules`, decide in
 `tests/test_monitor.py`.
 
 **Start the job by hand.** In the repository's "Actions" tab choose the workflow
-"weekly" and "Run workflow". Tick "dry run" to run everything without committing or
-publishing.
+"weekly" and "Run workflow". Tick "dry run" to run everything on the runner only:
+nothing is uploaded, committed or published, and no issue is opened. A real run whose
+clock is earlier than the last recorded run stops with `ClockError`.
 
 **Read a failed run.** Open the run in the repository's "Actions" tab; the failing step
 names the stage. What each message means and what to do about it is in

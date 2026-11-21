@@ -44,6 +44,7 @@ every week that is not final, so one missed Monday loses nothing.
 |---|---|---|
 | `LockError` | a locked file or the code differs from `lock.json` | if the change is intended, make a new lock version (below); if not, revert it |
 | `RegistryError` | a model file does not match its registered hash, or roles are inconsistent | restore the file or correct the registry |
+| `ClockError` | a real run was started with a clock earlier than the last recorded run (`monitoring/last_run.json`); it would move the stored state back | wait for the next Monday, or use "dry run" |
 | `RulesError` | the champion has no entry under `performance` or `calibration` in `monitoring/rules.yaml` (this happens after a promotion) | add the entries for the new champion and make a new lock version |
 | "fail the shape checks" | more than 5% of pulled matches are malformed | look at one rejected match; OpenDota may have changed a table |
 | "giving up on the OpenDota explorer" | OpenDota did not answer after retries | start the workflow again by hand later |
@@ -62,5 +63,15 @@ change were produced under different rules.
 
 ## Starting the job by hand
 
-Actions tab, workflow "weekly", "Run workflow". Tick "dry run" to run everything without
-committing or publishing; the log then shows what would have changed.
+Actions tab, workflow "weekly", "Run workflow". Tick "dry run" to run everything on the
+runner only: nothing is uploaded, committed or published, no issue is opened, and the log
+shows what would have changed. Tick "publish only" to rebuild the page from the committed
+tables without running the job.
+
+
+## History of the lock
+
+| Version | Date | What changed |
+|---|---|---|
+| 1 | 2026-11-21 13:18 UTC | go-live: rules, gate, three starting models, code. No real run happened under it |
+| 2 | 2026-11-21 | code only, after a dry run under version 1: weekly files are uploaded under their asset names (they were uploaded under the bare file name, so a later run would not have found them); a week counts as changed only when its rows change (compressed bytes differ between machines); a dry run uploads nothing and opens no issue; a real run earlier than the last recorded run is refused. Rules, gate and models are the same files |

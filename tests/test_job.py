@@ -147,4 +147,4 @@ def test_a_live_run_earlier_than_the_last_run_is_refused(tmp_path):
         raise AssertionError("the pull must not start")
 
     with pytest.raises(ClockError, match="earlier than the last recorded run"):
-        run_job(layout, monday - 86400, channel, explorer)
+        run_job(layout, monday - 86400, channel, explorer, upload=True)

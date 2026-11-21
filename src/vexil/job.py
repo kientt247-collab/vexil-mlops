@@ -270,7 +270,8 @@ def run_job(
     summary: dict = {"now": now, "open_weeks": weeks}
     if explorer is not None:
         last_run = layout.monitoring / "last_run.json"
-        if last_run.exists() and now < json.loads(last_run.read_text())["now"]:
+        # a run that uploads is a run that will be stored; a dry run may use any clock
+        if upload and last_run.exists() and now < json.loads(last_run.read_text())["now"]:
             raise ClockError(
                 "this run is earlier than the last recorded run (monitoring/last_run.json); "
                 "running it would move the stored state back in time"

@@ -1,17 +1,16 @@
 # The weekly job: pull, score, evaluate, alarms, challengers, dashboard.
-# It can always be started by hand.
-#
-# The Monday schedule (cron "17 3 * * 1") was added at go-live and taken out again
-# an hour later, on 2026-11-21: a dry run under lock version 1 showed that the job
-# would store weekly files under wrong asset names. The schedule comes back with
-# the lock version that fixes this.
+# It runs every Monday at 03:17 UTC and can always be started by hand.
+# The schedule belongs to lock version 2 (2026-11-21); under version 1 it was
+# taken out after an hour because of an upload defect (see docs/runbook.md).
 name: weekly
 
 on:
+  schedule:
+    - cron: "17 3 * * 1"
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Run everything but do not commit or publish"
+        description: "Run everything, but upload, commit and publish nothing and open no issue"
         type: boolean
         default: false
       publish_only:
@@ -42,7 +41,7 @@ jobs:
 
       - name: Pull, score, evaluate, raise alarms
         if: ${{ !inputs.publish_only }}
-        run: uv run --no-dev python -m vexil run
+        run: uv run --no-dev python -m vexil run ${{ inputs.dry_run && '--dry-run' || '' }}
 
       - name: Build the dashboard
         run: uv run --no-dev python -m vexil dashboard --out site
