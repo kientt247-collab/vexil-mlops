@@ -2,7 +2,7 @@ import hashlib
 
 import pytest
 
-from vexil import smoke
+from vexil import hashing, smoke
 
 
 def test_explorer_url_quotes_sql():
@@ -24,7 +24,7 @@ def test_parse_count_rejects_error_and_extra_rows():
 def test_sha256_file_matches_hashlib(tmp_path):
     path = tmp_path / "blob.bin"
     path.write_bytes(b"vexil" * 1000)
-    assert smoke.sha256_file(path) == hashlib.sha256(b"vexil" * 1000).hexdigest()
+    assert hashing.sha256_file(path) == hashlib.sha256(b"vexil" * 1000).hexdigest()
 
 
 def test_render_page_shows_the_count():

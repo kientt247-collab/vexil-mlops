@@ -1,0 +1,41 @@
+{
+ "inputs": {
+  "usable matches": 15928,
+  "minute rows": 559914,
+  "largest absolute difference to the phase 2 table": 0.0
+ },
+ "leak tests on real matches": {
+  "checks": 600,
+  "cut test passed": 600,
+  "poison test passed": 600,
+  "planted bug (reads minute t+1) caught by the cut test": 600,
+  "planted bug caught by the poison test": 600
+ },
+ "holdout predictions": {
+  "rows": 69467,
+  "rows in minutes 0-29": 49283,
+  "rstar": {
+   "sha256": "87a22e23efe8b1a29d5573ee71cf7f031afc055bf917e80e42385a9f22238ee5",
+   "largest absolute difference": 0.0
+  },
+  "candidate": "deferred to M3: phase 2 computed the holdout ratings inside its Confirm run and did not save them, so this comparison needs the rating code of M3"
+ },
+ "model arithmetic against phase 2 code, all rows": {
+  "rows": 559914,
+  "candidate": {
+   "sha256": "a24854dc32cb6e5b2e1eb37c8f2560ba0b868f10455d2cd6d8862cdbadaff072",
+   "largest absolute difference": 0.0
+  },
+  "rstar": {
+   "sha256": "87a22e23efe8b1a29d5573ee71cf7f031afc055bf917e80e42385a9f22238ee5",
+   "largest absolute difference": 0.0
+  }
+ },
+ "anchor": {
+  "out-of-fold rows compared": 144282,
+  "largest absolute difference to the phase 2 out-of-fold predictions": 2.220446049250313e-16,
+  "fitting rows": 170519,
+  "sha256": "102adcb55f41036b3090568e9ad7bc8a48498101ba22d9333976935ab6671446"
+ },
+ "seconds": 37.0
+}

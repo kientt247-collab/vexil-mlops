@@ -11,7 +11,6 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import gzip
-import hashlib
 import json
 import urllib.parse
 import urllib.request
@@ -54,15 +53,6 @@ def parse_count(payload: dict) -> int:
     if len(rows) != 1:
         raise ValueError(f"expected one row, got {len(rows)}")
     return int(rows[0]["n"])
-
-
-def sha256_file(path: Path) -> str:
-    """SHA-256 of a file, as lowercase hex."""
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1 << 20), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def render_page(record: dict) -> str:
