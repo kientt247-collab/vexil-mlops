@@ -12,7 +12,7 @@ from pathlib import Path
 import yaml
 
 from vexil.hashing import sha256_file
-from vexil.models.linear import GoldTimeModel, RidgeA1Model, load_model
+from vexil.models.linear import GoldTimeModel, RecalibratedModel, RidgeA1Model, load_model
 
 ROLES = ("champion", "baseline", "anchor", "challenger", "retired")
 
@@ -32,7 +32,7 @@ class ModelEntry:
     approval: dict | None = None
     scored_from: str | None = None  # first week a challenger is scored, if set
 
-    def load(self) -> RidgeA1Model | GoldTimeModel:
+    def load(self) -> RidgeA1Model | GoldTimeModel | RecalibratedModel:
         return load_model(self.file)
 
 

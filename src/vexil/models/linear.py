@@ -1,12 +1,13 @@
 """Logistic models stored as plain JSON files, predicted with NumPy only.
 
-Two kinds exist:
+Three kinds exist:
 
 * ``ridge_a1``: the frozen phase 2 models (R* and the final model). Design matrix
   ``[100 * u, z(ten A1 inputs), z(f), z(f * u) for every added input f]`` where
   ``u`` is ln(1 + t) standardised with the mean and standard deviation of the fitting rows,
   and ``z`` standardises with statistics stored in the file.
 * ``gold_time``: the anchor. Design matrix ``[u, gold, gold * u]`` divided by stored scales.
+* ``recalibrated``: another model file plus a slope and a shift applied to its log-odds.
 
 Prediction needs no fitting library, so a model file can be scored anywhere NumPy runs.
 """
@@ -87,7 +88,26 @@ class GoldTimeModel:
         return sigmoid(self.log_odds(inputs))
 
 
-def load_model(path: Path) -> RidgeA1Model | GoldTimeModel:
+@dataclass(frozen=True)
+class RecalibratedModel:
+    """Another model with its log-odds rescaled: ``shift + slope * log-odds``."""
+
+    base: RidgeA1Model
+    slope: float
+    shift: float
+
+    @property
+    def input_names(self) -> tuple[str, ...]:
+        return self.base.input_names
+
+    def log_odds(self, inputs: Inputs) -> np.ndarray:
+        return self.shift + self.slope * self.base.log_odds(inputs)
+
+    def predict(self, inputs: Inputs) -> np.ndarray:
+        return sigmoid(self.log_odds(inputs))
+
+
+def load_model(path: Path) -> RidgeA1Model | GoldTimeModel | RecalibratedModel:
     """Read a model file. Files without a ``kind`` are phase 2 files (``ridge_a1``)."""
     spec = json.loads(Path(path).read_text())
     kind = spec.get("kind", "ridge_a1")
@@ -112,4 +132,9 @@ def load_model(path: Path) -> RidgeA1Model | GoldTimeModel:
             coef=np.array(spec["coef"]),
             intercept=spec["intercept"],
         )
+    if kind == "recalibrated":
+        base = load_model(Path(path).parent / spec["base_file"])
+        if not isinstance(base, RidgeA1Model):
+            raise ValueError("a recalibrated model needs a ridge_a1 base")
+        return RecalibratedModel(base=base, slope=spec["slope"], shift=spec["shift"])
     raise ValueError(f"unknown model kind: {kind}")

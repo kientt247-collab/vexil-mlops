@@ -1,0 +1,343 @@
+{
+ "development matches of the judged tiers": 4470,
+ "minute rows": 170519,
+ "proof of done: refit on all development rows against candidate.json": {
+  "fitting rows": 170519,
+  "fitting rows of candidate.json": 170519,
+  "largest coefficient difference": 8.800082884619087e-10,
+  "largest difference in predictions on all rows": 9.1618312936248e-10,
+  "note": "phase 2 fitted with the rating stored as 32-bit floats; here it is 64-bit"
+ },
+ "placebo by trigger date": {
+  "2026-03-02": {
+   "training matches": 1918,
+   "8 weeks": {
+    "shadow matches": 1188,
+    "placebo challengers passing": "0 of 20",
+    "placebo gain, min / median / max": [
+     -0.00152,
+     -4e-05,
+     0.00082
+    ]
+   },
+   "12 weeks": {
+    "shadow matches": 1449,
+    "placebo challengers passing": "0 of 20",
+    "placebo gain, min / median / max": [
+     -0.00121,
+     -0.00034,
+     0.00084
+    ]
+   }
+  },
+  "2026-03-24": {
+   "training matches": 2219,
+   "8 weeks": {
+    "shadow matches": 1083,
+    "placebo challengers passing": "0 of 20",
+    "placebo gain, min / median / max": [
+     -0.00208,
+     -1e-05,
+     0.00093
+    ]
+   },
+   "12 weeks": {
+    "shadow matches": 1521,
+    "placebo challengers passing": "0 of 20",
+    "placebo gain, min / median / max": [
+     -0.00235,
+     -0.00013,
+     0.00065
+    ]
+   }
+  },
+  "2026-03-30": {
+   "training matches": 2346,
+   "8 weeks": {
+    "shadow matches": 1030,
+    "placebo challengers passing": "0 of 20",
+    "placebo gain, min / median / max": [
+     -0.001,
+     -5e-05,
+     0.00078
+    ]
+   },
+   "12 weeks": {
+    "shadow matches": 1506,
+    "placebo challengers passing": "0 of 20",
+    "placebo gain, min / median / max": [
+     -0.00091,
+     -8e-05,
+     0.00135
+    ]
+   }
+  },
+  "2026-04-27": {
+   "training matches": 3109,
+   "8 weeks": {
+    "shadow matches": 737,
+    "placebo challengers passing": "0 of 20",
+    "placebo gain, min / median / max": [
+     -0.00269,
+     -0.00044,
+     0.00121
+    ]
+   },
+   "12 weeks": {
+    "shadow matches": 1219,
+    "placebo challengers passing": "0 of 20",
+    "placebo gain, min / median / max": [
+     -0.0028,
+     0.0003,
+     0.00181
+    ]
+   }
+  },
+  "2026-05-25": {
+   "training matches": 3381,
+   "8 weeks": {
+    "shadow matches": 958,
+    "placebo challengers passing": "0 of 20",
+    "placebo gain, min / median / max": [
+     -0.00201,
+     0.00013,
+     0.00119
+    ]
+   },
+   "12 weeks": "skipped: shadow period would pass 2026-07-30"
+  }
+ },
+ "false-promotion rate": {
+  "8 weeks": {
+   "rate": 0.0,
+   "trials": 100
+  },
+  "12 weeks": {
+   "rate": 0.0,
+   "trials": 80
+  }
+ },
+ "power: overconfident champion against a recalibration challenger": {
+  "by trigger date": {
+   "2026-03-02": {
+    "fitted slope": 0.816,
+    "fitting rows": 33963,
+    "8 weeks": {
+     "passed": false,
+     "gain": 0.00024,
+     "interval": [
+      -0.00455,
+      0.00512
+     ],
+     "slope": 1.043,
+     "matches": 1188,
+     "reasons": [
+      "gain +0.0002 is below 0.002",
+      "95% interval -0.0045 to +0.0051 includes 0"
+     ]
+    },
+    "12 weeks": {
+     "passed": false,
+     "gain": 0.00054,
+     "interval": [
+      -0.00355,
+      0.00492
+     ],
+     "slope": 1.037,
+     "matches": 1449,
+     "reasons": [
+      "gain +0.0005 is below 0.002",
+      "95% interval -0.0035 to +0.0049 includes 0"
+     ]
+    }
+   },
+   "2026-03-24": {
+    "fitted slope": 0.789,
+    "fitting rows": 43240,
+    "8 weeks": {
+     "passed": false,
+     "gain": -0.00272,
+     "interval": [
+      -0.00776,
+      0.00248
+     ],
+     "slope": 1.148,
+     "matches": 1083,
+     "reasons": [
+      "gain -0.0027 is below 0.002",
+      "95% interval -0.0078 to +0.0025 includes 0",
+      "slope 1.148 is outside 0.9 to 1.1"
+     ]
+    },
+    "12 weeks": {
+     "passed": false,
+     "gain": -0.00205,
+     "interval": [
+      -0.00661,
+      0.00227
+     ],
+     "slope": 1.137,
+     "matches": 1521,
+     "reasons": [
+      "gain -0.0020 is below 0.002",
+      "95% interval -0.0066 to +0.0023 includes 0",
+      "slope 1.137 is outside 0.9 to 1.1"
+     ]
+    }
+   },
+   "2026-03-30": {
+    "fitted slope": 0.797,
+    "fitting rows": 46192,
+    "8 weeks": {
+     "passed": false,
+     "gain": -0.00051,
+     "interval": [
+      -0.00562,
+      0.00429
+     ],
+     "slope": 1.115,
+     "matches": 1030,
+     "reasons": [
+      "gain -0.0005 is below 0.002",
+      "95% interval -0.0056 to +0.0043 includes 0",
+      "slope 1.115 is outside 0.9 to 1.1"
+     ]
+    },
+    "12 weeks": {
+     "passed": false,
+     "gain": -0.00163,
+     "interval": [
+      -0.00563,
+      0.00259
+     ],
+     "slope": 1.144,
+     "matches": 1506,
+     "reasons": [
+      "gain -0.0016 is below 0.002",
+      "95% interval -0.0056 to +0.0026 includes 0",
+      "slope 1.144 is outside 0.9 to 1.1"
+     ]
+    }
+   },
+   "2026-04-27": {
+    "fitted slope": 0.828,
+    "fitting rows": 51700,
+    "8 weeks": {
+     "passed": false,
+     "gain": 0.00021,
+     "interval": [
+      -0.00436,
+      0.00486
+     ],
+     "slope": 1.1,
+     "matches": 737,
+     "reasons": [
+      "gain +0.0002 is below 0.002",
+      "95% interval -0.0044 to +0.0049 includes 0"
+     ]
+    },
+    "12 weeks": {
+     "passed": false,
+     "gain": -0.00067,
+     "interval": [
+      -0.00421,
+      0.00296
+     ],
+     "slope": 1.118,
+     "matches": 1219,
+     "reasons": [
+      "gain -0.0007 is below 0.002",
+      "95% interval -0.0042 to +0.0030 includes 0",
+      "slope 1.118 is outside 0.9 to 1.1"
+     ]
+    }
+   },
+   "2026-05-25": {
+    "fitted slope": 0.846,
+    "fitting rows": 41986,
+    "8 weeks": {
+     "passed": false,
+     "gain": -0.00239,
+     "interval": [
+      -0.00634,
+      0.00175
+     ],
+     "slope": 1.132,
+     "matches": 958,
+     "reasons": [
+      "gain -0.0024 is below 0.002",
+      "95% interval -0.0063 to +0.0017 includes 0",
+      "slope 1.132 is outside 0.9 to 1.1"
+     ]
+    }
+   }
+  },
+  "passed": {
+   "8 weeks": "0 of 5",
+   "12 weeks": "0 of 4"
+  }
+ },
+ "information: real refits against the champion fitted at 2026-03-02, 8-week shadow": {
+  "2026-03-30": {
+   "passed": false,
+   "gain": 0.00031,
+   "interval": [
+    -0.00089,
+    0.0015
+   ],
+   "slope": 1.055,
+   "matches": 1030,
+   "reasons": [
+    "gain +0.0003 is below 0.002",
+    "95% interval -0.0009 to +0.0015 includes 0"
+   ]
+  },
+  "2026-04-27": {
+   "passed": false,
+   "gain": 0.00099,
+   "interval": [
+    -0.0007,
+    0.00263
+   ],
+   "slope": 1.069,
+   "matches": 737,
+   "reasons": [
+    "gain +0.0010 is below 0.002",
+    "95% interval -0.0007 to +0.0026 includes 0"
+   ]
+  },
+  "2026-05-25": {
+   "passed": false,
+   "gain": 0.00156,
+   "interval": [
+    -0.00016,
+    0.00331
+   ],
+   "slope": 1.136,
+   "matches": 958,
+   "reasons": [
+    "gain +0.0016 is below 0.002",
+    "95% interval -0.0002 to +0.0033 includes 0",
+    "slope 1.136 is outside 0.9 to 1.1"
+   ]
+  }
+ },
+ "keep rule": {
+  "arms within the 5% line": [
+   8,
+   12
+  ],
+  "power share": {
+   "8": 0.0,
+   "12": 0.0
+  },
+  "kept shadow weeks": 8,
+  "gate": {
+   "min_matches": 600,
+   "min_gain": 0.002,
+   "slope_low": 0.9,
+   "slope_high": 1.1
+  }
+ },
+ "seconds": 103.6
+}

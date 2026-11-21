@@ -1,0 +1,13 @@
+version: 1
+shadow_weeks: 8
+min_matches: 600
+min_gain: 0.002
+slope_low: 0.9
+slope_high: 1.1
+bootstrap_draws: 2000
+recalibration_weeks: 12
+refit_recipe:
+  added:
+  - pelx
+  c_value: 0.03
+new_patch_matches: 300
