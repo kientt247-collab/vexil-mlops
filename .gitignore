@@ -1,10 +1,10 @@
-__pycache__/
 *.pyc
-.venv/
 .pytest_cache/
 .ruff_cache/
+.venv/
+__pycache__/
+_fresh/
+_store/
+_work/
 dist/
 site/
-_work/
-_store/
-_fresh/

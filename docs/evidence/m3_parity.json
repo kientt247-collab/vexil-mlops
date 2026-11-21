@@ -1,0 +1,27 @@
+{
+ "matches": 15995,
+ "matches with a result": 15995,
+ "rated accounts": 7924,
+ "resume from the snapshot before week": {
+  "week": "2026-09-21",
+  "snapshot bytes": 126743,
+  "matches after it": 1307,
+  "largest absolute difference to the single pass": 0.0
+ },
+ "development matches compared with the phase 2 rating column": {
+  "matches": 13715,
+  "note": "the phase 2 column is stored as 32-bit floats; compared at that precision",
+  "largest absolute difference": 0.0,
+  "largest absolute difference before rounding to 32 bits": 1.1532804711222866e-07
+ },
+ "final model, saved holdout predictions": {
+  "rows": 69467,
+  "matches": 1689,
+  "largest absolute difference": 2.220446049250313e-16
+ },
+ "leak tests on holdout matches": {
+  "equal to the from-scratch rating that uses only matches ended before the start": "150 of 150",
+  "unchanged when every result not yet known at the start is flipped": "25 of 25"
+ },
+ "seconds": 83.1
+}
