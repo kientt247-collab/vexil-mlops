@@ -22,7 +22,15 @@ MATCH_SCHEMA = {
     "week": pl.String, "match_id": pl.Int64, "start_time": pl.Int64, "region": pl.String,
     "league_tier": pl.String, "league_name": pl.String, "patch": pl.String, "pair": pl.String,
     "rows": pl.Int32, "rating_input": pl.Float64, "new_player_share": pl.Float64,
+    "abs_gold_10": pl.Float64, "abs_gold_20": pl.Float64, "abs_xp_pm_10": pl.Float64,
+    "abs_xp_pm_20": pl.Float64, "abs_kill_diff_20": pl.Float64,
 }  # fmt: skip
+# Inputs watched by the input alarm: (column, input name, minute). Absolute values, because
+# a signed lead averages to zero over matches and would hide a change of scale.
+WATCHED_INPUTS = (
+    ("abs_gold_10", "gold", 10), ("abs_gold_20", "gold", 20), ("abs_xp_pm_10", "xp_adv_pm", 10),
+    ("abs_xp_pm_20", "xp_adv_pm", 20), ("abs_kill_diff_20", "kill_diff", 20),
+)  # fmt: skip
 PREDICTION_SCHEMA = {
     "week": pl.String, "match_id": pl.Int64, "t": pl.Int16, "model_id": pl.String,
     "p": pl.Float64,
@@ -89,6 +97,10 @@ def process_week(
                 "rows": len(inputs["t"]),
                 "rating_input": rating_inputs[match_id],
                 "new_player_share": shares[match_id],
+                **{
+                    column: abs(float(inputs[name][minute])) if len(inputs["t"]) > minute else None
+                    for column, name, minute in WATCHED_INPUTS
+                },
             }  # fmt: skip
         )
         for model_id, p in score_match(entries, inputs).items():

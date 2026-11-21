@@ -52,7 +52,10 @@ def match_scores(predictions: pl.DataFrame, results: dict[int, int]) -> pl.DataF
         {"match_id": list(results), "y": list(results.values())},
         schema={"match_id": pl.Int64, "y": pl.Int8},
     )
+    clipped = pl.col("p").cast(pl.Float64).clip(1e-6, 1 - 1e-6)
     rows = predictions.join(labels, on="match_id", how="inner").with_columns(
+        q=clipped,
+        x=(clipped / (1 - clipped)).log(),
         loss=-(
             pl.col("y") * pl.col("p").clip(1e-12, 1 - 1e-12).log()
             + (1 - pl.col("y")) * (1 - pl.col("p").clip(1e-12, 1 - 1e-12)).log()
@@ -70,7 +73,12 @@ def match_scores(predictions: pl.DataFrame, results: dict[int, int]) -> pl.DataF
             pl.col("loss").filter(in_phase).sum().alias(f"loss_{phase}"),
         ]
     early = pl.col("t") < 30
-    aggregates.append((pl.col("p") - pl.col("y")).filter(early).sum().alias("bias_sum"))
+    aggregates += [
+        (pl.col("p") - pl.col("y")).filter(early).sum().alias("bias_sum"),
+        # sums for the one-step calibration slope: 1 + cal_u / cal_i (see vexil.alerts)
+        (pl.col("x") * (pl.col("y") - pl.col("q"))).filter(early).sum().alias("cal_u"),
+        (pl.col("x") ** 2 * pl.col("q") * (1 - pl.col("q"))).filter(early).sum().alias("cal_i"),
+    ]
     scores = rows.group_by(["week", "match_id", "model_id"], maintain_order=True).agg(aggregates)
     return scores.with_columns(
         n=sum(pl.col(f"n_{phase}") for phase in EARLY_PHASES),

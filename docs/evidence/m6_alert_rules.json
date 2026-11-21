@@ -1,0 +1,994 @@
+{
+ "development matches": 3702,
+ "match groups": 1953,
+ "weeks": [
+  "2026-01-12",
+  "2026-07-27"
+ ],
+ "full weeks used": 27,
+ "simulated years per noise version": 20000,
+ "models": {
+  "final-model": {
+   "reference": {
+    "gain": 0.017453857067202767,
+    "slope": 1.008609318299434,
+    "bias": 0.0024412902444344983
+   },
+   "weekly gain over the anchor, sd over full weeks": 0.01943083020207872,
+   "typical rows per week": 3714.5555555555557,
+   "noise sd on the log-odds per planted size": {
+    "0.005": 0.21227622963488102,
+    "0.01": 0.3121014665812254,
+    "0.02": 0.4546916289255023,
+    "0.03": 0.5653093736618757,
+    "0.05": 0.743276746943593
+   },
+   "limits": {
+    "D": 0.04453353691951634,
+    "A": 0.007221806179586565,
+    "B": 0.8011340624761942,
+    "A half": 0.008314795262776897,
+    "B half": 0.9532889528600208,
+    "slope": 0.13387612325459486,
+    "bias": 0.032881914744393725
+   },
+   "limits per noise version": {
+    "D": {
+     "limit from N1": 0.04449692945036077,
+     "limit from N2": 0.04453353691951634,
+     "false alarms per year under N2 with the N1 limit": 2.1632,
+     "false alarms per year under N1 with the N2 limit": 0.99795
+    },
+    "A": {
+     "limit from N1": 0.006316102179880545,
+     "limit from N2": 0.007221806179586565,
+     "false alarms per year under N2 with the N1 limit": 1.55785,
+     "false alarms per year under N1 with the N2 limit": 0.67395
+    },
+    "B": {
+     "limit from N1": 0.7424723620715667,
+     "limit from N2": 0.8011340624761942,
+     "false alarms per year under N2 with the N1 limit": 1.6662,
+     "false alarms per year under N1 with the N2 limit": 0.82355
+    },
+    "A half": {
+     "limit from N1": 0.007885189847911533,
+     "limit from N2": 0.008314795262776897,
+     "false alarms per year under N2 with the N1 limit": 0.703,
+     "false alarms per year under N1 with the N2 limit": 0.4032
+    },
+    "B half": {
+     "limit from N1": 0.9532889528600208,
+     "limit from N2": 0.8011340624761942,
+     "false alarms per year under N2 with the N1 limit": 0.24005,
+     "false alarms per year under N1 with the N2 limit": 0.82355
+    },
+    "slope": {
+     "limit from N1": 0.12742337867166498,
+     "limit from N2": 0.13387612325459486,
+     "false alarms per year under N2 with the N1 limit": 0.7174,
+     "false alarms per year under N1 with the N2 limit": 0.38715
+    },
+    "bias": {
+     "limit from N1": 0.02976294636118837,
+     "limit from N2": 0.032881914744393725,
+     "false alarms per year under N2 with the N1 limit": 0.9114,
+     "false alarms per year under N1 with the N2 limit": 0.29245
+    }
+   },
+   "false alarms per 52 weeks at the final limits": {
+    "D": {
+     "N1": 0.998,
+     "N2": 0.0
+    },
+    "A": {
+     "N1": 0.674,
+     "N2": 0.999
+    },
+    "B": {
+     "N1": 0.824,
+     "N2": 0.413
+    },
+    "C": {
+     "N1": 0.806,
+     "N2": 0.651
+    },
+    "calibration": {
+     "N1": 0.657,
+     "N2": 0.989
+    }
+   },
+   "planted cases": {
+    "N1": {
+     "loss +0.005": {
+      "D": {
+       "found within 12 weeks": 0.309,
+       "median delay, weeks": 25.0
+      },
+      "A": {
+       "found within 12 weeks": 0.627,
+       "median delay, weeks": 9.0
+      },
+      "B": {
+       "found within 12 weeks": 0.691,
+       "median delay, weeks": 8.0
+      },
+      "C": {
+       "found within 12 weeks": 0.687,
+       "median delay, weeks": 8.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.164,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.01": {
+      "D": {
+       "found within 12 weeks": 0.475,
+       "median delay, weeks": 13.0
+      },
+      "A": {
+       "found within 12 weeks": 0.903,
+       "median delay, weeks": 6.0
+      },
+      "B": {
+       "found within 12 weeks": 0.941,
+       "median delay, weeks": 4.0
+      },
+      "C": {
+       "found within 12 weeks": 0.94,
+       "median delay, weeks": 4.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.164,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.02": {
+      "D": {
+       "found within 12 weeks": 0.835,
+       "median delay, weeks": 5.0
+      },
+      "A": {
+       "found within 12 weeks": 0.996,
+       "median delay, weeks": 3.0
+      },
+      "B": {
+       "found within 12 weeks": 0.998,
+       "median delay, weeks": 2.0
+      },
+      "C": {
+       "found within 12 weeks": 0.998,
+       "median delay, weeks": 2.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.164,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.03": {
+      "D": {
+       "found within 12 weeks": 0.978,
+       "median delay, weeks": 3.0
+      },
+      "A": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 2.0
+      },
+      "B": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "C": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.164,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.05": {
+      "D": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "A": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 2.0
+      },
+      "B": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "C": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.164,
+       "median delay, weeks": Infinity
+      }
+     },
+     "slope 0.85": {
+      "D": {
+       "found within 12 weeks": 0.269,
+       "median delay, weeks": Infinity
+      },
+      "A": {
+       "found within 12 weeks": 0.422,
+       "median delay, weeks": 16.0
+      },
+      "B": {
+       "found within 12 weeks": 0.555,
+       "median delay, weeks": 11.0
+      },
+      "C": {
+       "found within 12 weeks": 0.522,
+       "median delay, weeks": 12.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.922,
+       "median delay, weeks": 6.0
+      }
+     },
+     "frozen ratings": {
+      "D": {
+       "found within 12 weeks": 0.344,
+       "median delay, weeks": 21.0
+      },
+      "A": {
+       "found within 12 weeks": 0.96,
+       "median delay, weeks": 5.0
+      },
+      "B": {
+       "found within 12 weeks": 0.935,
+       "median delay, weeks": 4.0
+      },
+      "C": {
+       "found within 12 weeks": 0.956,
+       "median delay, weeks": 4.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.164,
+       "median delay, weeks": Infinity
+      }
+     },
+     "gold scaled": {
+      "D": {
+       "found within 12 weeks": 0.205,
+       "median delay, weeks": Infinity
+      },
+      "A": {
+       "found within 12 weeks": 0.172,
+       "median delay, weeks": Infinity
+      },
+      "B": {
+       "found within 12 weeks": 0.174,
+       "median delay, weeks": Infinity
+      },
+      "C": {
+       "found within 12 weeks": 0.173,
+       "median delay, weeks": Infinity
+      },
+      "calibration": {
+       "found within 12 weeks": 0.164,
+       "median delay, weeks": Infinity
+      }
+     }
+    },
+    "N2": {
+     "loss +0.005": {
+      "D": {
+       "found within 12 weeks": 0.207,
+       "median delay, weeks": Infinity
+      },
+      "A": {
+       "found within 12 weeks": 0.709,
+       "median delay, weeks": 8.0
+      },
+      "B": {
+       "found within 12 weeks": 0.726,
+       "median delay, weeks": 7.0
+      },
+      "C": {
+       "found within 12 weeks": 0.755,
+       "median delay, weeks": 7.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.235,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.01": {
+      "D": {
+       "found within 12 weeks": 0.346,
+       "median delay, weeks": 22.0
+      },
+      "A": {
+       "found within 12 weeks": 0.899,
+       "median delay, weeks": 5.0
+      },
+      "B": {
+       "found within 12 weeks": 0.962,
+       "median delay, weeks": 3.0
+      },
+      "C": {
+       "found within 12 weeks": 0.964,
+       "median delay, weeks": 3.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.235,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.02": {
+      "D": {
+       "found within 12 weeks": 0.831,
+       "median delay, weeks": 5.0
+      },
+      "A": {
+       "found within 12 weeks": 0.989,
+       "median delay, weeks": 3.0
+      },
+      "B": {
+       "found within 12 weeks": 0.998,
+       "median delay, weeks": 2.0
+      },
+      "C": {
+       "found within 12 weeks": 0.998,
+       "median delay, weeks": 2.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.235,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.03": {
+      "D": {
+       "found within 12 weeks": 0.974,
+       "median delay, weeks": 3.0
+      },
+      "A": {
+       "found within 12 weeks": 0.999,
+       "median delay, weeks": 2.0
+      },
+      "B": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "C": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.235,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.05": {
+      "D": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "A": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 2.0
+      },
+      "B": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "C": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.235,
+       "median delay, weeks": Infinity
+      }
+     },
+     "slope 0.85": {
+      "D": {
+       "found within 12 weeks": 0.42,
+       "median delay, weeks": 16.0
+      },
+      "A": {
+       "found within 12 weeks": 0.543,
+       "median delay, weeks": 11.0
+      },
+      "B": {
+       "found within 12 weeks": 0.628,
+       "median delay, weeks": 9.0
+      },
+      "C": {
+       "found within 12 weeks": 0.602,
+       "median delay, weeks": 10.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.851,
+       "median delay, weeks": 7.0
+      }
+     },
+     "frozen ratings": {
+      "D": {
+       "found within 12 weeks": 0.228,
+       "median delay, weeks": Infinity
+      },
+      "A": {
+       "found within 12 weeks": 0.948,
+       "median delay, weeks": 5.0
+      },
+      "B": {
+       "found within 12 weeks": 0.928,
+       "median delay, weeks": 4.0
+      },
+      "C": {
+       "found within 12 weeks": 0.952,
+       "median delay, weeks": 4.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.235,
+       "median delay, weeks": Infinity
+      }
+     },
+     "gold scaled": {
+      "D": {
+       "found within 12 weeks": 0.0,
+       "median delay, weeks": Infinity
+      },
+      "A": {
+       "found within 12 weeks": 0.221,
+       "median delay, weeks": Infinity
+      },
+      "B": {
+       "found within 12 weeks": 0.067,
+       "median delay, weeks": Infinity
+      },
+      "C": {
+       "found within 12 weeks": 0.121,
+       "median delay, weeks": Infinity
+      },
+      "calibration": {
+       "found within 12 weeks": 0.235,
+       "median delay, weeks": Infinity
+      }
+     }
+    }
+   }
+  },
+  "rstar": {
+   "reference": {
+    "gain": 0.0021186136125659477,
+    "slope": 0.9869772473967906,
+    "bias": 0.0008849913500061084
+   },
+   "weekly gain over the anchor, sd over full weeks": 0.004752378367499375,
+   "typical rows per week": 3714.5555555555557,
+   "noise sd on the log-odds per planted size": {
+    "0.005": 0.2316435892134905,
+    "0.01": 0.33098412584513426,
+    "0.02": 0.4726365404203534,
+    "0.03": 0.5825108969584107,
+    "0.05": 0.7593669136986136
+   },
+   "limits": {
+    "D": 0.015988105525138963,
+    "A": 0.002794272219944105,
+    "B": 1.7009788557061256,
+    "A half": 0.003398005183044006,
+    "B half": 1.7009788557061256,
+    "slope": 0.12769828924047033,
+    "bias": 0.030972853250204935
+   },
+   "limits per noise version": {
+    "D": {
+     "limit from N1": 0.011564062542674947,
+     "limit from N2": 0.015988105525138963,
+     "false alarms per year under N2 with the N1 limit": 2.1505,
+     "false alarms per year under N1 with the N2 limit": 0.7172
+    },
+    "A": {
+     "limit from N1": 0.0017060568898159545,
+     "limit from N2": 0.002794272219944105,
+     "false alarms per year under N2 with the N1 limit": 1.73415,
+     "false alarms per year under N1 with the N2 limit": 0.1448
+    },
+    "B": {
+     "limit from N1": 0.9377275235237903,
+     "limit from N2": 1.7009788557061256,
+     "false alarms per year under N2 with the N1 limit": 2.1521,
+     "false alarms per year under N1 with the N2 limit": 0.1465
+    },
+    "A half": {
+     "limit from N1": 0.002142658633601968,
+     "limit from N2": 0.003398005183044006,
+     "false alarms per year under N2 with the N1 limit": 1.27495,
+     "false alarms per year under N1 with the N2 limit": 0.03975
+    },
+    "B half": {
+     "limit from N1": 1.20926208619494,
+     "limit from N2": 1.7009788557061256,
+     "false alarms per year under N2 with the N1 limit": 2.1521,
+     "false alarms per year under N1 with the N2 limit": 0.1465
+    },
+    "slope": {
+     "limit from N1": 0.12769828924047033,
+     "limit from N2": 0.11404796694750985,
+     "false alarms per year under N2 with the N1 limit": 0.2106,
+     "false alarms per year under N1 with the N2 limit": 0.8348
+    },
+    "bias": {
+     "limit from N1": 0.02996451071157935,
+     "limit from N2": 0.030972853250204935,
+     "false alarms per year under N2 with the N1 limit": 0.682,
+     "false alarms per year under N1 with the N2 limit": 0.4235
+    }
+   },
+   "false alarms per 52 weeks at the final limits": {
+    "D": {
+     "N1": 0.717,
+     "N2": 0.0
+    },
+    "A": {
+     "N1": 0.145,
+     "N2": 0.981
+    },
+    "B": {
+     "N1": 0.146,
+     "N2": 0.48
+    },
+    "C": {
+     "N1": 0.175,
+     "N2": 0.734
+    },
+    "calibration": {
+     "N1": 0.881,
+     "N2": 0.71
+    }
+   },
+   "planted cases": {
+    "N1": {
+     "loss +0.005": {
+      "D": {
+       "found within 12 weeks": 0.836,
+       "median delay, weeks": 5.0
+      },
+      "A": {
+       "found within 12 weeks": 0.897,
+       "median delay, weeks": 5.0
+      },
+      "B": {
+       "found within 12 weeks": 0.981,
+       "median delay, weeks": 2.0
+      },
+      "C": {
+       "found within 12 weeks": 0.981,
+       "median delay, weeks": 2.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.214,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.01": {
+      "D": {
+       "found within 12 weeks": 0.982,
+       "median delay, weeks": 2.0
+      },
+      "A": {
+       "found within 12 weeks": 0.983,
+       "median delay, weeks": 3.0
+      },
+      "B": {
+       "found within 12 weeks": 0.999,
+       "median delay, weeks": 2.0
+      },
+      "C": {
+       "found within 12 weeks": 0.999,
+       "median delay, weeks": 2.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.214,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.02": {
+      "D": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "A": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 2.0
+      },
+      "B": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "C": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.214,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.03": {
+      "D": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "A": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "B": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "C": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.214,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.05": {
+      "D": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "A": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "B": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "C": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.214,
+       "median delay, weeks": Infinity
+      }
+     },
+     "slope 0.85": {
+      "D": {
+       "found within 12 weeks": 0.426,
+       "median delay, weeks": 15.0
+      },
+      "A": {
+       "found within 12 weeks": 0.796,
+       "median delay, weeks": 7.0
+      },
+      "B": {
+       "found within 12 weeks": 0.898,
+       "median delay, weeks": 5.0
+      },
+      "C": {
+       "found within 12 weeks": 0.904,
+       "median delay, weeks": 5.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.945,
+       "median delay, weeks": 6.0
+      }
+     },
+     "frozen ratings": {
+      "D": {
+       "found within 12 weeks": 0.156,
+       "median delay, weeks": Infinity
+      },
+      "A": {
+       "found within 12 weeks": 0.037,
+       "median delay, weeks": Infinity
+      },
+      "B": {
+       "found within 12 weeks": 0.033,
+       "median delay, weeks": Infinity
+      },
+      "C": {
+       "found within 12 weeks": 0.039,
+       "median delay, weeks": Infinity
+      },
+      "calibration": {
+       "found within 12 weeks": 0.214,
+       "median delay, weeks": Infinity
+      }
+     },
+     "gold scaled": {
+      "D": {
+       "found within 12 weeks": 0.164,
+       "median delay, weeks": Infinity
+      },
+      "A": {
+       "found within 12 weeks": 0.064,
+       "median delay, weeks": Infinity
+      },
+      "B": {
+       "found within 12 weeks": 0.057,
+       "median delay, weeks": Infinity
+      },
+      "C": {
+       "found within 12 weeks": 0.065,
+       "median delay, weeks": Infinity
+      },
+      "calibration": {
+       "found within 12 weeks": 0.214,
+       "median delay, weeks": Infinity
+      }
+     }
+    },
+    "N2": {
+     "loss +0.005": {
+      "D": {
+       "found within 12 weeks": 0.764,
+       "median delay, weeks": 6.0
+      },
+      "A": {
+       "found within 12 weeks": 0.918,
+       "median delay, weeks": 4.0
+      },
+      "B": {
+       "found within 12 weeks": 0.995,
+       "median delay, weeks": 2.0
+      },
+      "C": {
+       "found within 12 weeks": 0.995,
+       "median delay, weeks": 2.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.175,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.01": {
+      "D": {
+       "found within 12 weeks": 0.987,
+       "median delay, weeks": 2.0
+      },
+      "A": {
+       "found within 12 weeks": 0.989,
+       "median delay, weeks": 3.0
+      },
+      "B": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "C": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.175,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.02": {
+      "D": {
+       "found within 12 weeks": 0.999,
+       "median delay, weeks": 1.0
+      },
+      "A": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 2.0
+      },
+      "B": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "C": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.175,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.03": {
+      "D": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "A": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "B": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "C": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.175,
+       "median delay, weeks": Infinity
+      }
+     },
+     "loss +0.05": {
+      "D": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "A": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "B": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "C": {
+       "found within 12 weeks": 1.0,
+       "median delay, weeks": 1.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.175,
+       "median delay, weeks": Infinity
+      }
+     },
+     "slope 0.85": {
+      "D": {
+       "found within 12 weeks": 0.413,
+       "median delay, weeks": 16.0
+      },
+      "A": {
+       "found within 12 weeks": 0.768,
+       "median delay, weeks": 7.0
+      },
+      "B": {
+       "found within 12 weeks": 0.944,
+       "median delay, weeks": 3.0
+      },
+      "C": {
+       "found within 12 weeks": 0.947,
+       "median delay, weeks": 3.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.883,
+       "median delay, weeks": 6.0
+      }
+     },
+     "frozen ratings": {
+      "D": {
+       "found within 12 weeks": 0.0,
+       "median delay, weeks": Infinity
+      },
+      "A": {
+       "found within 12 weeks": 0.268,
+       "median delay, weeks": Infinity
+      },
+      "B": {
+       "found within 12 weeks": 0.118,
+       "median delay, weeks": Infinity
+      },
+      "C": {
+       "found within 12 weeks": 0.171,
+       "median delay, weeks": Infinity
+      },
+      "calibration": {
+       "found within 12 weeks": 0.175,
+       "median delay, weeks": Infinity
+      }
+     },
+     "gold scaled": {
+      "D": {
+       "found within 12 weeks": 0.0,
+       "median delay, weeks": Infinity
+      },
+      "A": {
+       "found within 12 weeks": 0.302,
+       "median delay, weeks": 33.0
+      },
+      "B": {
+       "found within 12 weeks": 0.344,
+       "median delay, weeks": 20.0
+      },
+      "C": {
+       "found within 12 weeks": 0.381,
+       "median delay, weeks": 19.0
+      },
+      "calibration": {
+       "found within 12 weeks": 0.175,
+       "median delay, weeks": Infinity
+      }
+     }
+    }
+   }
+  }
+ },
+ "keep rule": {
+  "median delay for loss +0.010, worse noise version": {
+   "D": 22.0,
+   "A": 6.0,
+   "B": 4.0,
+   "C": 4.0
+  },
+  "found within 12 weeks for loss +0.010, worse noise version": {
+   "D": 0.346,
+   "A": 0.899,
+   "B": 0.941,
+   "C": 0.94
+  },
+  "kept arm": "B",
+  "target met (0.010 found within 12 weeks in at least 80%)": true,
+  "smallest planted size found within 12 weeks in at least 80% (kept arm)": 0.01
+ },
+ "input alarm": {
+  "statistics": [
+   "abs_gold_10",
+   "abs_gold_20",
+   "abs_xp_pm_10",
+   "abs_xp_pm_20",
+   "abs_kill_diff_20",
+   "abs_rating_input",
+   "new_player_share"
+  ],
+  "matches": 4443,
+  "weeks": 31,
+  "limit on the largest standardised weekly shift": 13.114509313563758,
+  "limits per noise version": {
+   "N1": 2.979784751096304,
+   "N2": 13.114509313563758
+  },
+  "false alarms per year under N2 with the N1 limit": 8.8811,
+  "false alarms per year under N1 with the N2 limit": 0.0,
+  "largest standardised shift in the real development weeks": [
+   11.87,
+   29.76,
+   21.53,
+   6.13,
+   4.59,
+   3.78,
+   1.81,
+   2.95,
+   4.92,
+   1.57,
+   6.06,
+   7.31,
+   6.52,
+   5.12,
+   4.16,
+   11.19,
+   12.88,
+   2.6,
+   1.99,
+   9.76,
+   6.75,
+   6.56,
+   7.75,
+   1.97,
+   7.71,
+   6.44,
+   13.11,
+   10.3,
+   5.75,
+   4.85,
+   4.87
+  ],
+  "planted case, gold inputs x 1.15": {
+   "N1": {
+    "found within 12 weeks": 0.0,
+    "median delay, weeks": Infinity
+   },
+   "N2": {
+    "found within 12 weeks": 0.217,
+    "median delay, weeks": Infinity
+   }
+  }
+ },
+ "hard stop": [
+  "input alarm: 8.88 false alarms per year across noise versions"
+ ],
+ "seconds": 343.0
+}

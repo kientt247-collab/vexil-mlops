@@ -54,7 +54,9 @@ def write_tables(folder: Path, outputs: dict[str, WeekOutput], results: dict[int
         path = folder / f"{name}.parquet"
         if path.exists():
             kept = pl.read_parquet(path).filter(~pl.col("week").is_in(weeks))
-            new = pl.concat([kept, new]).sort(["week", "match_id"], maintain_order=True)
+            # "diagonal": a column added by a newer version is null in older rows
+            new = pl.concat([kept, new], how="diagonal_relaxed").select(new.columns)
+            new = new.sort(["week", "match_id"], maintain_order=True)
         new.write_parquet(path, compression="zstd")
 
 
