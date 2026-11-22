@@ -10,9 +10,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+import numpy as np
 import polars as pl
 
+from vexil.candidates import ResultHistory, week_table
 from vexil.data.store import Store
+from vexil.features.extra import load_items
 from vexil.matchdata import is_usable
 from vexil.ratings import MatchMeta, RatingState
 from vexil.registry import Registry
@@ -80,9 +83,20 @@ def pair_key(match: dict, meta: MatchMeta) -> str:
 
 
 def process_week(
-    store: Store, week: str, registry: Registry, state: RatingState, results: dict[int, int]
+    store: Store,
+    week: str,
+    registry: Registry,
+    state: RatingState,
+    results: dict[int, int],
+    history: ResultHistory | None = None,
 ) -> WeekOutput:
-    """Score one week. `results` are the match results the rating may use (from the loader)."""
+    """Score one week. `results` are the match results the rating may use (from the loader).
+
+    `history` holds the facts and results of every earlier match, for the candidates that
+    replay results (kind ``frozen_train``). It is advanced by the week at the end of the call.
+    Without a history, an empty one is used, which is right only for a replay from the start.
+    """
+    history = history if history is not None else ResultHistory.empty()
     rows = list(store.read_week(week))
     metas = {match["match_id"]: MatchMeta.from_rows(match, players) for match, players in rows}
     shares = {}
@@ -93,7 +107,9 @@ def process_week(
         if meta.match_id in results:
             state.add_result(meta, results[meta.match_id])
 
-    entries = registry.active()
+    entries = tuple(e for e in registry.active() if e.kind != "frozen_train")
+    candidates = tuple(e for e in registry.active() if e.kind == "frozen_train")
+    scored: list[tuple[dict, list]] = []
     match_rows, prediction_frames = [], []
     counts = {
         "matches": len(rows),
@@ -113,6 +129,7 @@ def process_week(
             counts["gap"] += 1
             continue
         counts["judged"] += 1
+        scored.append((match, players))
         match_id = match["match_id"]
         inputs = match_inputs(match, players, rating_inputs[match_id])
         match_rows.append(
@@ -148,6 +165,24 @@ def process_week(
                     schema=PREDICTION_SCHEMA,
                 )  # fmt: skip
             )
+    if candidates and scored:
+        table = week_table(history, rows, {m["match_id"] for m, _ in scored}, results, load_items())
+        ids = table.rows["match_id"]
+        for entry in candidates:
+            p = entry.load().predict_rows(table, np.arange(len(ids)))
+            prediction_frames.append(
+                pl.DataFrame(
+                    {
+                        "week": week,
+                        "match_id": ids,
+                        "t": table.rows["t"].astype("int16"),
+                        "model_id": entry.id,
+                        "p": p,
+                    },
+                    schema=PREDICTION_SCHEMA,
+                )
+            )
+    history.add_week(rows, results)
     matches = pl.DataFrame(match_rows, schema=MATCH_SCHEMA)
     predictions = (
         pl.concat(prediction_frames)

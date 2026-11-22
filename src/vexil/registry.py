@@ -12,6 +12,7 @@ from pathlib import Path
 
 import yaml
 
+from vexil.candidates import FrozenTrainModel, load_candidate
 from vexil.hashing import sha256_file
 from vexil.models.linear import GoldTimeModel, RecalibratedModel, RidgeA1Model, load_model
 
@@ -33,7 +34,9 @@ class ModelEntry:
     approval: dict | None = None
     scored_from: str | None = None  # first week a challenger is scored, if set
 
-    def load(self) -> RidgeA1Model | GoldTimeModel | RecalibratedModel:
+    def load(self) -> RidgeA1Model | GoldTimeModel | RecalibratedModel | FrozenTrainModel:
+        if self.kind == "frozen_train":
+            return load_candidate(self.file)
         return load_model(self.file)
 
 

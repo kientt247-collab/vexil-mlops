@@ -10,11 +10,11 @@ from pathlib import Path
 PACKAGE = Path(__file__).resolve().parents[1] / "src" / "vexil"
 LAYER = {
     "weeks": 1, "matchdata": 1, "hashing": 1, "alerts": 1, "evaluate": 1, "ratings": 1,
-    "features.a1": 1, "models.linear": 1,
-    "scoring": 2, "registry": 2, "monitor": 2, "investigate": 2, "retrain": 2, "leakcheck": 2,
-    "models.fit": 2,
+    "features.a1": 1, "features.extra": 1, "models.linear": 1,
+    "candidates": 2, "scoring": 2, "registry": 2, "monitor": 2, "investigate": 2, "retrain": 2,
+    "leakcheck": 2, "models.fit": 2,
     "data.schema": 3, "data.store": 3, "data.opendota": 3, "data.pull": 3, "data.remote": 3,
-    "labels": 3, "features.extra": 3, "candidates": 3, "pipeline": 3, "run": 3, "issues": 3, "job": 3, "dashboard": 3, "cli": 3,
+    "labels": 3, "pipeline": 3, "run": 3, "issues": 3, "job": 3, "dashboard": 3, "cli": 3,
     "__main__": 3,
 }  # fmt: skip
 

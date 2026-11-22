@@ -17,6 +17,7 @@ from pathlib import Path
 import numpy as np
 import polars as pl
 
+from vexil.candidates import ResultHistory
 from vexil.data.store import Store
 from vexil.evaluate import match_scores
 from vexil.hashing import sha256_file
@@ -35,12 +36,18 @@ def score_weeks(
     state: RatingState,
     weeks: list[str],
     purpose: str,
+    history: ResultHistory | None = None,
 ) -> tuple[dict[str, WeekOutput], dict[int, int]]:
-    """Process weeks in order. Returns the output per week and all results that were read."""
+    """Process weeks in order. Returns the output per week and all results that were read.
+
+    One result history runs through all the weeks (a fresh one if none is given, which is
+    right when `weeks` start at the first week of the store).
+    """
+    history = history if history is not None else ResultHistory.empty()
     outputs, results = {}, {}
     for week in weeks:
         week_results = loader.week_labels(week, purpose=purpose)
-        outputs[week] = process_week(store, week, registry, state, week_results)
+        outputs[week] = process_week(store, week, registry, state, week_results, history)
         results.update(week_results)
     return outputs, results
 

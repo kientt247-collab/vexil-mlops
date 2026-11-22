@@ -24,6 +24,7 @@ import polars as pl
 import yaml
 
 from vexil import retrain
+from vexil.candidates import ResultHistory
 from vexil.data import remote
 from vexil.data.opendota import Explorer
 from vexil.data.pull import pull_weeks
@@ -72,6 +73,9 @@ class Layout:
     def snapshot(self, week: str) -> Path:
         return self.state / f"ratings-before-{week}.json.gz"
 
+    def history_snapshot(self, week: str) -> Path:
+        return self.state / f"history-before-{week}.json.gz"
+
 
 LOCKED_FILES = (
     "monitoring/rules.yaml", "monitoring/gate.yaml",
@@ -119,6 +123,22 @@ def verify_lock(layout: Layout) -> None:
             raise LockError(f"{name} differs from lock version {lock['version']}")
     if source_tree_sha256(layout.root) != lock["source_tree_sha256"]:
         raise LockError(f"the code under src/vexil differs from lock version {lock['version']}")
+
+
+def _history(
+    layout: Layout, store: Store, loader: LabelLoader, week: str, repository: str | None = None
+) -> ResultHistory:
+    """Facts and results of every match before `week`: from the snapshot, else replayed."""
+    path = layout.history_snapshot(week)
+    if path.exists():
+        return ResultHistory.load(path)
+    history = ResultHistory.empty()
+    for earlier in (w for w in store.weeks() if w < week):
+        if repository:
+            remote.download_week(store, earlier, repository)
+        results = loader.week_labels(earlier, purpose="rebuild of the result history")
+        history.add_week(list(store.read_week(earlier)), results)
+    return history
 
 
 def _rating_state(
@@ -302,16 +322,24 @@ def run_job(
     # 2. ratings and scores of the open weeks
     live = repository if explorer is not None else None
     state = _rating_state(layout, store, loader, weeks[0], live)
+    history = (
+        _history(layout, store, loader, weeks[0], live)
+        if any(e.kind == "frozen_train" for e in registry.active())
+        else None
+    )
     outputs, results = {}, {}
     for index, week in enumerate(weeks):
         week_results = loader.week_labels(week, purpose="weekly job")
-        outputs[week] = process_week(store, week, registry, state, week_results)
+        outputs[week] = process_week(store, week, registry, state, week_results, history)
         results.update(week_results)
         if index == 0:
             state.save(layout.snapshot(_next_week(week)))  # the start point of the next run
+            if history is not None:
+                history.save(layout.history_snapshot(_next_week(week)))
     write_tables(layout.monitoring, outputs, results)
-    for old in sorted(layout.state.glob("ratings-before-*.json.gz"))[:-SNAPSHOTS_KEPT]:
-        old.unlink()
+    for pattern in ("ratings-before-*.json.gz", "history-before-*.json.gz"):
+        for old in sorted(layout.state.glob(pattern))[:-SNAPSHOTS_KEPT]:
+            old.unlink()
 
     # 3. rules on final weeks
     counts = pl.read_parquet(layout.monitoring / "weekly_counts.parquet")

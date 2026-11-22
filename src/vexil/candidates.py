@@ -19,9 +19,12 @@ which in production comes from ``vexil.labels`` (logged, and withheld until the 
 
 from __future__ import annotations
 
+import gzip
 import hashlib
 import importlib.util
+import json
 from collections.abc import Iterable
+from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
@@ -32,6 +35,27 @@ from vexil.features.extra import EXTRA_INPUTS, extra_table
 from vexil.matchdata import Match, Player, n_rows
 
 COLUMNS = (*A1_INPUTS, *EXTRA_INPUTS)
+
+
+def match_meta(match: Match, players: list[Player]) -> dict:
+    """Facts known before a match starts, plus its end time (start + duration)."""
+    ordered = sorted(players, key=lambda p: p["player_slot"])
+    rad = [p for p in ordered if p["player_slot"] < 128]
+    dire = [p for p in ordered if p["player_slot"] >= 128]
+    return {
+        "id": match["match_id"],
+        "start": match["start_time"],
+        "end": match["start_time"] + (match.get("duration") or 0),
+        "rt": match.get("radiant_team_id"),
+        "dt": match.get("dire_team_id"),
+        "ra": [p.get("account_id") for p in rad],
+        "da": [p.get("account_id") for p in dire],
+        "rh": [p.get("hero_id") for p in rad],
+        "dh": [p.get("hero_id") for p in dire],
+        "leagueid": int(match.get("leagueid") or 0),
+        "tier": str(match.get("league_tier")),
+        "game_mode": int(match.get("game_mode") or 0),
+    }
 
 
 class CandidateTable:
@@ -62,23 +86,7 @@ class CandidateTable:
         per_match: dict[int, dict[str, np.ndarray]] = {}
         for match, players in matches:
             mid = match["match_id"]
-            ordered = sorted(players, key=lambda p: p["player_slot"])
-            rad = [p for p in ordered if p["player_slot"] < 128]
-            dire = [p for p in ordered if p["player_slot"] >= 128]
-            table.meta[mid] = {
-                "id": mid,
-                "start": match["start_time"],
-                "end": match["start_time"] + (match.get("duration") or 0),
-                "rt": match.get("radiant_team_id"),
-                "dt": match.get("dire_team_id"),
-                "ra": [p.get("account_id") for p in rad],
-                "da": [p.get("account_id") for p in dire],
-                "rh": [p.get("hero_id") for p in rad],
-                "dh": [p.get("hero_id") for p in dire],
-                "leagueid": int(match.get("leagueid") or 0),
-                "tier": str(match.get("league_tier")),
-                "game_mode": int(match.get("game_mode") or 0),
-            }
+            table.meta[mid] = match_meta(match, players)
             table.start[mid] = match["start_time"]
             rows = n_rows(match)
             if rows:
@@ -178,3 +186,167 @@ def load_train(path: Path, expected_sha256: str):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+# ---------------------------------------------------------------------------- state files
+def encode_state(obj):
+    """Fitted state of a candidate as JSON-safe data. Floats survive exactly (repr round trip)."""
+    if isinstance(obj, np.ndarray):
+        return {"__nd__": obj.tolist(), "dtype": str(obj.dtype)}
+    if isinstance(obj, np.generic):
+        return encode_state(obj.item())
+    if isinstance(obj, dict):
+        if all(isinstance(k, str) for k in obj):
+            return {"__dict__": {k: encode_state(v) for k, v in obj.items()}}
+        if all(isinstance(k, int | np.integer) for k in obj):
+            return {"__intdict__": [[int(k), encode_state(v)] for k, v in obj.items()]}
+        raise TypeError("state dictionaries need keys that are all str or all int")
+    if isinstance(obj, list | tuple):
+        return {"__list__": [encode_state(v) for v in obj]}
+    if obj is None or isinstance(obj, bool | int | float | str):
+        return obj
+    raise TypeError(f"cannot store a state value of type {type(obj).__name__}")
+
+
+def decode_state(obj):
+    if isinstance(obj, dict):
+        if "__nd__" in obj:
+            return np.array(obj["__nd__"], dtype=obj["dtype"])
+        if "__dict__" in obj:
+            return {k: decode_state(v) for k, v in obj["__dict__"].items()}
+        if "__intdict__" in obj:
+            return {int(k): decode_state(v) for k, v in obj["__intdict__"]}
+        if "__list__" in obj:
+            return [decode_state(v) for v in obj["__list__"]]
+        raise ValueError("unknown state encoding")
+    return obj
+
+
+# ---------------------------------------------------------------------------- history
+@dataclass
+class ResultHistory:
+    """Facts and results of every finished match of any tier, as the candidates replay them.
+
+    The weekly job keeps one snapshot before each week, like the rating snapshots. A candidate
+    sees only results of matches that ended strictly before the match it predicts.
+    """
+
+    meta: dict[int, dict]
+    results: dict[int, int]
+
+    @classmethod
+    def empty(cls) -> ResultHistory:
+        return cls({}, {})
+
+    def add_week(self, matches: Iterable[tuple[Match, list[Player]]], results: dict[int, int]):
+        """Add the facts of a week's matches and the results the loader released for them."""
+        for match, players in matches:
+            self.meta[match["match_id"]] = match_meta(match, players)
+        for mid, win in results.items():
+            if mid in self.meta:
+                self.results[mid] = int(win)
+
+    def save(self, path: Path) -> None:
+        payload = {
+            "meta": [self.meta[k] for k in sorted(self.meta)],
+            "results": {str(k): v for k, v in sorted(self.results.items())},
+        }
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with gzip.GzipFile(path, "wb", mtime=0) as handle:
+            handle.write(json.dumps(payload, separators=(",", ":")).encode())
+
+    @classmethod
+    def load(cls, path: Path) -> ResultHistory:
+        with gzip.open(path, "rt") as handle:
+            payload = json.load(handle)
+        return cls(
+            {m["id"]: m for m in payload["meta"]},
+            {int(k): v for k, v in payload["results"].items()},
+        )
+
+
+# ---------------------------------------------------------------------------- the model kind
+@dataclass
+class FrozenTrainModel:
+    """A candidate: an audited ``train.py`` plus the state it was fitted to."""
+
+    module: object
+    state: object
+    train_file: str
+    train_sha256: str
+
+    def predict_rows(self, table: CandidateTable, row_idx: np.ndarray) -> np.ndarray:
+        ctx = CandidateCtx(table, row_idx)
+        p = np.asarray(self.module.predict(self.state, ctx, ctx.rows), dtype=float)
+        if (
+            p.shape != (len(row_idx),)
+            or not np.isfinite(p).all()
+            or (p <= 0).any()
+            or (p >= 1).any()
+        ):
+            raise ValueError("a candidate returned a bad prediction array")
+        return p
+
+
+def load_candidate(path: Path) -> FrozenTrainModel:
+    """Read a candidate file (kind ``frozen_train``): check the train.py hash, restore the state."""
+    path = Path(path)
+    spec = json.loads(path.read_text())
+    if spec.get("kind") != "frozen_train":
+        raise ValueError(f"{path}: not a frozen_train file")
+    train = path.parent / spec["train_file"]
+    module = load_train(train, spec["train_sha256"])
+    return FrozenTrainModel(
+        module, decode_state(spec["state"]), spec["train_file"], spec["train_sha256"]
+    )
+
+
+def fit_candidate(
+    train_path: Path, train_sha256: str, table: CandidateTable, train_ids: list[int], seed: int = 0
+) -> dict:
+    """Fit a candidate on the given training matches and return the content of its model file."""
+    module = load_train(train_path, train_sha256)
+    rows = np.flatnonzero(np.isin(table.rows["match_id"], list(train_ids)))
+    ids = sorted({int(m) for m in table.rows["match_id"][rows]})
+    state = module.fit(CandidateCtx(table, rows, label_ids=ids), ids, seed)
+    return {
+        "kind": "frozen_train",
+        "train_file": Path(train_path).name,
+        "train_sha256": train_sha256,
+        "seed": seed,
+        "n_rows": int(len(rows)),
+        "n_matches": len(ids),
+        "state": encode_state(state),
+    }
+
+
+def week_table(
+    history: ResultHistory,
+    matches: list[tuple[Match, list[Player]]],
+    predict_ids: set[int],
+    results: dict[int, int],
+    items: dict,
+) -> CandidateTable:
+    """Table for one week of scoring.
+
+    ``matches`` are all matches of the week (any tier); only those in ``predict_ids`` get rows.
+    The replay facts are the history before the week plus the week's matches, and the results
+    are the history's plus the ones the loader released for the week. A candidate asking for
+    ``results_before(ts)`` still gets only matches that ended strictly before ``ts``.
+    """
+    table = CandidateTable.build(
+        [(m, p) for m, p in matches if m["match_id"] in predict_ids],
+        {},
+        items,
+        order=sorted(predict_ids),
+    )
+    for match, players in matches:
+        table.meta.setdefault(match["match_id"], match_meta(match, players))
+    table.meta = dict(history.meta) | table.meta
+    table.results = {m: r for m, r in (history.results | results).items() if m in table.meta}
+    table.start = {m: v["start"] for m, v in table.meta.items()}
+    ends = sorted((v["end"], m) for m, v in table.meta.items())
+    table.end_sorted = np.array([e for e, _ in ends], dtype=np.int64)
+    table.end_ids = [i for _, i in ends]
+    return table
