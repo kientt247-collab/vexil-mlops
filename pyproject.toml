@@ -28,6 +28,8 @@ packages = ["src/vexil"]
 [tool.ruff]
 line-length = 100
 src = ["src", "tests"]
+# The four audited train.py files are frozen by hash; they are never reformatted or fixed.
+extend-exclude = ["models/candidates/*/train.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
