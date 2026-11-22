@@ -511,6 +511,7 @@ version = "0.0.1"
 source = { editable = "." }
 dependencies = [
     { name = "numpy" },
+    { name = "pandas" },
     { name = "polars" },
     { name = "pyyaml" },
     { name = "scikit-learn" },
@@ -518,7 +519,6 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "pandas" },
     { name = "pytest" },
     { name = "ruff" },
 ]
@@ -526,6 +526,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "numpy", specifier = ">=2.5.5" },
+    { name = "pandas", specifier = ">=3.1.1" },
     { name = "polars", specifier = ">=2.1.0" },
     { name = "pyyaml", specifier = ">=6.0.4" },
     { name = "scikit-learn", specifier = ">=1.9.1" },
@@ -533,7 +534,6 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "pandas", specifier = ">=3.1.1" },
     { name = "pytest", specifier = ">=8" },
     { name = "ruff", specifier = ">=0.8" },
 ]
