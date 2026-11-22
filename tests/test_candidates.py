@@ -235,3 +235,19 @@ def test_a_result_that_ends_after_the_start_never_changes_the_prediction(world, 
     again = week_table(history, week, ids, flipped, items)
     p1 = fitted[tag].predict_rows(again, np.arange(len(again.rows["match_id"])))
     assert np.array_equal(p0, p1)
+
+
+@pytest.mark.parametrize("tag", TAGS)
+def test_a_short_match_is_scored_row_by_row(world, fitted, tag):
+    """A hand-built 12 minute match: one finite probability per minute row, no more."""
+    matches, results, items = world
+    history = ResultHistory.empty()
+    history.add_week(matches[:40], results)
+    short, players = make_match(500, minutes=12, start_time=T0 + 500 * STEP)
+    for p in players:
+        p["hero_id"] = 1 + (p["player_slot"] % 128)
+    mid = short["match_id"]
+    table = week_table(history, [(short, players)], {mid}, {mid: 1}, items)
+    p = fitted[tag].predict_rows(table, np.arange(len(table.rows["match_id"])))
+    assert len(p) == 12 and np.isfinite(p).all()
+    assert list(table.rows["t"]) == list(range(12))

@@ -1,0 +1,38 @@
+{
+ "A1": {
+  "train_sha256": "7c737230bf0de9acc3b6cd4897c4bf3e427acae3ca9d35c85b8810ebdc3d4a04",
+  "model_sha256": "36d07a71d8154a66f7086a501d5fe5a38d3981c7bb88a2f25e7b27a2a989cbcb",
+  "n_matches": 4470,
+  "n_rows": 170519,
+  "model_bytes": 12304,
+  "two_fits_identical": true,
+  "seconds_for_two_fits": 11.9
+ },
+ "A3": {
+  "train_sha256": "7ada1523f84c8d1d307f316b4c6f41ae77f7c82267d91584022a575c5f0cf301",
+  "model_sha256": "8acdaefc7a35f3fc4edb067812e04791876dec8f1f82f2c0b28d1b42d1e71b0d",
+  "n_matches": 4470,
+  "n_rows": 170519,
+  "model_bytes": 1834,
+  "two_fits_identical": true,
+  "seconds_for_two_fits": 1.8
+ },
+ "A4": {
+  "train_sha256": "33d1c4b06b5a11e17c91a4a6a3d4d28ce84c42d370b15cbd1352b088347a464d",
+  "model_sha256": "a43af0a3106ed207c69a04eb69fd09e9bbb0891d2bf3751becdacaeda4782280",
+  "n_matches": 4470,
+  "n_rows": 170519,
+  "model_bytes": 4214,
+  "two_fits_identical": true,
+  "seconds_for_two_fits": 2.9
+ },
+ "A5": {
+  "train_sha256": "1cf8e61d9eb9c50d4221006f01dc575b98bb667c685a3fd3bc12785ad641e2a5",
+  "model_sha256": "45688c755875ea34fdc1d460d3174468e0cbc72b35e08d510fc1481c9c84b6fa",
+  "n_matches": 4470,
+  "n_rows": 170519,
+  "model_bytes": 5253,
+  "two_fits_identical": true,
+  "seconds_for_two_fits": 6.7
+ }
+}

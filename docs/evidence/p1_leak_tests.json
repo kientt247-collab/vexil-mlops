@@ -1,0 +1,58 @@
+{
+ "sample": 40,
+ "overlapping": 34,
+ "tol": 1e-12,
+ "candidates": {
+  "A1": {
+   "cut": 1.1102230246251565e-16,
+   "poison": 0.0,
+   "later_flip": 0.0,
+   "matches_moved_by_later_results": 0,
+   "reach_ok": true
+  },
+  "A3": {
+   "cut": 1.1102230246251565e-16,
+   "poison": 0.0,
+   "later_flip": 0.0,
+   "matches_moved_by_later_results": 0,
+   "reach_ok": true
+  },
+  "A4": {
+   "cut": 1.1102230246251565e-16,
+   "poison": 0.0,
+   "later_flip": 0.0,
+   "matches_moved_by_later_results": 0,
+   "reach_ok": true
+  },
+  "A5": {
+   "cut": 1.1102230246251565e-16,
+   "poison": 0.0,
+   "later_flip": 0.0,
+   "matches_moved_by_later_results": 0,
+   "reach_ok": true
+  },
+  "A3_BUG_IN_TRAIN_ONLY": {
+   "cut": 1.1102230246251565e-16,
+   "poison": 0.0,
+   "later_flip": 0.0,
+   "matches_moved_by_later_results": 0,
+   "reach_ok": true
+  },
+  "A3_BUG_IN_CTX_ONLY": {
+   "cut": 1.1102230246251565e-16,
+   "poison": 0.0,
+   "later_flip": 0.0,
+   "matches_moved_by_later_results": 0,
+   "reach_ok": true
+  },
+  "A3_BUG_IN_BOTH": {
+   "cut": 1.1102230246251565e-16,
+   "poison": 0.0,
+   "later_flip": 0.014550459065153842,
+   "matches_moved_by_later_results": 31,
+   "reach_ok": true
+  }
+ },
+ "real_candidates_pass": true,
+ "planted_bug_caught": true
+}

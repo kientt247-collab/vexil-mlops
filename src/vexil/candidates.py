@@ -275,16 +275,12 @@ class FrozenTrainModel:
     state: object
     train_file: str
     train_sha256: str
+    ctx_class: type = CandidateCtx  # tests swap in a leaky ctx to prove that they would notice
 
     def predict_rows(self, table: CandidateTable, row_idx: np.ndarray) -> np.ndarray:
-        ctx = CandidateCtx(table, row_idx)
+        ctx = self.ctx_class(table, row_idx)
         p = np.asarray(self.module.predict(self.state, ctx, ctx.rows), dtype=float)
-        if (
-            p.shape != (len(row_idx),)
-            or not np.isfinite(p).all()
-            or (p <= 0).any()
-            or (p >= 1).any()
-        ):
+        if p.shape != (len(row_idx),) or not np.isfinite(p).all() or (p < 0).any() or (p > 1).any():
             raise ValueError("a candidate returned a bad prediction array")
         return p
 
