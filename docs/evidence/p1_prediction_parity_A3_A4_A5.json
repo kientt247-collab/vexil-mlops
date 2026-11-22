@@ -1,0 +1,38 @@
+{
+ "A3": {
+  "sha256": "7ada1523f84c",
+  "largest_abs_diff_probability": 0.0,
+  "per_block": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "seconds": 2.8
+ },
+ "A4": {
+  "sha256": "33d1c4b06b5a",
+  "largest_abs_diff_probability": 0.0,
+  "per_block": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "seconds": 3.9
+ },
+ "A5": {
+  "sha256": "1cf8e61d9eb9",
+  "largest_abs_diff_probability": 0.0,
+  "per_block": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "seconds": 8.6
+ }
+}

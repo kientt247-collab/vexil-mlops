@@ -1,0 +1,26 @@
+{
+ "BASE": {
+  "sha256": "bf28211fae56",
+  "largest_abs_diff_probability": 0.0,
+  "per_block": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "seconds": 1.6
+ },
+ "A1": {
+  "sha256": "7c737230bf0d",
+  "largest_abs_diff_probability": 0.0,
+  "per_block": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "seconds": 12.7
+ }
+}

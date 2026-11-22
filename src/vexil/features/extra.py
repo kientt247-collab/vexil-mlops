@@ -102,7 +102,6 @@ def extra_table(
     n = n_rows(match) if n is None else n
     t = np.arange(n)
     now = 60.0 * t
-    g = np.asarray(match["radiant_gold_adv"][:n], dtype=float)
     x = np.asarray(match["radiant_xp_adv"][:n], dtype=float)
     rad = [p for p in players if is_radiant(p)]
     dire = [p for p in players if not is_radiant(p)]
