@@ -646,17 +646,17 @@
   },
   "2026-11-16": {
    "bytes": {
-    "matches": 228465,
-    "players": 699839
+    "matches": 465420,
+    "players": 1370098
    },
-   "matches": 59,
-   "revision": 1,
+   "matches": 112,
+   "revision": 2,
    "sha256": {
-    "matches": "55f46e2265f02be114310120c273677697d764cd9a271e7eec2300660ca62e89",
-    "players": "90db16af76894cd176b88edfdcff6eb0834d65d5b838f3cf49152cea8cc3d68a"
+    "matches": "73bfff991eda85b2849d14afc5e5f46a6b81c861242f0035493ce81054a852a9",
+    "players": "6ae11a41b1f63fecead18ea4bcb2d7ea844d7ac95572801f1ff34a9fe88b214e"
    },
-   "source": "phase2-seed",
-   "usable": 59
+   "source": "opendota",
+   "usable": 112
   }
  }
 }

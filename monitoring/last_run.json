@@ -1,17 +1,28 @@
 {
- "now": 1795403820,
+ "now": 1795430038,
  "open_weeks": [
   "2026-11-02",
   "2026-11-09",
   "2026-11-16"
  ],
+ "pull": {
+  "2026-11-02": {
+   "matches": 140,
+   "changed": false,
+   "rejected": 0
+  },
+  "2026-11-09": {
+   "matches": 185,
+   "changed": false,
+   "rejected": 0
+  },
+  "2026-11-16": {
+   "matches": 112,
+   "changed": true,
+   "rejected": 0
+  }
+ },
  "final_weeks": 47,
- "issues": [
-  "close: [alert] calibration / rstar",
-  "gate: recalibration-2026-09-14 rejected"
- ],
- "actions": [
-  "close: [alert] calibration / rstar",
-  "gate: recalibration-2026-09-14 rejected"
- ]
+ "issues": [],
+ "actions": []
 }
