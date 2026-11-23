@@ -75,7 +75,7 @@ tables without running the job.
 |---|---|---|
 | 1 | 2026-11-21 13:18 UTC | go-live: rules, gate, three starting models, code. No real run happened under it |
 | 2 | 2026-11-21 | code only, after a dry run under version 1: weekly files are uploaded under their asset names (they were uploaded under the bare file name, so a later run would not have found them); a week counts as changed only when its rows change (compressed bytes differ between machines); a dry run uploads nothing and opens no issue; a real run earlier than the last recorded run is refused. Rules, gate and models are the same files |
-| 3 (pending, not approved) | draft 2026-11-23 | four frozen candidates (A1, A3, A4, A5 of the vexil-auto loop) enter as challengers with kind `frozen_train`, scored from week 2026-11-23, the shadow clock starting then. The locked set grows by `models/constants/items.json`, `models/candidates/<tag>/train.py` and `model.json`, and `uv.lock`. Rules, gate, champion, baseline and anchor are the same files. Takes effect only when a person approves it in the Issue and the branch is merged |
+| 3 | 2026-11-23 10:59 UTC (approved by Kien 17:59 UTC+7) | four frozen candidates (A1, A3, A4, A5 of the vexil-auto loop) enter as challengers with kind `frozen_train`, scored from week 2026-11-23, the shadow clock starting then. The locked set grows by `models/constants/items.json`, `models/candidates/<tag>/train.py` and `model.json`, and `uv.lock`. Rules, gate, champion, baseline and anchor are the same files. |
 
 ## Candidates in the shadow period
 

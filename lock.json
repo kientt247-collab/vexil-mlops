@@ -1,6 +1,6 @@
 {
  "version": 3,
- "locked_at": "2026-11-23 10:44 UTC",
+ "locked_at": "2026-11-23 10:59 UTC",
  "files": {
   "monitoring/rules.yaml": "764827cd2233f75cee48d06ac19167c63e6492724e99f76eb935cf81e80421f9",
   "monitoring/gate.yaml": "775ed1fa7f8ec166bf947528d503290adeb63a24930d765fe303cb996c50cc0e",
@@ -19,6 +19,6 @@
   "uv.lock": "8c96c45397a0a9bf65c5e6fd09957c3acdf984c0ae5565744916337818fac6db"
  },
  "source_tree_sha256": "7b675dcd15e241c2544db8627f3eb84c6d324054c2030c2774a11d45767e78ab",
- "approved_by": "PENDING (Kien has not answered the lock v3 question yet)",
- "reason": "Draft for the dry run only. Lock v3 adds four frozen candidates (A1, A3, A4, A5) as challengers scored from 2026-11-23, items.json, uv.lock and the candidate code to the locked set. Rules, gate and the champion/baseline/anchor models unchanged. Not approved."
+ "approved_by": "Kien",
+ "reason": "Four frozen candidates (A1, A3, A4, A5 of the vexil-auto loop) enter as challengers of kind frozen_train, scored from week 2026-11-23, shadow clock from then; items.json, the eight candidate files and uv.lock join the locked set. Rules, gate, champion, baseline and anchor unchanged. Kien approved on 2026-11-23 17:59 UTC+7: 'Duyet lock v3 nhu da neu'."
 }
