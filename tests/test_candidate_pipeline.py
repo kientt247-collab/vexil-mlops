@@ -52,6 +52,8 @@ def run(tmp_path_factory):
     table = CandidateTable.build(first, results, load_items())
     ids = sorted({int(m) for m in table.rows["match_id"]} & set(results))
     registry_path = tmp / "models" / "registry.yaml"
+    text = registry_path.read_text()  # the repository's own candidate entries are not used here
+    registry_path.write_text(text.split("\n  - id: cand-")[0].rstrip("\n") + "\n")
     for tag in TAGS:
         folder = tmp / "models" / "candidates" / tag
         train = folder / "train.py"
@@ -67,6 +69,7 @@ def run(tmp_path_factory):
                 "file": f"models/candidates/{tag}/model.json",
                 "sha256": hashlib.sha256((folder / "model.json").read_bytes()).hexdigest(),
                 "description": "test candidate",
+                **({"scored_from": WEEKS[1]} if tag == "A5" else {}),
             },
         )  # fmt: skip
     registry = load_registry(registry_path, tmp)
@@ -76,14 +79,24 @@ def run(tmp_path_factory):
 
 def test_candidates_get_one_row_per_match_minute_and_model(run):
     _, _, _, outputs, _ = run
-    for output in outputs.values():
+    for week, output in outputs.items():
         pred = output.predictions
         per_model = pred.group_by("model_id").len()
         counts = dict(zip(per_model["model_id"], per_model["len"], strict=True))
-        assert {f"cand-{t}" for t in TAGS} <= set(counts)
-        assert len({counts[f"cand-{t}"] for t in TAGS}) == 1
-        assert counts[f"cand-{TAGS[0]}"] == counts["final-model"]
+        scored = [t for t in TAGS if t != "A5" or week >= WEEKS[1]]
+        assert {f"cand-{t}" for t in scored} <= set(counts)
+        assert len({counts[f"cand-{t}"] for t in scored}) == 1
+        assert counts[f"cand-{scored[0]}"] == counts["final-model"]
         assert pred["p"].is_finite().all() and pred["p"].min() >= 0 and pred["p"].max() <= 1
+
+
+def test_scored_from_keeps_a_candidate_out_of_earlier_weeks(run):
+    """An entry with scored_from gets no row for a week before it, and rows from it on."""
+    _, _, _, outputs, _ = run
+    early = outputs[WEEKS[0]].predictions["model_id"].unique().to_list()
+    late = outputs[WEEKS[1]].predictions["model_id"].unique().to_list()
+    assert "cand-A5" not in early and "cand-A5" in late
+    assert {"cand-A1", "cand-A3", "cand-A4"} <= set(early)
 
 
 def test_pipeline_rows_equal_direct_prediction(run):

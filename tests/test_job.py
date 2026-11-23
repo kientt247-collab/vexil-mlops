@@ -32,6 +32,7 @@ def make_root(tmp: Path, weeks: list[str]) -> Layout:
     (root / "models" / "registry.yaml").write_text(registry.rstrip("\n") + "\n")
     for name in ("rules.yaml", "gate.yaml"):
         shutil.copy(REPO / "monitoring" / name, root / "monitoring" / name)
+    shutil.copy(REPO / "uv.lock", root / "uv.lock")  # locked since version 3
     store = Store(tmp / "store", root / "data" / "manifest.json")
     seed = 0
     for week in weeks:

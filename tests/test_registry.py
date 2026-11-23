@@ -30,12 +30,16 @@ def edit(workspace, change):
 
 def score(registry):
     match, players = make_match(3)
-    return score_match(registry.active(), match_inputs(match, players, rating_input=0.2))
+    per_match = tuple(e for e in registry.active() if e.kind != "frozen_train")
+    return score_match(per_match, match_inputs(match, players, rating_input=0.2))
 
 
 def test_the_registry_in_the_repository_is_valid():
     registry = load_registry(REPO / "models" / "registry.yaml")
-    assert [e.id for e in registry.active()] == ["final-model", "rstar", "anchor"]
+    assert [e.id for e in registry.active()] == [
+        "final-model", "rstar", "anchor", "cand-A1", "cand-A3", "cand-A4", "cand-A5",
+    ]  # fmt: skip
+    assert all(e.scored_from == "2026-11-23" for e in registry.by_role("challenger"))
     assert registry.one("champion").id == "final-model"
     assert registry.one("anchor").id == "anchor"
 

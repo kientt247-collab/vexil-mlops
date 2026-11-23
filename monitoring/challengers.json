@@ -34,5 +34,33 @@
    "gain +0.0000 is below 0.002",
    "95% interval -0.0028 to +0.0029 is not above 0"
   ]
+ },
+ {
+  "id": "cand-A1",
+  "kind": "frozen_train",
+  "trigger": "vexil-auto candidate A1, confirm node C1 (action-map-v2)",
+  "shadow_from": "2026-11-23",
+  "status": "shadow"
+ },
+ {
+  "id": "cand-A3",
+  "kind": "frozen_train",
+  "trigger": "vexil-auto candidate A3, confirm node C1 (action-map-v2)",
+  "shadow_from": "2026-11-23",
+  "status": "shadow"
+ },
+ {
+  "id": "cand-A4",
+  "kind": "frozen_train",
+  "trigger": "vexil-auto candidate A4, confirm node C1 (action-map-v2)",
+  "shadow_from": "2026-11-23",
+  "status": "shadow"
+ },
+ {
+  "id": "cand-A5",
+  "kind": "frozen_train",
+  "trigger": "vexil-auto candidate A5, confirm node C1 (action-map-v2)",
+  "shadow_from": "2026-11-23",
+  "status": "shadow"
  }
 ]

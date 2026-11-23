@@ -80,6 +80,14 @@ class Layout:
 LOCKED_FILES = (
     "monitoring/rules.yaml", "monitoring/gate.yaml",
     "models/candidate.json", "models/rstar.json", "models/anchor.json",
+    # lock version 3: the four candidates of the vexil-auto loop, their item constants, and
+    # the resolved dependencies (the numbers depend on the library versions)
+    "models/constants/items.json",
+    "models/candidates/A1/train.py", "models/candidates/A1/model.json",
+    "models/candidates/A3/train.py", "models/candidates/A3/model.json",
+    "models/candidates/A4/train.py", "models/candidates/A4/model.json",
+    "models/candidates/A5/train.py", "models/candidates/A5/model.json",
+    "uv.lock",
 )  # fmt: skip
 
 

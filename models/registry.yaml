@@ -47,3 +47,35 @@ models:
     file: models/challengers/recalibration-2026-09-14.json
     sha256: 62ed6f23b02d1e568f2cf1cf89786ee0ed526dc309446b28abc8baa10a2cd375
     description: "recalibration challenger created in week 2026-09-14; trigger: calibration alarm on final-model, week 2026-08-24"
+
+  - id: cand-A1
+    role: challenger
+    kind: frozen_train
+    file: models/candidates/A1/model.json
+    sha256: 36d07a71d8154a66f7086a501d5fe5a38d3981c7bb88a2f25e7b27a2a989cbcb
+    description: "Candidate A1 of the vexil-auto loop (train.py 7c737230), fitted once on development data; confirm node C1, shadow from week 2026-11-23."
+    scored_from: "2026-11-23"
+
+  - id: cand-A3
+    role: challenger
+    kind: frozen_train
+    file: models/candidates/A3/model.json
+    sha256: 8acdaefc7a35f3fc4edb067812e04791876dec8f1f82f2c0b28d1b42d1e71b0d
+    description: "Candidate A3 of the vexil-auto loop (train.py 7ada1523), fitted once on development data; confirm node C1, shadow from week 2026-11-23."
+    scored_from: "2026-11-23"
+
+  - id: cand-A4
+    role: challenger
+    kind: frozen_train
+    file: models/candidates/A4/model.json
+    sha256: a43af0a3106ed207c69a04eb69fd09e9bbb0891d2bf3751becdacaeda4782280
+    description: "Candidate A4 of the vexil-auto loop (train.py 33d1c4b0), fitted once on development data; confirm node C1, shadow from week 2026-11-23."
+    scored_from: "2026-11-23"
+
+  - id: cand-A5
+    role: challenger
+    kind: frozen_train
+    file: models/candidates/A5/model.json
+    sha256: 45688c755875ea34fdc1d460d3174468e0cbc72b35e08d510fc1481c9c84b6fa
+    description: "Candidate A5 of the vexil-auto loop (train.py 1cf8e61d), fitted once on development data; confirm node C1, shadow from week 2026-11-23."
+    scored_from: "2026-11-23"

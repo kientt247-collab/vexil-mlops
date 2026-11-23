@@ -111,6 +111,8 @@ def append_entry(path: Path, entry: dict) -> None:
     lines.append(
         f"    description: {json.dumps(entry['description'])}"
     )  # quoted: it may hold colons
+    if entry.get("scored_from"):
+        lines.append(f"    scored_from: {json.dumps(str(entry['scored_from']))}")
     path = Path(path)
     path.write_text(path.read_text().rstrip("\n") + "\n" + "\n".join(lines) + "\n")
 

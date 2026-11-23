@@ -37,5 +37,11 @@ def match_inputs(match: Match, players: list[Player], rating_input: float) -> di
 def score_match(
     entries: tuple[ModelEntry, ...], inputs: dict[str, np.ndarray]
 ) -> dict[str, np.ndarray]:
-    """Win probability of Radiant per minute row, for each model id."""
+    """Win probability of Radiant per minute row, for each model id.
+
+    Per-match models only. Entries of kind ``frozen_train`` replay results and are scored per
+    week by ``pipeline.process_week``.
+    """
+    if any(entry.kind == "frozen_train" for entry in entries):
+        raise ValueError("frozen_train entries are scored per week, not per match")
     return {entry.id: entry.load().predict(inputs) for entry in entries}

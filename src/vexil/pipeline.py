@@ -107,9 +107,14 @@ def process_week(
         if meta.match_id in results:
             state.add_result(meta, results[meta.match_id])
 
-    entries = tuple(e for e in registry.active() if e.kind != "frozen_train")
-    candidates = tuple(e for e in registry.active() if e.kind == "frozen_train")
-    scored: list[tuple[dict, list]] = []
+    # An entry with `scored_from` is scored only for that week and later: a challenger must not
+    # be scored on weeks whose labels were read before it was registered.
+    scored = tuple(
+        e for e in registry.active() if e.scored_from is None or week >= str(e.scored_from)
+    )
+    entries = tuple(e for e in scored if e.kind != "frozen_train")
+    candidates = tuple(e for e in scored if e.kind == "frozen_train")
+    judged_matches: list[tuple[dict, list]] = []
     match_rows, prediction_frames = [], []
     counts = {
         "matches": len(rows),
@@ -129,7 +134,7 @@ def process_week(
             counts["gap"] += 1
             continue
         counts["judged"] += 1
-        scored.append((match, players))
+        judged_matches.append((match, players))
         match_id = match["match_id"]
         inputs = match_inputs(match, players, rating_inputs[match_id])
         match_rows.append(
@@ -165,8 +170,10 @@ def process_week(
                     schema=PREDICTION_SCHEMA,
                 )  # fmt: skip
             )
-    if candidates and scored:
-        table = week_table(history, rows, {m["match_id"] for m, _ in scored}, results, load_items())
+    if candidates and judged_matches:
+        table = week_table(
+            history, rows, {m["match_id"] for m, _ in judged_matches}, results, load_items()
+        )
         ids = table.rows["match_id"]
         for entry in candidates:
             p = entry.load().predict_rows(table, np.arange(len(ids)))
