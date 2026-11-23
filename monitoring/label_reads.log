@@ -153,3 +153,6 @@
 {"time": "2026-11-21T11:49:15+00:00", "purpose": "weekly job", "kind": "labels", "matches": 140, "after_cutoff": 0, "withheld": 0}
 {"time": "2026-11-21T11:49:16+00:00", "purpose": "weekly job", "kind": "labels", "matches": 185, "after_cutoff": 0, "withheld": 0}
 {"time": "2026-11-21T11:49:17+00:00", "purpose": "weekly job", "kind": "labels", "matches": 59, "after_cutoff": 0, "withheld": 0}
+{"time": "2026-11-23T10:34:25+00:00", "purpose": "weekly job", "kind": "labels", "matches": 140, "after_cutoff": 0, "withheld": 0}
+{"time": "2026-11-23T10:34:25+00:00", "purpose": "weekly job", "kind": "labels", "matches": 185, "after_cutoff": 0, "withheld": 0}
+{"time": "2026-11-23T10:34:26+00:00", "purpose": "weekly job", "kind": "labels", "matches": 112, "after_cutoff": 53, "withheld": 0}
