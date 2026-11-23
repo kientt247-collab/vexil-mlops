@@ -75,3 +75,20 @@ tables without running the job.
 |---|---|---|
 | 1 | 2026-11-21 13:18 UTC | go-live: rules, gate, three starting models, code. No real run happened under it |
 | 2 | 2026-11-21 | code only, after a dry run under version 1: weekly files are uploaded under their asset names (they were uploaded under the bare file name, so a later run would not have found them); a week counts as changed only when its rows change (compressed bytes differ between machines); a dry run uploads nothing and opens no issue; a real run earlier than the last recorded run is refused. Rules, gate and models are the same files |
+| 3 (pending, not approved) | draft 2026-11-23 | four frozen candidates (A1, A3, A4, A5 of the vexil-auto loop) enter as challengers with kind `frozen_train`, scored from week 2026-11-23, the shadow clock starting then. The locked set grows by `models/constants/items.json`, `models/candidates/<tag>/train.py` and `model.json`, and `uv.lock`. Rules, gate, champion, baseline and anchor are the same files. Takes effect only when a person approves it in the Issue and the branch is merged |
+
+## Candidates in the shadow period
+
+A candidate is an audited `train.py` run by the pipeline through `CandidateCtx`: it sees the
+rows of a week, the pregame facts and `results_before` (results that ended strictly before
+the match starts), and gets the label only inside `fit`. Its fitted state lives in
+`models/candidates/<tag>/model.json`, with the sha256 of the train file. A candidate is
+scored from `scored_from` onwards; earlier weeks are left alone. The result history behind
+`results_before` is kept as `state/history-before-<week>.json.gz` snapshots, the same way as
+the rating snapshots, and is replayed from the store when a snapshot is missing.
+
+Candidates are compared with the champion by the same gate as any challenger (8 final
+weeks, at least 600 judged matches, gain at least 0.002 with the 95 percent interval above
+0, slope 0.9 to 1.1). The gate only watches challengers of kind `refit` and `recalibration`
+for its own collision check, so candidates of kind `frozen_train` do not clash with them.
+The job opens a "Promotion proposed" Issue; a person approves it in the registry.
