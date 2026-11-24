@@ -1,0 +1,73 @@
+{
+ "train_py_sha256": "1fc3396bde80c583154cbaa139737dcb0221d8c9d297117092fd30715308a92f",
+ "max_abs_dX": 0.0,
+ "blocks": [
+  {
+   "block": 1,
+   "train_matches": 659,
+   "test_rows": 20232,
+   "core_vs_e1_max_abs_dp": 0.0,
+   "pkg_vs_e1_max_abs_dp": 1.7541523789077473e-14,
+   "pkg_vs_e1_max_abs_df": 7.882583474838611e-15,
+   "share_rows_df_above_0.01": 0.0,
+   "loss_e1": 0.5038392027325177,
+   "loss_pkg": 0.5038392027325175,
+   "loss_core": 0.5038392027325177
+  },
+  {
+   "block": 2,
+   "train_matches": 1373,
+   "test_rows": 20433,
+   "core_vs_e1_max_abs_dp": 0.0,
+   "pkg_vs_e1_max_abs_dp": 1.0880185641326534e-14,
+   "pkg_vs_e1_max_abs_df": 7.854827899222983e-15,
+   "share_rows_df_above_0.01": 0.0,
+   "loss_e1": 0.5233102939077648,
+   "loss_pkg": 0.5233102939077648,
+   "loss_core": 0.5233102939077648
+  },
+  {
+   "block": 3,
+   "train_matches": 2108,
+   "test_rows": 20270,
+   "core_vs_e1_max_abs_dp": 0.0,
+   "pkg_vs_e1_max_abs_dp": 5.88418203051333e-15,
+   "pkg_vs_e1_max_abs_df": 1.0470790900996008e-14,
+   "share_rows_df_above_0.01": 0.0,
+   "loss_e1": 0.501482565901898,
+   "loss_pkg": 0.501482565901898,
+   "loss_core": 0.501482565901898
+  },
+  {
+   "block": 4,
+   "train_matches": 2782,
+   "test_rows": 20202,
+   "core_vs_e1_max_abs_dp": 0.0,
+   "pkg_vs_e1_max_abs_dp": 9.658940314238862e-15,
+   "pkg_vs_e1_max_abs_df": 9.2148511043888e-15,
+   "share_rows_df_above_0.01": 0.0,
+   "loss_e1": 0.48409775239160396,
+   "loss_pkg": 0.4840977523916041,
+   "loss_core": 0.48409775239160396
+  },
+  {
+   "block": 5,
+   "train_matches": 3502,
+   "test_rows": 20597,
+   "core_vs_e1_max_abs_dp": 0.0,
+   "pkg_vs_e1_max_abs_dp": 5.88418203051333e-15,
+   "pkg_vs_e1_max_abs_df": 7.993605777301127e-15,
+   "share_rows_df_above_0.01": 0.0,
+   "loss_e1": 0.490519926665927,
+   "loss_pkg": 0.4905199266659269,
+   "loss_core": 0.490519926665927
+  }
+ ],
+ "pooled_loss_e1": 0.5006635669420884,
+ "pooled_loss_pkg": 0.5006635669420882,
+ "pooled_diff": -1.1102230246251565e-16,
+ "max_core_dp": 0.0,
+ "max_pkg_dp": 1.7541523789077473e-14,
+ "max_df": 1.0470790900996008e-14,
+ "seconds": 27.2
+}

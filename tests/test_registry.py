@@ -37,9 +37,11 @@ def score(registry):
 def test_the_registry_in_the_repository_is_valid():
     registry = load_registry(REPO / "models" / "registry.yaml")
     assert [e.id for e in registry.active()] == [
-        "final-model", "rstar", "anchor", "cand-A1", "cand-A3", "cand-A4", "cand-A5",
+        "final-model", "rstar", "anchor", "cand-A1", "cand-A3", "cand-A4", "cand-A5", "cand-R",
     ]  # fmt: skip
-    assert all(e.scored_from == "2026-11-23" for e in registry.by_role("challenger"))
+    first_week = {e.id: e.scored_from for e in registry.by_role("challenger")}
+    assert all(first_week[f"cand-{tag}"] == "2026-11-23" for tag in ("A1", "A3", "A4", "A5"))
+    assert first_week["cand-R"] == "2026-11-30"
     assert registry.one("champion").id == "final-model"
     assert registry.one("anchor").id == "anchor"
 

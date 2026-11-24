@@ -1,6 +1,6 @@
 {
- "version": 3,
- "locked_at": "2026-11-23 10:59 UTC",
+ "version": 4,
+ "locked_at": "2026-11-24 10:41 UTC",
  "files": {
   "monitoring/rules.yaml": "764827cd2233f75cee48d06ac19167c63e6492724e99f76eb935cf81e80421f9",
   "monitoring/gate.yaml": "775ed1fa7f8ec166bf947528d503290adeb63a24930d765fe303cb996c50cc0e",
@@ -16,9 +16,12 @@
   "models/candidates/A4/model.json": "a43af0a3106ed207c69a04eb69fd09e9bbb0891d2bf3751becdacaeda4782280",
   "models/candidates/A5/train.py": "1cf8e61d9eb9c50d4221006f01dc575b98bb667c685a3fd3bc12785ad641e2a5",
   "models/candidates/A5/model.json": "45688c755875ea34fdc1d460d3174468e0cbc72b35e08d510fc1481c9c84b6fa",
+  "models/candidates/R/train.py": "1fc3396bde80c583154cbaa139737dcb0221d8c9d297117092fd30715308a92f",
+  "models/candidates/R/model.json": "c28be160988361ce0f369a4eef42ef2aeaf341bc772676977f474104bb2cc6d5",
+  "models/candidates/R/initial_ratings_2026-01-01.csv": "fac4d6e5a428c394430ba564db87f16bd4e9c75d8a45f7f9d3a521be2b29b7a2",
   "uv.lock": "8c96c45397a0a9bf65c5e6fd09957c3acdf984c0ae5565744916337818fac6db"
  },
- "source_tree_sha256": "7b675dcd15e241c2544db8627f3eb84c6d324054c2030c2774a11d45767e78ab",
+ "source_tree_sha256": "8e695a3a5ca4c1ec30cd13beb6e6d14651fdcbb3cdffce4ae06d6268cf00791e",
  "approved_by": "Kien",
- "reason": "Four frozen candidates (A1, A3, A4, A5 of the vexil-auto loop) enter as challengers of kind frozen_train, scored from week 2026-11-23, shadow clock from then; items.json, the eight candidate files and uv.lock join the locked set. Rules, gate, champion, baseline and anchor unchanged. Kien approved on 2026-11-23 17:59 UTC+7: 'Duyet lock v3 nhu da neu'."
+ "reason": "Lock v4: cand-R (action map v3 node P3, audited build) enters as a fifth challenger of kind frozen_train, scored from week 2026-11-30, shadow clock from then. cand-R train.py, its frozen table of initial ratings (state at 2026-01-01 00:00 UTC, history from 2024) and its model.json join the locked set; LOCKED_FILES in src/vexil/job.py changes. Rules, gate, champion, baseline, anchor and the four candidates A1, A3, A4, A5 unchanged. Kien approved on 2026-11-24 17:35 UTC+7 in the P4 go question (option: Duyet lock v4 nhu viet)."
 }

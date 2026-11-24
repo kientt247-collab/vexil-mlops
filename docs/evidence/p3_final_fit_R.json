@@ -1,0 +1,11 @@
+{
+ "train_sha256": "1fc3396bde80c583154cbaa139737dcb0221d8c9d297117092fd30715308a92f",
+ "model_sha256": "c28be160988361ce0f369a4eef42ef2aeaf341bc772676977f474104bb2cc6d5",
+ "n_matches": 4470,
+ "n_rows": 170519,
+ "model_bytes": 1115,
+ "two_fits_identical": true,
+ "fit_matches_of_loop": 4470,
+ "label_clashes": 0,
+ "seconds": 24.1
+}
