@@ -1,0 +1,15 @@
+{
+ "table_sha256": "fac4d6e5a428c394430ba564db87f16bd4e9c75d8a45f7f9d3a521be2b29b7a2",
+ "accounts": 16621,
+ "straddling_matches": 1,
+ "resume_max_abs_diff": 0.0,
+ "planted_2026_in_table_max_abs_diff": 1.4173959372254044,
+ "code_sha256": {
+  "p3_common.py": "e87e0642c810695643aa2758910e7e2a3586c908d5f25b69960771a156eb3498",
+  "run_p3_table.py": "57a12c329feccdf3d74756d1c0e10a0235788afcb614fed346eac83bc26cac90",
+  "test_p3.py": "b027726c400809dcf337cd3b81b3f7b4e093721d81b7da954e244e46b6403610",
+  "b_common.py": "d53dc11af65411fd0c3d5ba584136c8f6176837d69dd6dc678c3035cb5b2fe26",
+  "e2_common.py": "8b5ed9abb2b0256ac7732103880807a344b009beafa05b3e1f5b9c0359c9994c"
+ },
+ "label_looks": 1
+}

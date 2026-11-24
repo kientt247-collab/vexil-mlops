@@ -79,3 +79,11 @@ models:
     sha256: 45688c755875ea34fdc1d460d3174468e0cbc72b35e08d510fc1481c9c84b6fa
     description: "Candidate A5 of the vexil-auto loop (train.py 1cf8e61d), fitted once on development data; confirm node C1, shadow from week 2026-11-23."
     scored_from: "2026-11-23"
+
+  - id: cand-R
+    role: challenger
+    kind: frozen_train
+    file: models/candidates/R/model.json
+    sha256: c28be160988361ce0f369a4eef42ef2aeaf341bc772676977f474104bb2cc6d5
+    description: "cand-R of action map v3 (train.py 1fc3396b): the champion's design with a rating that starts from a frozen table of initial ratings (state at 2026-01-01 00:00 UTC, history from 2024); fitted once on development data, rows t 0 to 29; confirm node C2."
+    scored_from: "2026-11-30"

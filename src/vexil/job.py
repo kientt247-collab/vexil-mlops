@@ -87,6 +87,9 @@ LOCKED_FILES = (
     "models/candidates/A3/train.py", "models/candidates/A3/model.json",
     "models/candidates/A4/train.py", "models/candidates/A4/model.json",
     "models/candidates/A5/train.py", "models/candidates/A5/model.json",
+    # lock version 4: cand-R, its train.py, its frozen table of initial ratings and its fitted file
+    "models/candidates/R/train.py", "models/candidates/R/model.json",
+    "models/candidates/R/initial_ratings_2026-01-01.csv",
     "uv.lock",
 )  # fmt: skip
 
